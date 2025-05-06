@@ -1,4 +1,5 @@
-[![English](https://flagcdn.com/w40/gb.png)](translations/README.en.md)
+#### _Read this in English._
+<kbd>[<img title="English" alt="English" src="https://flagcdn.com/w40/gb.png" width="22">](translations/README.en.md)</kbd>
 
 # EasySave
 
