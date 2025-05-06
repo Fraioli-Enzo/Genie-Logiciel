@@ -1,5 +1,5 @@
 #### _Read this in English._
-<kbd>[<img title="English" alt="English" src="https://flagcdn.com/w40/gb.png" width="22">](translations/Software Specification_Project_EasySafe_1.0_English.md)</kbd>
+<kbd>[<img title="English" alt="English" src="https://flagcdn.com/w40/gb.png" width="22">](translations/Software_Specification_Project_EasySafe_1.0_English.md)</kbd>
 
 ### **Cahier des Charges - EasySave Version 1.0**
 
