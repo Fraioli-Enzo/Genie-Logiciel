@@ -14,8 +14,8 @@
 - **Language**: C#
 - **Framework**: .NET 8.0
 - **Recommended IDE**: Visual Studio 2022 or higher
-- **UML Tool**: ArgoUML (recommended)
-- **Version control**: GitHub (your supervisor must be added to the repository)
+- **UML Tool**: ArgoUML 
+- **Version control**: GitHub 
 
 ## Development Constraints
 
