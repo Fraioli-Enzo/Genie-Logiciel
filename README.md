@@ -1,4 +1,4 @@
-[![English](https://flagcdn.com/w40/gb.png)](.translations/README.en.md)
+[![English](https://flagcdn.com/w40/gb.png)](translations/README.en.md)
 
 # EasySave
 
