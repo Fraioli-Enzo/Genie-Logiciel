@@ -133,4 +133,36 @@
     <value>Nom mis à jour :</value>
     <comment>-</comment>
   </data>
+  <data name="RunBackupWelcomeMessage" xml:space="preserve">
+    <value>Que voulez-vous faire ?
+1. Afficher les travaux
+2. Ajouter un travail
+3. Supprimer un travail
+4. Quitter</value>
+    <comment>-</comment>
+  </data>
+  <data name="AddWorkError" xml:space="preserve">
+    <value>Impossible d'ajouter ce travail.</value>
+    <comment>-</comment>
+  </data>
+  <data name="AddWorkSucess" xml:space="preserve">
+    <value>Travail ajouté avec succès.</value>
+    <comment>-</comment>
+  </data>
+  <data name="RemoveWorkSucess" xml:space="preserve">
+    <value>Travail supprimer avec succès.</value>
+    <comment>-</comment>
+  </data>
+  <data name="DisplayWorksError" xml:space="preserve">
+    <value>Impossible d'afficher les travaux.</value>
+    <comment>-</comment>
+  </data>
+  <data name="RunBackupDefaultError" xml:space="preserve">
+    <value>Impossible de lire la saisie, veuillez réessayer.</value>
+    <comment>-</comment>
+  </data>
+  <data name="RunBackupExit" xml:space="preserve">
+    <value>Au revoir !</value>
+    <comment>-</comment>
+  </data>
 </root>

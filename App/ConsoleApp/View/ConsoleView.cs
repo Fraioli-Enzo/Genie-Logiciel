@@ -6,49 +6,44 @@ namespace ConsoleApp.View
 {
     public class ConsoleView
     {
-        private readonly PersonViewModel _viewModel;
-
-        public ConsoleView(PersonViewModel viewModel)
+        public void Display()
         {
-            _viewModel = viewModel;
-        }
+            var viewModel = new EasySafeViewModel();
 
-        public void Run()
-        {
-            // Demander à l'utilisateur de choisir une langue  
+            // ## Choisir la langue
             Console.WriteLine("Choisissez une langue (fr/en) :");
-            var language = Console.ReadLine();
+            viewModel.ChooseLanguage();
 
-            // Définir la culture en fonction de l'entrée utilisateur  
-            try
-            {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
-            }
-            catch (CultureNotFoundException)
-            {
-                Console.WriteLine("Langue non reconnue, utilisation de la langue par défaut (fr).");
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
-            }
-
-            // Charger les ressources localisées  
+            // Charger les différents langages 
             ResourceManager resourceManager = new ResourceManager("ConsoleApp.Resources.Messages", typeof(ConsoleView).Assembly);
-
-            // Afficher un message localisé  
             Console.WriteLine(resourceManager.GetString("WelcomeMessage"));
+
+
+            // ## Début de la sauvegarde
+            var responses = new Dictionary<string, string>
+            {
+                { "RunBackupExit", resourceManager.GetString("RunBackupExit") },
+                { "RunBackupDefaultError", resourceManager.GetString("RunBackupDefaultError") },
+                { "AddWorkError", resourceManager.GetString("AddWorkError") },
+                { "AddWorkSucess", resourceManager.GetString("AddWorkSucess") },
+                { "RemoveWorkSucess", resourceManager.GetString("RemoveWorkSucess") },
+                { "DisplayWorksError", resourceManager.GetString("DisplayWorksError") },
+            };
 
             while (true)
             {
-                Console.WriteLine(resourceManager.GetString("EnterName"));
-                var input = Console.ReadLine();
+                Console.WriteLine(resourceManager.GetString("RunBackupWelcomeMessage"));
+                string data = viewModel.RunBackup();
 
-                if (input?.ToLower() == "exit")
+                if (responses.ContainsKey(data))
                 {
-                    Console.WriteLine(resourceManager.GetString("ExitMessage"));
-                    break;
+                    Console.WriteLine(responses[data]);
+                    if (data == "RunBackupExit") break;
                 }
-
-                _viewModel.Name = input;
-                Console.WriteLine($"{resourceManager.GetString("UpdatedName")} {_viewModel.Name}");
+                else
+                {
+                    Console.WriteLine(data);
+                }
             }
         }
     }

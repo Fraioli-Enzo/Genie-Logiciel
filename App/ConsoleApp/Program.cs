@@ -7,9 +7,9 @@ namespace ConsoleApp
     {
         public static void Main(string[] args)
         {
-            var viewModel = new PersonViewModel();
-            var view = new ConsoleView(viewModel);
-            view.Run();
+            var consoleView = new ConsoleView();
+            consoleView.Display();
+
         }
     }
 }

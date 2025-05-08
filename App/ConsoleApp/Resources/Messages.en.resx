@@ -129,4 +129,29 @@
   <data name="UpdatedName" xml:space="preserve">
     <value>Name update:</value>
   </data>
+  <data name="RunBackupWelcomeMessage" xml:space="preserve">
+    <value>What would you like to do?
+1. Display jobs
+2. Add a job
+3. Delete a job
+4. Exit</value>
+  </data>
+  <data name="AddWorkError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddWorkSucess" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RemoveWorkSucess" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DisplayWorksError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunBackupDefaultError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunBackupExit" xml:space="preserve">
+    <value />
+  </data>
 </root>
