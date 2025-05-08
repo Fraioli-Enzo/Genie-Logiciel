@@ -1,9 +1,6 @@
 ﻿using ConsoleApp.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.Resources;
 
 namespace ConsoleApp.View
 {
@@ -18,16 +15,40 @@ namespace ConsoleApp.View
 
         public void Run()
         {
+            // Demander à l'utilisateur de choisir une langue  
+            Console.WriteLine("Choisissez une langue (fr/en) :");
+            var language = Console.ReadLine();
+
+            // Définir la culture en fonction de l'entrée utilisateur  
+            try
+            {
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            }
+            catch (CultureNotFoundException)
+            {
+                Console.WriteLine("Langue non reconnue, utilisation de la langue par défaut (fr).");
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
+            }
+
+            // Charger les ressources localisées  
+            ResourceManager resourceManager = new ResourceManager("ConsoleApp.Resources.Messages", typeof(ConsoleView).Assembly);
+
+            // Afficher un message localisé  
+            Console.WriteLine(resourceManager.GetString("WelcomeMessage"));
+
             while (true)
             {
-                Console.WriteLine("Entrez un nom (ou tapez 'exit' pour quitter) :");
+                Console.WriteLine(resourceManager.GetString("EnterName"));
                 var input = Console.ReadLine();
 
                 if (input?.ToLower() == "exit")
+                {
+                    Console.WriteLine(resourceManager.GetString("ExitMessage"));
                     break;
+                }
 
                 _viewModel.Name = input;
-                Console.WriteLine($"Nom mis à jour : {_viewModel.Name}");
+                Console.WriteLine($"{resourceManager.GetString("UpdatedName")} {_viewModel.Name}");
             }
         }
     }

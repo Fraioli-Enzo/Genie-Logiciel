@@ -13,3 +13,8 @@ C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ref
 C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.pdb
 C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.genruntimeconfig.cache
 C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ref\ConsoleApp.dll
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.Resources.Messages.resources
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.Resources.Messages.en.resources
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.csproj.GenerateResource.cache
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\bin\Debug\net8.0\en\ConsoleApp.resources.dll
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\en\ConsoleApp.resources.dll
