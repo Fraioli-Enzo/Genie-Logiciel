@@ -27,7 +27,7 @@ namespace ConsoleApp.ViewModel
             }
         }
 
-        public string RunBackup(string choice)
+        public string RunBackup(string choice, string pathSource, string pathTarget)
         {
             string workName;
 
@@ -38,8 +38,7 @@ namespace ConsoleApp.ViewModel
                     return displayWork;
 
                 case "2":
-                    workName = Console.ReadLine();
-                    string addWork = workManager.AddWork(workName);
+                    string addWork = workManager.AddWork(pathSource, pathTarget);
                     return addWork;
 
                 case "3":

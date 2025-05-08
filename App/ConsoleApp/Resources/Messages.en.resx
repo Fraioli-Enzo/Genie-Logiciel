@@ -160,4 +160,22 @@
   <data name="RemoveWorkError" xml:space="preserve">
     <value>Unable to delete this work.</value>
   </data>
+  <data name="AddWorkSelect" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddWorkCancel" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddWorkFolders" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddWorkFiles" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddWorkDisk" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddWorkDiskError" xml:space="preserve">
+    <value />
+  </data>
 </root>

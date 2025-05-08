@@ -172,4 +172,28 @@
     <value>Impossible de supprimer ce travail.</value>
     <comment>-</comment>
   </data>
+  <data name="AddWorkSelect" xml:space="preserve">
+    <value>Tapez le numéro du dossier pour continuer, 's' pour sélectionner ce dossier, ou 'q' pour quitter :</value>
+    <comment>-</comment>
+  </data>
+  <data name="AddWorkCancel" xml:space="preserve">
+    <value>Opération annulée.</value>
+    <comment>-</comment>
+  </data>
+  <data name="AddWorkFolders" xml:space="preserve">
+    <value>Dossiers :</value>
+    <comment>-</comment>
+  </data>
+  <data name="AddWorkFiles" xml:space="preserve">
+    <value>Fichiers :</value>
+    <comment>-</comment>
+  </data>
+  <data name="AddWorkDisk" xml:space="preserve">
+    <value>Veuillez entrer la lettre du disque (ex: C):</value>
+    <comment>-</comment>
+  </data>
+  <data name="AddWorkDiskError" xml:space="preserve">
+    <value>Le disque spécifié n'existe pas.</value>
+    <comment>-</comment>
+  </data>
 </root>

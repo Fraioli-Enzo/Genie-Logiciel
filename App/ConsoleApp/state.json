@@ -1,0 +1,10 @@
+{
+  "Name": "work_1",
+  "SourceFilePath": "C:\\Users\\enzof\\Documents\\Test_Source",
+  "TargetFilePath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
+  "State": "ACTIVE",
+  "TotalFilesToCopy": 3300,
+  "TotalFilesSize": 1240312777,
+  "NbFilesLeftToDo": 3274,
+  "Progression": 0
+}
