@@ -145,11 +145,11 @@
     <value>Impossible d'ajouter ce travail.</value>
     <comment>-</comment>
   </data>
-  <data name="AddWorkSucess" xml:space="preserve">
+  <data name="AddWorkSuccess" xml:space="preserve">
     <value>Travail ajouté avec succès.</value>
     <comment>-</comment>
   </data>
-  <data name="RemoveWorkSucess" xml:space="preserve">
+  <data name="RemoveWorkSuccess" xml:space="preserve">
     <value>Travail supprimer avec succès.</value>
     <comment>-</comment>
   </data>
@@ -163,6 +163,13 @@
   </data>
   <data name="RunBackupExit" xml:space="preserve">
     <value>Au revoir !</value>
+    <comment>-</comment>
+  </data>
+  <data name="EnterFileName" xml:space="preserve">
+    <value>Veuillez entrez le nom du fichier :</value>
+  </data>
+  <data name="RemoveWorkError" xml:space="preserve">
+    <value>Impossible de supprimer ce travail.</value>
     <comment>-</comment>
   </data>
 </root>

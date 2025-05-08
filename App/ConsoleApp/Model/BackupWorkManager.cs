@@ -15,16 +15,20 @@ namespace ConsoleApp.Model
         {
             if (Works.Count >= MaxWorks)
             {
-                return "AddWorkError"; 
+                return "AddWorkError";
             }
 
             Works.Add(work);
-            return "AddWorkSucess"; 
+            return "AddWorkSuccess";
         }
 
         public string RemoveWork(string work)
         {
-            return "RemoveWorkSucess"; 
+            if (Works.Remove(work))
+            {
+                return "RemoveWorkSuccess";
+            }
+            return "RemoveWorkError";
         }
 
         public string DisplayWorks()

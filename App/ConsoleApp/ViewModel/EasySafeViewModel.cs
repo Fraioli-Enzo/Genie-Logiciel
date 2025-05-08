@@ -2,12 +2,15 @@
 using System.Globalization;
 using System.Resources;
 using ConsoleApp.Model;
+using System.Xml.Serialization;
 
 
 namespace ConsoleApp.ViewModel
 {
     public class EasySafeViewModel
     {
+        private readonly BackupWorkManager workManager = new BackupWorkManager(); 
+
         public void ChooseLanguage()
         {
             var language = Console.ReadLine();
@@ -24,11 +27,8 @@ namespace ConsoleApp.ViewModel
             }
         }
 
-        public string RunBackup()
+        public string RunBackup(string choice)
         {
-            var workManager = new BackupWorkManager();
-
-            var choice = Console.ReadLine();
             string workName;
 
             switch (choice)
