@@ -41,7 +41,6 @@ namespace ConsoleApp.ViewModel
 
         public string RunBackup(string choice, string name, string pathSource, string pathTarget, string type)
         {
-            string workName;
 
             switch (choice)
             {
