@@ -15,7 +15,7 @@ namespace ConsoleApp.View
             string configFilePath = Path.Combine(projectRootPath, "config.json");
             string configContent = File.ReadAllText(configFilePath);
             var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
-            string language = config.ContainsKey("language") ? config["language"] : "fr";
+            string language = config.ContainsKey("language") ? config["language"] : "en";
 
             // Set ResourceManager culture based on language
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
@@ -32,7 +32,7 @@ namespace ConsoleApp.View
                 switch (WelcomeChoice)
                 {
                     case "1":
-                        Console.WriteLine("Choisissez une langue (fr/en) :");
+                        Console.WriteLine(resourceManager.GetString("LanguageSelection"));
                         string languageChoice = Console.ReadLine();
                         viewModel.ChooseLanguage(languageChoice);
 
@@ -46,7 +46,6 @@ namespace ConsoleApp.View
                         break;
 
                     case "2":
-                        // ## Début de la sauvegarde  
                         var responses = new Dictionary<string, string>
                         {
                             { "RunBackupExit", resourceManager.GetString("RunBackupExit") },
@@ -57,6 +56,8 @@ namespace ConsoleApp.View
                             { "RemoveWorkError", resourceManager.GetString("RemoveWorkError") },
                             { "DisplayWorksError", resourceManager.GetString("DisplayWorksError") },
                             { "EnterFileName", resourceManager.GetString("EnterFileName") },
+                            { "ExecuteWorkError", resourceManager.GetString("ExecuteWorkError") },
+                            { "ExecuteWorkSuccess", resourceManager.GetString("ExecuteWorkSuccess") },
                         };
 
                         while (true)
@@ -70,9 +71,10 @@ namespace ConsoleApp.View
                             string type = null;
                             string typeChoice = null;
 
-                            if (choice == "3")
+                            if (choice == "3" || choice == "4")
                             {
                                 Console.WriteLine(responses["EnterFileName"]);
+                                name = Console.ReadLine();
                             }
                             if (choice == "2")
                             {
@@ -204,6 +206,8 @@ namespace ConsoleApp.View
                                     Console.WriteLine(resourceManager.GetString("AddWorkDiskError"));
                                 }
                             }
+                            
+                            
                             string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type);
 
                             if (responses.ContainsKey(data))
@@ -216,6 +220,11 @@ namespace ConsoleApp.View
                                 Console.WriteLine(data);
                             }
                         }
+                        break;
+
+                    case "3":
+                        Console.WriteLine(resourceManager.GetString("RunBackupExit"));
+                        Environment.Exit(0); // Quitte l'application
                         break;
 
                     default:

@@ -54,11 +54,14 @@ namespace ConsoleApp.ViewModel
                     return addWork;
 
                 case "3":
-                    workName = Console.ReadLine();
-                    string removeWork = workManager.RemoveWork(workName);
+                    string removeWork = workManager.RemoveWork(name);
                     return removeWork;
 
                 case "4":
+                    string executeWork = workManager.ExecuteWork(name);
+                    return executeWork;
+
+                case "5":
                     return "RunBackupExit";
 
                 default:
