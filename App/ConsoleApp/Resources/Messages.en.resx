@@ -195,4 +195,10 @@
   <data name="LanguageSelection" xml:space="preserve">
     <value>Choose a language (fr/en):</value>
   </data>
+  <data name="ExecuteWorkSuccess" xml:space="preserve">
+    <value>Job executed successfully!</value>
+  </data>
+  <data name="ExecuteWorkError" xml:space="preserve">
+    <value>Unable to execute the job.</value>
+  </data>
 </root>

@@ -214,4 +214,12 @@
     <value>Choisissez une langue (fr/en) :</value>
     <comment>-</comment>
   </data>
+  <data name="ExecuteWorkSuccess" xml:space="preserve">
+    <value>Travail exécuté avec succès !</value>
+    <comment>-</comment>
+  </data>
+  <data name="ExecuteWorkError" xml:space="preserve">
+    <value>Impossible d'exécuter le travail.</value>
+    <comment>-</comment>
+  </data>
 </root>

@@ -56,6 +56,8 @@ namespace ConsoleApp.View
                             { "RemoveWorkError", resourceManager.GetString("RemoveWorkError") },
                             { "DisplayWorksError", resourceManager.GetString("DisplayWorksError") },
                             { "EnterFileName", resourceManager.GetString("EnterFileName") },
+                            { "ExecuteWorkError", resourceManager.GetString("ExecuteWorkError") },
+                            { "ExecuteWorkSuccess", resourceManager.GetString("ExecuteWorkSuccess") },
                         };
 
                         while (true)

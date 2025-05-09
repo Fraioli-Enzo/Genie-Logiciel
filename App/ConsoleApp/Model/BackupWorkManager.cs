@@ -157,15 +157,43 @@ namespace ConsoleApp.Model
                     return "SourceDirectoryNotFound";
                 }
 
+                // Recalculate and update TotalFilesToCopy, TotalFilesSize, NbFilesLeftToDo, and Progression
+                var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
+                int totalFiles = allFiles.Length;
+                long totalSize = allFiles.Sum(file => new FileInfo(file).Length);
+
+                workToExecute.TotalFilesToCopy = totalFiles.ToString();
+                workToExecute.TotalFilesSize = totalSize.ToString();
+                workToExecute.NbFilesLeftToDo = totalFiles.ToString();
+                workToExecute.Progression = "0";
+
+                // Update state.json with recalculated values
+                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+                string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+
+                if (File.Exists(jsonFilePath))
+                {
+                    string existingJsonContent = File.ReadAllText(jsonFilePath);
+                    var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
+
+                    var workIndex = existingWorks.FindIndex(w => w.Name == workName);
+                    if (workIndex != -1)
+                    {
+                        existingWorks[workIndex].TotalFilesToCopy = workToExecute.TotalFilesToCopy;
+                        existingWorks[workIndex].TotalFilesSize = workToExecute.TotalFilesSize;
+                        existingWorks[workIndex].NbFilesLeftToDo = workToExecute.NbFilesLeftToDo;
+                        existingWorks[workIndex].Progression = workToExecute.Progression;
+                    }
+
+                    string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(jsonFilePath, updatedJsonContent);
+                }
+
                 // Ensure target directory exists
                 Directory.CreateDirectory(targetPath);
 
                 try
                 {
-                    // Get all files from the source directory
-                    var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
-
-                    int totalFiles = allFiles.Length;
                     int filesCopied = 0;
 
                     foreach (var file in allFiles)
@@ -186,10 +214,7 @@ namespace ConsoleApp.Model
                         workToExecute.Progression = ((filesCopied * 100) / totalFiles).ToString();
                     }
 
-                    // Update state.json
-                    string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
-                    string jsonFilePath = Path.Combine(projectRootPath, "state.json");
-
+                    // Update state.json with progress
                     if (File.Exists(jsonFilePath))
                     {
                         string existingJsonContent = File.ReadAllText(jsonFilePath);
