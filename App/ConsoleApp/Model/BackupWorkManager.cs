@@ -205,8 +205,19 @@ namespace ConsoleApp.Model
                         // Ensure the target directory exists
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFilePath)!);
 
+                        // Measure file transfer time
+                        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
                         // Copy the file
                         File.Copy(file, targetFilePath, overwrite: true);
+
+                        stopwatch.Stop();
+                        double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
+
+                        // Log the file copy operation
+                        long fileSize = new FileInfo(file).Length;
+                        ManageLogs(workName, file, targetFilePath, fileSize, fileTransferTime);
+
                         filesCopied++;
 
                         // Update progress
@@ -241,6 +252,38 @@ namespace ConsoleApp.Model
             }
 
             return "ExecuteWorkError";
+        }
+
+        public string ManageLogs(string workName, string fileSource, string fileTarget, long fileSize, double fileTransferTime)
+        {
+            // Define the path to the logs directory
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string logsDirectoryPath = Path.Combine(projectRootPath, "Logs");
+
+            // Ensure the logs directory exists
+            Directory.CreateDirectory(logsDirectoryPath);
+
+            // Define the log file path
+            string logFilePath = Path.Combine(logsDirectoryPath, $"{workName}_log.json");
+
+            // Create the log entry
+            var logEntry = new
+            {
+                Name = workName,
+                FileSource = fileSource,
+                FileTarget = fileTarget,
+                FileSize = fileSize,
+                FileTransferTime = fileTransferTime,
+                Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+            };
+
+            // Serialize the log entry to JSON
+            string logEntryJson = JsonSerializer.Serialize(logEntry, new JsonSerializerOptions { WriteIndented = true });
+
+            // Append the log entry to the log file
+            File.AppendAllText(logFilePath, logEntryJson + Environment.NewLine);
+
+            return "LogCreated";
         }
     }
 }
