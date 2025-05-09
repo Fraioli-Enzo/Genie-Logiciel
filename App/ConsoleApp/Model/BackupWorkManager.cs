@@ -14,6 +14,23 @@ namespace ConsoleApp.Model
 
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
 
+        public BackupWorkManager()
+        {
+            InitializeWorksFromState();
+        }
+
+        private void InitializeWorksFromState()
+        {
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+
+            if (File.Exists(jsonFilePath))
+            {
+                string jsonContent = File.ReadAllText(jsonFilePath);
+                Works = JsonSerializer.Deserialize<List<BackupWork>>(jsonContent) ?? new List<BackupWork>();
+            }
+        }
+
         public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
             if (Works.Count >= MaxWorks)
@@ -66,13 +83,16 @@ namespace ConsoleApp.Model
 
         public string RemoveWork(string workName)
         {
+            // Find the work in the in-memory list
             var workToRemove = Works.FirstOrDefault(w => w.Name == workName);
+
             if (workToRemove != null)
             {
+                // Remove from the in-memory list
                 Works.Remove(workToRemove);
 
                 // Update state.json
-                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
                 string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
                 if (File.Exists(jsonFilePath))
@@ -81,7 +101,7 @@ namespace ConsoleApp.Model
                     string existingJsonContent = File.ReadAllText(jsonFilePath);
                     var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
 
-                    // Remove the work from the list
+                    // Remove the work from the JSON list
                     existingWorks = existingWorks.Where(w => w.Name != workName).ToList();
 
                     // Save the updated list back to state.json
@@ -91,6 +111,8 @@ namespace ConsoleApp.Model
 
                 return "RemoveWorkSuccess";
             }
+
+            // Return error if the work was not found
             return "RemoveWorkError";
         }
 

@@ -15,7 +15,7 @@ namespace ConsoleApp.View
             string configFilePath = Path.Combine(projectRootPath, "config.json");
             string configContent = File.ReadAllText(configFilePath);
             var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
-            string language = config.ContainsKey("language") ? config["language"] : "fr";
+            string language = config.ContainsKey("language") ? config["language"] : "en";
 
             // Set ResourceManager culture based on language
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
@@ -32,7 +32,7 @@ namespace ConsoleApp.View
                 switch (WelcomeChoice)
                 {
                     case "1":
-                        Console.WriteLine("Choisissez une langue (fr/en) :");
+                        Console.WriteLine(resourceManager.GetString("LanguageSelection"));
                         string languageChoice = Console.ReadLine();
                         viewModel.ChooseLanguage(languageChoice);
 
@@ -216,6 +216,11 @@ namespace ConsoleApp.View
                                 Console.WriteLine(data);
                             }
                         }
+                        break;
+
+                    case "3":
+                        Console.WriteLine(resourceManager.GetString("RunBackupExit"));
+                        Environment.Exit(0); // Quitte l'application
                         break;
 
                     default:
