@@ -46,7 +46,6 @@ namespace ConsoleApp.View
                         break;
 
                     case "2":
-                        // ## Début de la sauvegarde  
                         var responses = new Dictionary<string, string>
                         {
                             { "RunBackupExit", resourceManager.GetString("RunBackupExit") },
@@ -70,9 +69,10 @@ namespace ConsoleApp.View
                             string type = null;
                             string typeChoice = null;
 
-                            if (choice == "3")
+                            if (choice == "3" || choice == "4")
                             {
                                 Console.WriteLine(responses["EnterFileName"]);
+                                name = Console.ReadLine();
                             }
                             if (choice == "2")
                             {
@@ -204,6 +204,8 @@ namespace ConsoleApp.View
                                     Console.WriteLine(resourceManager.GetString("AddWorkDiskError"));
                                 }
                             }
+                            
+                            
                             string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type);
 
                             if (responses.ContainsKey(data))

@@ -141,5 +141,81 @@ namespace ConsoleApp.Model
             // Retourner les travaux sous forme de chaîne formatée
             return string.Join(Environment.NewLine, worksFromFile.Select((w, index) => $"{index + 1}. {w.Name} ({w.SourcePath} -> {w.TargetPath})"));
         }
+
+        public string ExecuteWork(string workName)
+        {
+            // Find the work in the in-memory list
+            var workToExecute = Works.FirstOrDefault(w => w.Name == workName);
+            if (workToExecute != null)
+            {
+                string sourcePath = workToExecute.SourcePath;
+                string targetPath = workToExecute.TargetPath;
+
+                // Check if source directory exists
+                if (!Directory.Exists(sourcePath))
+                {
+                    return "SourceDirectoryNotFound";
+                }
+
+                // Ensure target directory exists
+                Directory.CreateDirectory(targetPath);
+
+                try
+                {
+                    // Get all files from the source directory
+                    var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
+
+                    int totalFiles = allFiles.Length;
+                    int filesCopied = 0;
+
+                    foreach (var file in allFiles)
+                    {
+                        // Determine the relative path and target file path
+                        string relativePath = Path.GetRelativePath(sourcePath, file);
+                        string targetFilePath = Path.Combine(targetPath, relativePath);
+
+                        // Ensure the target directory exists
+                        Directory.CreateDirectory(Path.GetDirectoryName(targetFilePath)!);
+
+                        // Copy the file
+                        File.Copy(file, targetFilePath, overwrite: true);
+                        filesCopied++;
+
+                        // Update progress
+                        workToExecute.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();
+                        workToExecute.Progression = ((filesCopied * 100) / totalFiles).ToString();
+                    }
+
+                    // Update state.json
+                    string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+                    string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+
+                    if (File.Exists(jsonFilePath))
+                    {
+                        string existingJsonContent = File.ReadAllText(jsonFilePath);
+                        var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
+
+                        var workIndex = existingWorks.FindIndex(w => w.Name == workName);
+                        if (workIndex != -1)
+                        {
+                            existingWorks[workIndex].NbFilesLeftToDo = workToExecute.NbFilesLeftToDo;
+                            existingWorks[workIndex].Progression = workToExecute.Progression;
+                        }
+
+                        string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
+                        File.WriteAllText(jsonFilePath, updatedJsonContent);
+                    }
+
+                    return "ExecuteWorkSuccess";
+                }
+                catch (Exception ex)
+                {
+                    // Handle any errors during file copy
+                    return $"ExecuteWorkError: {ex.Message}";
+                }
+            }
+
+            return "ExecuteWorkError";
+        }
     }
 }
