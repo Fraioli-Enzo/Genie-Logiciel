@@ -1,6 +1,6 @@
 #### _Read this in English._
 
-<kbd>[<img title="English" alt="English" src="https://flagcdn.com/w40/gb.png" width="22">](translations/translations/User_guide_En.md)</kbd>
+<kbd>[<img title="English" alt="English" src="https://flagcdn.com/w40/gb.png" width="22">](translations/User_guide_En.md)</kbd>
 
 # Guide d'utilisation de l'application EasySave (Console)
 
