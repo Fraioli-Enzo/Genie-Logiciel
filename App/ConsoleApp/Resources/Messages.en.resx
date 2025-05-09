@@ -161,21 +161,31 @@
     <value>Unable to delete this work.</value>
   </data>
   <data name="AddWorkSelect" xml:space="preserve">
-    <value />
+    <value>Enter the folder number to continue, 's' to select this folder, or 'q' to quit:</value>
   </data>
   <data name="AddWorkCancel" xml:space="preserve">
-    <value />
+    <value>Operation cancelled.</value>
   </data>
   <data name="AddWorkFolders" xml:space="preserve">
-    <value />
+    <value>Folders:</value>
   </data>
   <data name="AddWorkFiles" xml:space="preserve">
-    <value />
+    <value>Files:</value>
   </data>
   <data name="AddWorkDisk" xml:space="preserve">
-    <value />
+    <value>Please enter the drive letter (e.g., C):</value>
   </data>
   <data name="AddWorkDiskError" xml:space="preserve">
-    <value />
+    <value>The specified drive does not exist.
+
+</value>
+  </data>
+  <data name="RunBackupSaveName" xml:space="preserve">
+    <value>Please enter the name of the backup:</value>
+  </data>
+  <data name="RunBackupSaveType" xml:space="preserve">
+    <value>Please enter the type of backup:
+1. Full  
+2. Differential</value>
   </data>
 </root>

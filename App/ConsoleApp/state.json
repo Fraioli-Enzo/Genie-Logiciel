@@ -1,10 +1,11 @@
 {
-  "Name": "work_1",
-  "SourceFilePath": "C:\\Users\\enzof\\Documents\\Test_Source",
-  "TargetFilePath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
-  "State": "ACTIVE",
-  "TotalFilesToCopy": 3300,
-  "TotalFilesSize": 1240312777,
-  "NbFilesLeftToDo": 3274,
-  "Progression": 0
+  "Name": "test1",
+  "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source",
+  "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
+  "Type": "FULL",
+  "State": "INACTIVE",
+  "TotalFilesToCopy": "1",
+  "TotalFilesSize": "1153",
+  "NbFilesLeftToDo": "1",
+  "Progression": "0"
 }

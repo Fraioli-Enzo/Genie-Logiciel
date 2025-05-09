@@ -40,6 +40,9 @@ namespace ConsoleApp.View
                 string choice = Console.ReadLine();
                 string currentPathSource = null;
                 string currentPathTarget = null;
+                string name = null;
+                string type = null;
+                string typeChoice = null;
 
                 if (choice == "3")
                 {
@@ -47,6 +50,24 @@ namespace ConsoleApp.View
                 }
                 if (choice == "2")
                 {
+                    Console.WriteLine(resourceManager.GetString("RunBackupSaveName"));
+                    name = Console.ReadLine();
+
+                    Console.WriteLine(resourceManager.GetString("RunBackupSaveType"));
+                    typeChoice = Console.ReadLine();
+                    switch (typeChoice)
+                    {
+                        case "1":
+                            type = "FULL";
+                            break;
+                        case "2":
+                            type = "DIFFERENTIAL";
+                            break;
+                        default:
+                            Console.WriteLine(resourceManager.GetString("RunBackupDefaultError"));
+                            break;
+                    }
+
                     // Demander à l'utilisateur de choisir un dossier source
                     Console.WriteLine(resourceManager.GetString("AddWorkDisk"));
                     string sourceDriveLetter = Console.ReadLine()?.ToUpper() + @":\";
@@ -157,7 +178,7 @@ namespace ConsoleApp.View
                         Console.WriteLine(resourceManager.GetString("AddWorkDiskError"));
                     }
                 }
-                string data = viewModel.RunBackup(choice, currentPathSource, currentPathTarget);
+                string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type);
 
                 if (responses.ContainsKey(data))
                 {

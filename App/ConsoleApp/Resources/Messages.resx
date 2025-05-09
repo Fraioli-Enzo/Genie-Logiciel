@@ -196,4 +196,14 @@
     <value>Le disque spécifié n'existe pas.</value>
     <comment>-</comment>
   </data>
+  <data name="RunBackupSaveName" xml:space="preserve">
+    <value>Veuillez entrer le nom de la sauvegarde :</value>
+    <comment>-</comment>
+  </data>
+  <data name="RunBackupSaveType" xml:space="preserve">
+    <value>Veuillez entrer le type de sauvegarde :
+1. Complète  
+2. Différentielle</value>
+    <comment>-</comment>
+  </data>
 </root>

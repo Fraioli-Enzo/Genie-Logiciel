@@ -11,29 +11,34 @@ namespace ConsoleApp.Model
     public class BackupWorkManager
     {
         private const int MaxWorks = 5;
-        public List<string> Works { get; set; } = new List<string>();
 
-        public string AddWork(string pathSource, string pathTarget)
+        public List<BackupWork> Works { get; set; } = new List<BackupWork>();
+
+        public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
             if (Works.Count >= MaxWorks)
             {
                 return "AddWorkError";
             }
 
-            // Create JSON content
-            var workData = new
-            {
-                Name = $"work_{Works.Count + 1}",
-                SourceFilePath = pathSource,
-                TargetFilePath = pathTarget,
-                State = "ACTIVE",
-                TotalFilesToCopy = 3300,
-                TotalFilesSize = 1240312777,
-                NbFilesLeftToDo = 3274,
-                Progression = 0
-            };
+            // Calculer le nombre total de fichiers et leur taille totale
+            var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
+            int totalFilesToCopy = allFiles.Length;
+            long totalFilesSize = allFiles.Sum(file => new FileInfo(file).Length);
 
-            string jsonContent = JsonSerializer.Serialize(workData, new JsonSerializerOptions { WriteIndented = true });
+
+            var newWork = new BackupWork(
+                name: name,
+                sourcePath: pathSource,
+                targetPath: pathTarget,
+                type: type,
+                totalFilesToCopy: totalFilesToCopy.ToString(),
+                totalFilesSize: totalFilesSize.ToString(),
+                nbFilesLeftToDo: totalFilesToCopy.ToString()
+            );
+
+            // Create JSON content
+            string jsonContent = JsonSerializer.Serialize(newWork, new JsonSerializerOptions { WriteIndented = true });
 
             // Save JSON file
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
@@ -41,14 +46,16 @@ namespace ConsoleApp.Model
 
             File.WriteAllText(jsonFilePath, jsonContent);
 
-            Works.Add($"work_{Works.Count}");
+            Works.Add(newWork);
             return "AddWorkSuccess";
         }
 
-        public string RemoveWork(string work)
+        public string RemoveWork(string workName)
         {
-            if (Works.Remove(work))
+            var workToRemove = Works.FirstOrDefault(w => w.Name == workName);
+            if (workToRemove != null)
             {
+                Works.Remove(workToRemove);
                 return "RemoveWorkSuccess";
             }
             return "RemoveWorkError";
@@ -62,7 +69,7 @@ namespace ConsoleApp.Model
             }
             else
             {
-                return string.Join(", ", Works);
+                return string.Join(", ", Works.Select(w => $"{w.Name} ({w.SourcePath} -> {w.TargetPath})"));
             }
         }
     }
