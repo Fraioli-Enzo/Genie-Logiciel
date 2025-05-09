@@ -1,0 +1,142 @@
+@startuml
+
+'===============================
+' Package Model : Logique métier
+'===============================
+
+package "Model" {
+
+    ' Représente un travail de sauvegarde (fichier ou dossier)
+    class Backup_Work {
+        - Name: string
+        - Source_Path: string
+        - Target_Path: string
+        - Type: Backup_Type
+        + Execute() : void
+    }
+
+    ' Gère une liste de sauvegardes et limite leur nombre (max 5)
+    class Backup_Work_Manager {
+        - Works: List<Backup_Work>
+        + Add_Work(work: Backup_Work) : bool
+        + Remove_Work(work_Name: string) : bool
+        + Get_Work(index: int) : Backup_Work
+        + Execute_Work(index: int) : void
+    }
+
+    ' Suivi individuel du transfert de chaque fichier
+    class Files_Transfer {
+        - Work_Name: string
+        - Source_Path: string
+        - Target_Path: string
+        - Size: float
+        - Transfer_Time: TimeSpan
+        - Time_Stamp: DateTime
+    }
+
+    ' Suivi global de la sauvegarde (état du dossier, progression globale)
+    class Work_State {
+        - Name_Work: string
+        - State: State
+        - Last_Action: DateTime
+        - Total_Files_Copy: int
+        - Size: float
+        - Nb_Files_Save: int
+        - Progression: double
+    }
+
+    ' Enumération pour l'état d'un dossier
+    enum State {
+        Active
+        Non_Active
+        End
+    }
+
+    ' Représente le type de sauvegarde demandé (complet ou différentiel)
+    enum Backup_Type {
+        Full
+        Differential
+    }
+
+    ' Service responsable d'écrire les logs dans un fichier
+    class Logger {
+
+        - Log_Path: string
+        + Initialize(log_Path: string) : void
+        + Write_Log(entry: Log_Entry) : void
+    }
+
+    ' Objet qui stocke les informations relatives à une action de log
+    class Log_Entry {
+        - Time_Stamp : DateTime
+        - Work_Name : string
+        - Source_Path : string
+        - Target_Path : string
+        - Size : float
+        - Transfer_Time : TimeSpan
+    }
+
+}
+
+'====================================
+' Package ViewModel et d'interaction
+'====================================
+package "ViewModel" {
+    ' Fait le lien entre la logique métier et la vue
+    class Easy_Save_ViewModel {
+        + Choose_Language() : void
+        + Run_Backup() : void
+        + See_Backround() : void
+        + Quit_Console() : void
+    }
+
+        ' Enumération pour choisir la langue
+    enum Language {
+        French
+        English
+    }
+}
+'=========================
+' Package View : Interface
+'=========================
+package "View" {
+    ' Gère l'affichage et la saisie en mode console
+    class Console_View {
+        + Display() : void
+    }
+}
+
+'=======================
+' Relations entre classes
+'=======================
+
+' Backup_Work_Manager gère plusieurs sauvegardes
+Backup_Work_Manager *-- Backup_Work
+
+Backup_Work_Manager *-- Logger
+
+' Chaque Backup_Work contient plusieurs fichiers à transférer
+Backup_Work *-- Files_Transfer
+
+Backup_Work --> Backup_Type
+
+' Backup_Work (via son exécution) est lié à un JobState pour le suivi global.
+Backup_Work *-- Work_State
+
+' JobState utilise l'énumération State pour l'état (Active / Non_Active)
+Work_State --> State
+
+' Le Logger écrit les LogEntry dans un fichier.
+Logger ..> Log_Entry : writes logs
+
+' Le ViewModel communique avec le gestionnaire de sauvegarde, l'analyseur de commandes et historique de sauvegarde.
+Easy_Save_ViewModel ..> Backup_Work_Manager : interacts
+Easy_Save_ViewModel ..> Log_Entry : see
+
+' Choisir la langue
+Easy_Save_ViewModel ..> Language : choose
+
+' La vue se connecte au ViewModel pour afficher les informations
+Console_View --> Easy_Save_ViewModel 
+
+@enduml
