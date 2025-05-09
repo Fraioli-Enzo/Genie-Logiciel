@@ -124,9 +124,10 @@
     <value>Thank for using our application, see you!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Welcome to the application!
+    <value>Choose what you want to do from this menu:
 1. Change language
-2. Works management</value>
+2. Works management
+3. Exit</value>
   </data>
   <data name="UpdatedName" xml:space="preserve">
     <value>Name update:</value>
@@ -136,7 +137,8 @@
 1. Display jobs
 2. Add a job
 3. Delete a job
-4. Exit</value>
+4. Execute a job
+5. Exit</value>
   </data>
   <data name="AddWorkError" xml:space="preserve">
     <value>Unable to add this work.</value>
@@ -189,5 +191,14 @@
     <value>Please enter the type of backup:
 1. Full  
 2. Differential</value>
+  </data>
+  <data name="LanguageSelection" xml:space="preserve">
+    <value>Choose a language (fr/en):</value>
+  </data>
+  <data name="ExecuteWorkSuccess" xml:space="preserve">
+    <value>Job executed successfully!</value>
+  </data>
+  <data name="ExecuteWorkError" xml:space="preserve">
+    <value>Unable to execute the job.</value>
   </data>
 </root>

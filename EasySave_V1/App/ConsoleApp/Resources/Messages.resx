@@ -126,9 +126,10 @@
     <comment>-</comment>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Bienvenue dans l'application ! 
+    <value>Choisissez ce que vous voulez faire parmi ce menu :
 1. Changer la langue 
-2. Management travaux</value>
+2. Management travaux
+3. Quitter</value>
     <comment>-</comment>
   </data>
   <data name="UpdatedName" xml:space="preserve">
@@ -140,7 +141,8 @@
 1. Afficher les travaux
 2. Ajouter un travail
 3. Supprimer un travail
-4. Quitter</value>
+4. Exécuter un travail
+5. Quitter</value>
     <comment>-</comment>
   </data>
   <data name="AddWorkError" xml:space="preserve">
@@ -206,6 +208,18 @@
     <value>Veuillez entrer le type de sauvegarde :
 1. Complète  
 2. Différentielle</value>
+    <comment>-</comment>
+  </data>
+  <data name="LanguageSelection" xml:space="preserve">
+    <value>Choisissez une langue (fr/en) :</value>
+    <comment>-</comment>
+  </data>
+  <data name="ExecuteWorkSuccess" xml:space="preserve">
+    <value>Travail exécuté avec succès !</value>
+    <comment>-</comment>
+  </data>
+  <data name="ExecuteWorkError" xml:space="preserve">
+    <value>Impossible d'exécuter le travail.</value>
     <comment>-</comment>
   </data>
 </root>
