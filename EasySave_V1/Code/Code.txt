@@ -1,1 +1,0 @@
-C'est dans ce dossier que vous retrouverez le code pour la version 1.0 de EasySave
