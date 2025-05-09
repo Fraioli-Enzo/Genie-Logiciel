@@ -126,7 +126,9 @@
     <comment>-</comment>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Bienvenue dans l'application !</value>
+    <value>Bienvenue dans l'application ! 
+1. Changer la langue 
+2. Management travaux</value>
     <comment>-</comment>
   </data>
   <data name="UpdatedName" xml:space="preserve">

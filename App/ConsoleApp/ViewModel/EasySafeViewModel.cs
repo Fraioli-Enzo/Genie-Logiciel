@@ -3,7 +3,8 @@ using System.Globalization;
 using System.Resources;
 using ConsoleApp.Model;
 using System.Xml.Serialization;
-
+using System.Text.Json;
+using System.IO;
 
 namespace ConsoleApp.ViewModel
 {
@@ -11,20 +12,31 @@ namespace ConsoleApp.ViewModel
     {
         private readonly BackupWorkManager workManager = new BackupWorkManager(); 
 
-        public void ChooseLanguage()
+        public void ChooseLanguage(string language)
         {
-            var language = Console.ReadLine();
+            if (language != "fr" && language != "en")
+            {
+                throw new ArgumentException("Invalid language. Only 'fr' and 'en' are supported.");
+            }
 
-            // Définir la langue en fonction de l'entrée utilisateur / si erreur utiliser français par défaut 
-            try
+            // Define the path to the config.json file
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
+            string configFilePath = Path.Combine(projectRootPath, "config.json");
+
+            // Read the existing config file
+            var config = new Dictionary<string, string>();
+            if (File.Exists(configFilePath))
             {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+                string configContent = File.ReadAllText(configFilePath);
+                config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent) ?? new Dictionary<string, string>();
             }
-            catch (CultureNotFoundException)
-            {
-                Console.WriteLine("Langue non reconnue, utilisation de la langue par défaut (fr).");
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
-            }
+
+            // Update the language setting
+            config["language"] = language;
+
+            // Write the updated config back to the file
+            string updatedConfigContent = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(configFilePath, updatedConfigContent);
         }
 
         public string RunBackup(string choice, string name, string pathSource, string pathTarget, string type)

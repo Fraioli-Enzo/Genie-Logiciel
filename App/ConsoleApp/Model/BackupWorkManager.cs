@@ -38,13 +38,27 @@ namespace ConsoleApp.Model
             );
 
             // Create JSON content
-            string jsonContent = JsonSerializer.Serialize(newWork, new JsonSerializerOptions { WriteIndented = true });
-
-            // Save JSON file
+            // Vérifier si le fichier state.json existe
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
-            File.WriteAllText(jsonFilePath, jsonContent);
+            List<BackupWork> existingWorks = new List<BackupWork>();
+
+            if (File.Exists(jsonFilePath))
+            {
+                // Charger les travaux existants depuis le fichier JSON  
+                string existingJsonContent = File.ReadAllText(jsonFilePath);
+                existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
+            }
+
+            // Ajouter le nouveau travail à la liste existante  
+            existingWorks.Add(newWork);
+
+            // Créer le contenu JSON mis à jour  
+            string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
+
+            // Sauvegarder le fichier JSON mis à jour  
+            File.WriteAllText(jsonFilePath, updatedJsonContent);
 
             Works.Add(newWork);
             return "AddWorkSuccess";
@@ -56,6 +70,25 @@ namespace ConsoleApp.Model
             if (workToRemove != null)
             {
                 Works.Remove(workToRemove);
+
+                // Update state.json
+                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+                string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+
+                if (File.Exists(jsonFilePath))
+                {
+                    // Load existing works from state.json
+                    string existingJsonContent = File.ReadAllText(jsonFilePath);
+                    var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
+
+                    // Remove the work from the list
+                    existingWorks = existingWorks.Where(w => w.Name != workName).ToList();
+
+                    // Save the updated list back to state.json
+                    string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(jsonFilePath, updatedJsonContent);
+                }
+
                 return "RemoveWorkSuccess";
             }
             return "RemoveWorkError";
@@ -63,14 +96,28 @@ namespace ConsoleApp.Model
 
         public string DisplayWorks()
         {
-            if (Works.Count == 0)
+            // Déterminer le chemin du fichier state.json
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+
+            // Vérifier si le fichier existe
+            if (!File.Exists(jsonFilePath))
             {
                 return "DisplayWorksError";
             }
-            else
+
+            // Charger et désérialiser le contenu du fichier JSON
+            string jsonContent = File.ReadAllText(jsonFilePath);
+            var worksFromFile = JsonSerializer.Deserialize<List<BackupWork>>(jsonContent) ?? new List<BackupWork>();
+
+            // Vérifier si des travaux existent
+            if (worksFromFile.Count == 0)
             {
-                return string.Join(", ", Works.Select(w => $"{w.Name} ({w.SourcePath} -> {w.TargetPath})"));
+                return "DisplayWorksError";
             }
+
+            // Retourner les travaux sous forme de chaîne formatée
+            return string.Join(Environment.NewLine, worksFromFile.Select((w, index) => $"{index + 1}. {w.Name} ({w.SourcePath} -> {w.TargetPath})"));
         }
     }
 }

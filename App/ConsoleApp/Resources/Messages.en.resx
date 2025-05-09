@@ -124,7 +124,9 @@
     <value>Thank for using our application, see you!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Welcome to the application!</value>
+    <value>Welcome to the application!
+1. Change language
+2. Works management</value>
   </data>
   <data name="UpdatedName" xml:space="preserve">
     <value>Name update:</value>
