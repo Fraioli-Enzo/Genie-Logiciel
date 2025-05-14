@@ -201,4 +201,16 @@
   <data name="ExecuteWorkError" xml:space="preserve">
     <value>Unable to execute the job.</value>
   </data>
+  <data name="SourceFolderContent" xml:space="preserve">
+    <value>Source folder content: {0}</value>
+  </data>
+  <data name="SourceFolderSelected" xml:space="preserve">
+    <value>Selected source folder: {0}</value>
+  </data>
+  <data name="TargetFolderContent" xml:space="preserve">
+    <value>Target folder content: {0}</value>
+  </data>
+  <data name="TargetFolderSelected" xml:space="preserve">
+    <value>Selected target folder: {0}</value>
+  </data>
 </root>

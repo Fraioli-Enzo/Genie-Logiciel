@@ -222,4 +222,20 @@
     <value>Impossible d'exécuter le travail.</value>
     <comment>-</comment>
   </data>
+  <data name="SourceFolderContent" xml:space="preserve">
+    <value>Contenu du dossier source : {0}</value>
+    <comment>-</comment>
+  </data>
+  <data name="SourceFolderSelected" xml:space="preserve">
+    <value>Dossier source sélectionné : {0}</value>
+    <comment>-</comment>
+  </data>
+  <data name="TargetFolderContent" xml:space="preserve">
+    <value>Contenu du dossier cible : {0}</value>
+    <comment>-</comment>
+  </data>
+  <data name="TargetFolderSelected" xml:space="preserve">
+    <value>Dossier cible sélectionné : {0}</value>
+    <comment>-</comment>
+  </data>
 </root>

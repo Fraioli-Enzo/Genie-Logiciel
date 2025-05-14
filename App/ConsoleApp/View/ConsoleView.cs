@@ -26,12 +26,14 @@ namespace ConsoleApp.View
             // Main loop to allow returning to options
             while (true)
             {
-                // ## Paramètres application     
+                // ## Paramètres application
+                Console.WriteLine();
                 Console.WriteLine(resourceManager.GetString("WelcomeMessage"));
                 string WelcomeChoice = Console.ReadLine();
                 switch (WelcomeChoice)
                 {
                     case "1":
+                        Console.WriteLine();
                         Console.WriteLine(resourceManager.GetString("LanguageSelection"));
                         string languageChoice = Console.ReadLine();
                         viewModel.ChooseLanguage(languageChoice);
@@ -73,14 +75,17 @@ namespace ConsoleApp.View
 
                             if (choice == "3" || choice == "4")
                             {
+                                Console.WriteLine();
                                 Console.WriteLine(responses["EnterFileName"]);
                                 name = Console.ReadLine();
                             }
                             if (choice == "2")
                             {
+                                Console.WriteLine();
                                 Console.WriteLine(resourceManager.GetString("RunBackupSaveName"));
                                 name = Console.ReadLine();
 
+                                Console.WriteLine();
                                 Console.WriteLine(resourceManager.GetString("RunBackupSaveType"));
                                 typeChoice = Console.ReadLine();
                                 switch (typeChoice)
@@ -92,11 +97,13 @@ namespace ConsoleApp.View
                                         type = "DIFFERENTIAL";
                                         break;
                                     default:
+                                        Console.WriteLine();
                                         Console.WriteLine(resourceManager.GetString("RunBackupDefaultError"));
                                         break;
                                 }
 
                                 // Demander à l'utilisateur de choisir un dossier source
+                                Console.WriteLine();
                                 Console.WriteLine(resourceManager.GetString("AddWorkDisk"));
                                 string sourceDriveLetter = Console.ReadLine()?.ToUpper() + @":\";
 
@@ -107,7 +114,7 @@ namespace ConsoleApp.View
                                     while (true)
                                     {
                                         Console.WriteLine();
-                                        Console.WriteLine($"Contenu du dossier source : {currentPathSource}");
+                                        Console.WriteLine(resourceManager.GetString("SourceFolderSelected"), currentPathSource);
                                         var directories = Directory.GetDirectories(currentPathSource);
                                         var files = Directory.GetFiles(currentPathSource);
 
@@ -128,7 +135,7 @@ namespace ConsoleApp.View
 
                                         if (input == "s")
                                         {
-                                            Console.WriteLine($"Dossier source sélectionné : {currentPathSource}");
+                                            Console.WriteLine(resourceManager.GetString("SourceFolderSelected"), currentPathSource);
                                             break;
                                         }
                                         else if (input == "q")
@@ -162,7 +169,7 @@ namespace ConsoleApp.View
                                     while (true)
                                     {
                                         Console.WriteLine();
-                                        Console.WriteLine($"Contenu du dossier cible : {currentPathTarget}");
+                                        Console.WriteLine(resourceManager.GetString("SourceFolderContent"), currentPathTarget);
                                         var directories = Directory.GetDirectories(currentPathTarget);
                                         var files = Directory.GetFiles(currentPathTarget);
 
@@ -183,7 +190,7 @@ namespace ConsoleApp.View
 
                                         if (input == "s")
                                         {
-                                            Console.WriteLine($"Dossier cible sélectionné : {currentPathTarget}");
+                                            Console.WriteLine(resourceManager.GetString("SourceFolderSelected"), currentPathTarget);
                                             break;
                                         }
                                         else if (input == "q")
@@ -206,8 +213,8 @@ namespace ConsoleApp.View
                                     Console.WriteLine(resourceManager.GetString("AddWorkDiskError"));
                                 }
                             }
-                            
-                            
+
+                            Console.WriteLine();
                             string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type);
 
                             if (responses.ContainsKey(data))
@@ -223,11 +230,13 @@ namespace ConsoleApp.View
                         break;
 
                     case "3":
+                        Console.WriteLine();
                         Console.WriteLine(resourceManager.GetString("RunBackupExit"));
                         Environment.Exit(0); // Quitte l'application
                         break;
 
                     default:
+                        Console.WriteLine();
                         Console.WriteLine(resourceManager.GetString("RunBackupDefaultError"));
                         break;
                 }
