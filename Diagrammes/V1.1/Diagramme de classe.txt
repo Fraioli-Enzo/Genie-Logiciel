@@ -1,0 +1,130 @@
+@startuml
+
+'========================
+' ENUMERATIONS (Model)
+'========================
+package Model {
+  enum Language {
+    FR
+    EN
+  }
+
+  enum State {
+    ACTIVE
+    INACTIVE
+    END
+  }
+
+  enum Type_Backup {
+    Complete
+    Differential
+  }
+
+  enum Type_File_Log {
+    XML
+    JSON
+  }
+}
+
+'========================
+' MODEL
+'========================
+package Model {
+  class Backup {
+    -Name_Backup: String
+    -Source_Path: String
+    -Target_Path: String
+    -Type_Backup : Type_Backup
+    -progressInfo: Progression_Backup
+    +execute(): void
+    +getProgress(): float
+    +getCryptoSoft(): bool
+  }
+
+  class Progression_Backup {
+    -BackupName: String
+    -Source_Path: String
+    -Target_Path: String
+    -Files_Size: int
+    -Total_Files_Copy: int
+    -Total_Files_To_Copy: int
+    -State: State
+    -Progression: float
+    +getPercentage(): float
+    +Json(): String
+    +update(): void
+  }
+
+  class LogEntry {
+    -Backup_Name: String
+    -Source_Path: String
+    -Target_Path: String
+    -File_Size: int
+    -File_Transfer_Time: TimeSpan
+    -Date_Backup_Save: DateTime
+    +Json(): String
+    +XML(): string
+  }
+
+  class Delete_Backup {
+    -Backups: List<Backup>
+    +Delete_Backup(name: String): bool
+  }
+
+}
+
+'========================
+' VIEWMODEL
+'========================
+package ViewModel {
+  class Backup_Manager {
+    -backups: List<Model.Backup>
+    +Add_Backup(name: String, type: String, source: String, target: String): void
+    +Execute_Backups(): void
+    +Get_Backups(): List<Model.Backup>
+    +Delete_Backup(name: String): void
+  }
+
+  class Logger {
+    -Log_Entries: List<Model.LogEntry>
+    -Type_File_Log : Type_File_Log
+    +Log_Execution(backup: Model.Backup): void
+    +getHistory(): List<Model.LogEntry>
+  }
+
+  class Language_Manager {
+    -Current_Language: Model.Language
+    -Language : Language
+    +Json(): String
+    +setLanguage(lang: Language): void
+    +getLanguage(): Language
+  }
+}
+
+'========================
+' VIEW
+'========================
+package View {
+  class Console_View{
+    +Menu_Backup(): void
+    +Menu_Language(): void
+  }
+
+  class Program{
+    +Display() : void
+  }
+}
+
+'========================
+' RELATIONS
+'========================
+View.Program --> View.Console_View
+View.Console_View --> ViewModel.Backup_Manager
+View.Console_View --> ViewModel.Language_Manager
+ViewModel.Backup_Manager *--> Model.Backup
+ViewModel.Backup_Manager ..> ViewModel.Logger
+ViewModel.Backup_Manager ..> Model.Delete_Backup
+ViewModel.Logger *--> Model.LogEntry
+Model.Backup *--> Model.Progression_Backup
+
+@enduml
