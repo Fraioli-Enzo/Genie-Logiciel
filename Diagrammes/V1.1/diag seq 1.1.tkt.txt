@@ -1,0 +1,62 @@
+
+== Lancement du programme ==
+User -> Program : Démarrage
+Program -> Console_View : Display()
+
+== Menu principal ==
+User -> Console_View : Menu_Backup()
+Console_View -> Backup_Manager : Add_Backup(name, type, source, target)
+
+Backup_Manager -> Model.Backup : new(name, source, target, type)
+activate Model.Backup
+Model.Backup -> Model.Progression_Backup : new()
+Model.Backup -> Model.State : set to ACTIVE
+Model.Backup -> Model.Type_Backup : set (Complete / Differential)
+deactivate Model.Backup
+
+Backup_Manager -> Logger : Log_Execution(backup)
+Logger -> Model.LogEntry : new()
+Logger -> Logger : Ajouter à Log_Entries
+
+Backup_Manager -> Backup_Manager : Ajouter à backups
+
+== Exécution d'une sauvegarde ==
+User -> Console_View : Menu_Backup()
+Console_View -> Backup_Manager : Execute_Backup()
+
+loop pour chaque backup in backups
+    alt backup.State == ACTIVE
+        Backup_Manager -> Model.Backup : execute()
+
+        Model.Backup -> Model.Progression_Backup : update()
+        loop durant la copie
+            Model.Backup -> Model.Backup : getProgress()
+        end
+
+        alt Type_File_Log == JSON
+            Logger -> Logger : Enregistrer en JSON
+        else Type_File_Log == XML
+            Logger -> Logger : Enregistrer en XML
+        end
+
+        Model.Backup -> Model.Backup : getCryptoSoft()
+        Backup_Manager -> Logger : Log_Execution(backup)
+        Logger -> Model.LogEntry : new()
+        Logger -> Logger : Ajouter à Log_Entries
+    else backup.State != ACTIVE
+        note right: Backup ignoré
+    end
+end
+
+== Suppression d'une sauvegarde ==
+User -> Console_View : Menu_Backup()
+Console_View -> Backup_Manager : Delete_Backup(name)
+Backup_Manager -> Model.Delete_Backup : Delete_Backup(name)
+Model.Delete_Backup -> Backup_Manager : bool
+
+== Changement de langue ==
+User -> Console_View : Menu_Language()
+Console_View -> Language_Manager : setLanguage(lang)
+Language_Manager -> Model.Language : EN / FR
+Language_Manager -> Language_Manager : Current_Language mis à jour
+@enduml
