@@ -1,3 +1,7 @@
 .vs/
 bin/
 obj/
+App/ConsoleApp/config.json
+App/ConsoleApp/state.json
+App/ConsoleApp/Logs/
+

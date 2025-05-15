@@ -11,8 +11,21 @@ namespace ConsoleApp.View
         public void Display()
         {
             // Read language from config.json
+            // Vérifier si le fichier config.json existe, sinon le créer avec des valeurs par défaut
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string configFilePath = Path.Combine(projectRootPath, "config.json");
+
+            if (!File.Exists(configFilePath))
+            {
+                var defaultConfig = new Dictionary<string, string>
+                {
+                    { "language", "en" },
+                    { "log", "json" }
+                };
+                string defaultConfigContent = JsonSerializer.Serialize(defaultConfig, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(configFilePath, defaultConfigContent);
+            }
+
             string configContent = File.ReadAllText(configFilePath);
             var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
             string language = config.ContainsKey("language") ? config["language"] : "en";
