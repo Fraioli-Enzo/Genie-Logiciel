@@ -16,6 +16,7 @@ namespace ConsoleApp.View
             string configContent = File.ReadAllText(configFilePath);
             var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
             string language = config.ContainsKey("language") ? config["language"] : "en";
+            string log = config.ContainsKey("log") ? config["log"] : "json";
 
             // Set ResourceManager culture based on language
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
@@ -41,13 +42,25 @@ namespace ConsoleApp.View
                         // Update language and ResourceManager
                         configContent = File.ReadAllText(configFilePath);
                         config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
-                        language = config.ContainsKey("language") ? config["language"] : "fr";
+                        language = config.ContainsKey("language") ? config["language"] : "en";
 
                         Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
                         resourceManager = new ResourceManager("ConsoleApp.Resources.Messages", typeof(ConsoleView).Assembly);
                         break;
 
                     case "2":
+                        Console.WriteLine();
+                        Console.WriteLine(resourceManager.GetString("LogChangeMessage"));
+                        string logExtensionChoice = Console.ReadLine();
+                        viewModel.ChooseLogExtension(logExtensionChoice);
+
+                        // Update log extension
+                        configContent = File.ReadAllText(configFilePath);
+                        config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
+                        log = config.ContainsKey("log") ? config["log"] : "json";
+                        break;
+
+                    case "3":
                         var responses = new Dictionary<string, string>
                         {
                             { "RunBackupExit", resourceManager.GetString("RunBackupExit") },
@@ -76,7 +89,7 @@ namespace ConsoleApp.View
 
                             if (choice == "3" || choice == "4")
                             {
-                                string datalist = viewModel.RunBackup("1", "_", "_", "_", "_", "_");
+                                string datalist = viewModel.RunBackup("1", "_", "_", "_", "_", "_", "_");
 
                                 Console.WriteLine();
                                 Console.WriteLine(datalist);
@@ -219,7 +232,7 @@ namespace ConsoleApp.View
                             }
 
                             Console.WriteLine();
-                            string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type, id);
+                            string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type, id, log);
 
                             if (responses.ContainsKey(data))
                             {
@@ -233,7 +246,7 @@ namespace ConsoleApp.View
                         }
                         break;
 
-                    case "3":
+                    case "4":
                         Console.WriteLine();
                         Console.WriteLine(resourceManager.GetString("RunBackupExit"));
                         Environment.Exit(0); // Quitte l'application

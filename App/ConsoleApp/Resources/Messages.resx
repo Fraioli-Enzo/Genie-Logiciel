@@ -128,8 +128,9 @@
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Choisissez ce que vous voulez faire parmi ce menu :
 1. Changer la langue 
-2. Management travaux
-3. Quitter</value>
+2. Changer l'extension des logs
+3. Management travaux
+4. Quitter</value>
     <comment>-</comment>
   </data>
   <data name="UpdatedName" xml:space="preserve">
@@ -236,6 +237,10 @@
   </data>
   <data name="TargetFolderSelected" xml:space="preserve">
     <value>Dossier cible sélectionné : {0}</value>
+    <comment>-</comment>
+  </data>
+  <data name="LogChangeMessage" xml:space="preserve">
+    <value>Choisissez une extension (xml/json) :</value>
     <comment>-</comment>
   </data>
 </root>

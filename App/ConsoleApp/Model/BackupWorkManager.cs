@@ -141,7 +141,7 @@ namespace ConsoleApp.Model
             return "RemoveWorkSuccess";
         }
 
-        public string ExecuteWork(string ids)
+        public string ExecuteWork(string ids, string log)
         {
             var idsToExecute = ParseIds(ids);
             if (idsToExecute.Count == 0)
@@ -150,7 +150,7 @@ namespace ConsoleApp.Model
             var results = new List<string>();
             foreach (var id in idsToExecute)
             {
-                var result = ExecuteSingleWork(id);
+                var result = ExecuteSingleWork(id, log);
                 results.Add(result);
             }
 
@@ -164,7 +164,7 @@ namespace ConsoleApp.Model
         }
 
         // Ancienne logique d'exécution d'un seul travail, rendue privée
-        private string ExecuteSingleWork(string id)
+        private string ExecuteSingleWork(string id, string log)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
             if (workToExecute != null)
@@ -228,7 +228,7 @@ namespace ConsoleApp.Model
                         double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
 
                         long fileSize = new FileInfo(file).Length;
-                        LoggingLibrary.Logger.Log(id, file, targetFilePath, fileSize, fileTransferTime);
+                        LoggingLibrary.Logger.Log(id, file, targetFilePath, fileSize, fileTransferTime, log);
 
                         filesCopied++;
 
