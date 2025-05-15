@@ -1,0 +1,86 @@
+@startuml
+actor User
+
+participant Program
+participant MainMenu
+participant Backup_Manager
+participant Language_Manager
+participant Logger
+participant Software_Detector
+participant Model.Backup
+participant Model.Progression_Backup
+participant Model.LogEntry
+participant Model.Delete_Backup
+participant Model.Language
+participant Model.State
+participant Model.Type_Backup
+participant Model.Type_File_Log
+participant Model.CryptoSoft
+
+== Program Launch ==
+User -> Program : Start
+Program -> MainMenu : Backup_Menu()
+
+== Add a Backup ==
+User -> MainMenu : Backup_Menu()
+MainMenu -> Backup_Manager : Add_Backup(name, type, source, target)
+
+Backup_Manager -> Model.Backup : new(name, source, target, type)
+activate Model.Backup
+Model.Backup -> Model.Progression_Backup : new()
+Model.Backup -> Model.State : set to ACTIVE
+Model.Backup -> Model.Type_Backup : set (Complete / Differential)
+Model.Backup -> Model.CryptoSoft : new()
+deactivate Model.Backup
+
+Backup_Manager -> Logger : Log_Execution(backup)
+Logger -> Model.LogEntry : new()
+Logger -> Logger : Add to Log_Entries
+
+Backup_Manager -> Backup_Manager : Add to backups
+
+== Execute a Backup ==
+User -> MainMenu : Backup_Menu()
+MainMenu -> Backup_Manager : Execute_Backup()
+
+Backup_Manager -> Software_Detector : Detect()
+Software_Detector -> Backup_Manager : detected_software []
+
+loop for each backup in backups
+    alt backup.State == ACTIVE
+        Backup_Manager -> Model.Backup : execute()
+
+        Model.Backup -> Model.CryptoSoft : Encrypt_File()
+
+        Model.Backup -> Model.Progression_Backup : update()
+        loop during copy
+            Model.Backup -> Model.Backup : getProgress()
+        end
+
+        alt Type_File_Log == JSON
+            Logger -> Logger : Save as JSON
+        else Type_File_Log == XML
+            Logger -> Logger : Save as XML
+        end
+
+        Model.Backup -> Model.Backup : getCryptoSoft()
+        Backup_Manager -> Logger : Log_Execution(backup)
+        Logger -> Model.LogEntry : new()
+        Logger -> Logger : Add to Log_Entries
+    else backup.State != ACTIVE
+        note right: Backup skipped
+    end
+end
+
+== Delete a Backup ==
+User -> MainMenu : Backup_Menu()
+MainMenu -> Backup_Manager : Delete_Backup(name)
+Backup_Manager -> Model.Delete_Backup : Delete_Backup(name)
+Model.Delete_Backup -> Backup_Manager : bool
+
+== Change Language ==
+User -> MainMenu : Language_Menu()
+MainMenu -> Language_Manager : setLanguage(lang)
+Language_Manager -> Model.Language : EN / FR
+Language_Manager -> Language_Manager : Current_Language updated
+@enduml
