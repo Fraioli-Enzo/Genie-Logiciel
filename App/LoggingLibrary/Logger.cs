@@ -43,30 +43,40 @@ namespace LoggingLibrary
 
             if (log.ToLower() == "xml")
             {
-                var xmlSerializer = new XmlSerializer(typeof(LogEntry));
-                var xmlSettings = new XmlWriterSettings
-                {
-                    OmitXmlDeclaration = true, // No XML declaration
-                    Indent = true,
-                    Encoding = Encoding.UTF8
-                };
+                // Prepare the entry XML
+                var entrySb = new StringBuilder();
+                entrySb.AppendLine("  <Entry>");
+                entrySb.AppendLine($"    <Name>{System.Security.SecurityElement.Escape(logEntry.Name)}</Name>");
+                entrySb.AppendLine($"    <FileSource>{System.Security.SecurityElement.Escape(logEntry.FileSource)}</FileSource>");
+                entrySb.AppendLine($"    <FileTarget>{System.Security.SecurityElement.Escape(logEntry.FileTarget)}</FileTarget>");
+                entrySb.AppendLine($"    <FileSize>{logEntry.FileSize}</FileSize>");
+                entrySb.AppendLine($"    <FileTransferTime>{logEntry.FileTransferTime}</FileTransferTime>");
+                entrySb.AppendLine($"    <Time>{System.Security.SecurityElement.Escape(logEntry.Time)}</Time>");
+                entrySb.AppendLine("  </Entry>");
+                string entryXml = entrySb.ToString();
 
-                // Serialize the log entry without a root element
-                string logEntryXml;
-                using (var stringWriter = new StringWriter())
-                using (var xmlWriter = XmlWriter.Create(stringWriter, xmlSettings))
+                if (!File.Exists(logFilePath))
                 {
-                    xmlSerializer.Serialize(xmlWriter, logEntry);
-                    logEntryXml = stringWriter.ToString();
+                    // Create new XML file with declaration, root, and first entry
+                    var sb = new StringBuilder();
+                    sb.AppendLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                    sb.AppendLine("<LogEntry>");
+                    sb.Append(entryXml);
+                    sb.AppendLine("</LogEntry>");
+                    File.WriteAllText(logFilePath, sb.ToString(), Encoding.UTF8);
                 }
-
-                // Remove the root element tags from the serialized XML
-                int startIndex = logEntryXml.IndexOf(">") + 1;
-                int endIndex = logEntryXml.LastIndexOf("</");
-                logEntryXml = logEntryXml.Substring(startIndex, endIndex - startIndex).Trim();
-
-                // Append the log entry XML to the file
-                File.AppendAllText(logFilePath, logEntryXml + Environment.NewLine, Encoding.UTF8);
+                else
+                {
+                    // Append new entry before the closing </LogEntry>
+                    string xml = File.ReadAllText(logFilePath, Encoding.UTF8);
+                    int insertPos = xml.LastIndexOf("</LogEntry>");
+                    if (insertPos != -1)
+                    {
+                        xml = xml.Insert(insertPos, entryXml);
+                        File.WriteAllText(logFilePath, xml, Encoding.UTF8);
+                    }
+                    // else: fallback, do nothing or recreate file (optional)
+                }
             }
             else // Par défaut JSON
             {

@@ -178,8 +178,34 @@ namespace ConsoleApp.Model
                 }
 
                 var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
-                int totalFiles = allFiles.Length;
-                long totalSize = allFiles.Sum(file => new FileInfo(file).Length);
+
+                // Ajout : filtrage selon le type de sauvegarde
+                List<string> filesToCopy;
+                if (workToExecute.Type == "FULL")
+                {
+                    filesToCopy = allFiles.ToList();
+                }
+                else if (workToExecute.Type == "DIFFERENTIAL")
+                {
+                    filesToCopy = new List<string>();
+                    foreach (var file in allFiles)
+                    {
+                        string relativePath = Path.GetRelativePath(sourcePath, file);
+                        string targetFilePath = Path.Combine(targetPath, relativePath);
+                        if (!File.Exists(targetFilePath))
+                        {
+                            filesToCopy.Add(file);
+                        }
+                    }
+                }
+                else
+                {
+                    // Type inconnu, ne rien faire
+                    return "ExecuteWorkError";
+                }
+
+                int totalFiles = filesToCopy.Count;
+                long totalSize = filesToCopy.Sum(file => new FileInfo(file).Length);
 
                 workToExecute.TotalFilesToCopy = totalFiles.ToString();
                 workToExecute.TotalFilesSize = totalSize.ToString();
@@ -213,7 +239,7 @@ namespace ConsoleApp.Model
                 {
                     int filesCopied = 0;
 
-                    foreach (var file in allFiles)
+                    foreach (var file in filesToCopy)
                     {
                         string relativePath = Path.GetRelativePath(sourcePath, file);
                         string targetFilePath = Path.Combine(targetPath, relativePath);
@@ -233,7 +259,7 @@ namespace ConsoleApp.Model
                         filesCopied++;
 
                         workToExecute.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();
-                        workToExecute.Progression = ((filesCopied * 100) / totalFiles).ToString();
+                        workToExecute.Progression = (totalFiles == 0 ? "100" : ((filesCopied * 100) / totalFiles).ToString());
                     }
 
                     if (File.Exists(jsonFilePath))

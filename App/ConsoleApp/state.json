@@ -18,8 +18,8 @@
     "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2",
     "Type": "DIFFERENTIAL",
     "State": "INACTIVE",
-    "TotalFilesToCopy": "39",
-    "TotalFilesSize": "44967",
+    "TotalFilesToCopy": "1",
+    "TotalFilesSize": "1153",
     "NbFilesLeftToDo": "0",
     "Progression": "100"
   },
@@ -30,8 +30,8 @@
     "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3",
     "Type": "FULL",
     "State": "INACTIVE",
-    "TotalFilesToCopy": "39",
-    "TotalFilesSize": "44967",
+    "TotalFilesToCopy": "3",
+    "TotalFilesSize": "3459",
     "NbFilesLeftToDo": "0",
     "Progression": "100"
   }
