@@ -126,8 +126,9 @@
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Choose what you want to do from this menu:
 1. Change language
-2. Works management
-3. Exit</value>
+2. Change the log file extension
+3. Works management
+4. Exit</value>
   </data>
   <data name="UpdatedName" xml:space="preserve">
     <value>Name update:</value>
@@ -158,8 +159,8 @@
   <data name="RunBackupExit" xml:space="preserve">
     <value>Good bye!</value>
   </data>
-  <data name="EnterFileName" xml:space="preserve">
-    <value>Please enter the file name:</value>
+  <data name="EnterFileID" xml:space="preserve">
+    <value>Please enter the backup ID (e.g. 1 or 1-3 or 1;3):</value>
   </data>
   <data name="RemoveWorkError" xml:space="preserve">
     <value>Unable to delete this work.</value>
@@ -212,5 +213,8 @@
   </data>
   <data name="TargetFolderSelected" xml:space="preserve">
     <value>Selected target folder: {0}</value>
+  </data>
+  <data name="LogChangeMessage" xml:space="preserve">
+    <value>Choose a file extension (xml/json):</value>
   </data>
 </root>

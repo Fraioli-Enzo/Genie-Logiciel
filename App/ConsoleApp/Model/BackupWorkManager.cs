@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using LoggingLibrary;
+
 
 namespace ConsoleApp.Model
 {
@@ -31,6 +33,32 @@ namespace ConsoleApp.Model
             }
         }
 
+        public string DisplayWorks()
+        {
+            // Déterminer le chemin du fichier state.json
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+
+            // Vérifier si le fichier existe
+            if (!File.Exists(jsonFilePath))
+            {
+                return "DisplayWorksError";
+            }
+
+            // Charger et désérialiser le contenu du fichier JSON
+            string jsonContent = File.ReadAllText(jsonFilePath);
+            var worksFromFile = JsonSerializer.Deserialize<List<BackupWork>>(jsonContent) ?? new List<BackupWork>();
+
+            // Vérifier si des travaux existent
+            if (worksFromFile.Count == 0)
+            {
+                return "DisplayWorksError";
+            }
+
+            // Retourner les travaux sous forme de chaîne formatée
+            return string.Join(Environment.NewLine, worksFromFile.Select((w, index) => $"{index + 1}. {w.Name} ({w.SourcePath} -> {w.TargetPath})"));
+        }
+        
         public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
             if (Works.Count >= MaxWorks)
@@ -42,9 +70,10 @@ namespace ConsoleApp.Model
             var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
             int totalFilesToCopy = allFiles.Length;
             long totalFilesSize = allFiles.Sum(file => new FileInfo(file).Length);
-
+            string id = (Works.Count + 1).ToString();
 
             var newWork = new BackupWork(
+                id: id,
                 name: name,
                 sourcePath: pathSource,
                 targetPath: pathTarget,
@@ -81,94 +110,109 @@ namespace ConsoleApp.Model
             return "AddWorkSuccess";
         }
 
-        public string RemoveWork(string workName)
+        public string RemoveWork(string ids)
         {
-            // Find the work in the in-memory list
-            var workToRemove = Works.FirstOrDefault(w => w.Name == workName);
+            // Parse les IDs à supprimer
+            var idsToRemove = ParseIds(ids);
 
-            if (workToRemove != null)
-            {
-                // Remove from the in-memory list
-                Works.Remove(workToRemove);
+            if (idsToRemove.Count == 0)
+                return "RemoveWorkError";
 
-                // Update state.json
-                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
-                string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+            // Supprime de la liste en mémoire
+            Works.RemoveAll(w => idsToRemove.Contains(w.ID));
 
-                if (File.Exists(jsonFilePath))
-                {
-                    // Load existing works from state.json
-                    string existingJsonContent = File.ReadAllText(jsonFilePath);
-                    var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
-
-                    // Remove the work from the JSON list
-                    existingWorks = existingWorks.Where(w => w.Name != workName).ToList();
-
-                    // Save the updated list back to state.json
-                    string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
-                    File.WriteAllText(jsonFilePath, updatedJsonContent);
-                }
-
-                return "RemoveWorkSuccess";
-            }
-
-            // Return error if the work was not found
-            return "RemoveWorkError";
-        }
-
-        public string DisplayWorks()
-        {
-            // Déterminer le chemin du fichier state.json
-            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            // Met à jour state.json
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
-            // Vérifier si le fichier existe
-            if (!File.Exists(jsonFilePath))
+            if (File.Exists(jsonFilePath))
             {
-                return "DisplayWorksError";
+                string existingJsonContent = File.ReadAllText(jsonFilePath);
+                var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
+
+                // Supprime les travaux correspondants
+                existingWorks = existingWorks.Where(w => !idsToRemove.Contains(w.ID)).ToList();
+
+                string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(jsonFilePath, updatedJsonContent);
             }
 
-            // Charger et désérialiser le contenu du fichier JSON
-            string jsonContent = File.ReadAllText(jsonFilePath);
-            var worksFromFile = JsonSerializer.Deserialize<List<BackupWork>>(jsonContent) ?? new List<BackupWork>();
-
-            // Vérifier si des travaux existent
-            if (worksFromFile.Count == 0)
-            {
-                return "DisplayWorksError";
-            }
-
-            // Retourner les travaux sous forme de chaîne formatée
-            return string.Join(Environment.NewLine, worksFromFile.Select((w, index) => $"{index + 1}. {w.Name} ({w.SourcePath} -> {w.TargetPath})"));
+            // Vérifie si au moins un travail a été supprimé
+            return "RemoveWorkSuccess";
         }
 
-        public string ExecuteWork(string workName)
+        public string ExecuteWork(string ids, string log)
         {
-            // Find the work in the in-memory list
-            var workToExecute = Works.FirstOrDefault(w => w.Name == workName);
+            var idsToExecute = ParseIds(ids);
+            if (idsToExecute.Count == 0)
+                return "ExecuteWorkError";
+
+            var results = new List<string>();
+            foreach (var id in idsToExecute)
+            {
+                var result = ExecuteSingleWork(id, log);
+                results.Add(result);
+            }
+
+            if (results.All(r => r == "ExecuteWorkSuccess"))
+                return "ExecuteWorkSuccess";
+            if (results.Any(r => r == "SourceDirectoryNotFound"))
+                return "SourceDirectoryNotFound";
+            // Retourne le premier message d'erreur rencontré sinon
+            var firstError = results.FirstOrDefault(r => r != "ExecuteWorkSuccess");
+            return firstError ?? "ExecuteWorkError";
+        }
+
+        // Ancienne logique d'exécution d'un seul travail, rendue privée
+        private string ExecuteSingleWork(string id, string log)
+        {
+            var workToExecute = Works.FirstOrDefault(w => w.ID == id);
             if (workToExecute != null)
             {
                 string sourcePath = workToExecute.SourcePath;
                 string targetPath = workToExecute.TargetPath;
 
-                // Check if source directory exists
                 if (!Directory.Exists(sourcePath))
                 {
                     return "SourceDirectoryNotFound";
                 }
 
-                // Recalculate and update TotalFilesToCopy, TotalFilesSize, NbFilesLeftToDo, and Progression
                 var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
-                int totalFiles = allFiles.Length;
-                long totalSize = allFiles.Sum(file => new FileInfo(file).Length);
+
+                // Ajout : filtrage selon le type de sauvegarde
+                List<string> filesToCopy;
+                if (workToExecute.Type == "FULL")
+                {
+                    filesToCopy = allFiles.ToList();
+                }
+                else if (workToExecute.Type == "DIFFERENTIAL")
+                {
+                    filesToCopy = new List<string>();
+                    foreach (var file in allFiles)
+                    {
+                        string relativePath = Path.GetRelativePath(sourcePath, file);
+                        string targetFilePath = Path.Combine(targetPath, relativePath);
+                        if (!File.Exists(targetFilePath))
+                        {
+                            filesToCopy.Add(file);
+                        }
+                    }
+                }
+                else
+                {
+                    // Type inconnu, ne rien faire
+                    return "ExecuteWorkError";
+                }
+
+                int totalFiles = filesToCopy.Count;
+                long totalSize = filesToCopy.Sum(file => new FileInfo(file).Length);
 
                 workToExecute.TotalFilesToCopy = totalFiles.ToString();
                 workToExecute.TotalFilesSize = totalSize.ToString();
                 workToExecute.NbFilesLeftToDo = totalFiles.ToString();
                 workToExecute.Progression = "0";
 
-                // Update state.json with recalculated values
-                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
                 string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
                 if (File.Exists(jsonFilePath))
@@ -176,7 +220,7 @@ namespace ConsoleApp.Model
                     string existingJsonContent = File.ReadAllText(jsonFilePath);
                     var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
 
-                    var workIndex = existingWorks.FindIndex(w => w.Name == workName);
+                    var workIndex = existingWorks.FindIndex(w => w.ID == id);
                     if (workIndex != -1)
                     {
                         existingWorks[workIndex].TotalFilesToCopy = workToExecute.TotalFilesToCopy;
@@ -189,49 +233,41 @@ namespace ConsoleApp.Model
                     File.WriteAllText(jsonFilePath, updatedJsonContent);
                 }
 
-                // Ensure target directory exists
                 Directory.CreateDirectory(targetPath);
 
                 try
                 {
                     int filesCopied = 0;
 
-                    foreach (var file in allFiles)
+                    foreach (var file in filesToCopy)
                     {
-                        // Determine the relative path and target file path
                         string relativePath = Path.GetRelativePath(sourcePath, file);
                         string targetFilePath = Path.Combine(targetPath, relativePath);
 
-                        // Ensure the target directory exists
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFilePath)!);
 
-                        // Measure file transfer time
                         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-                        // Copy the file
                         File.Copy(file, targetFilePath, overwrite: true);
 
                         stopwatch.Stop();
                         double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
 
-                        // Log the file copy operation
                         long fileSize = new FileInfo(file).Length;
-                        ManageLogs(workName, file, targetFilePath, fileSize, fileTransferTime);
+                        LoggingLibrary.Logger.Log(id, file, targetFilePath, fileSize, fileTransferTime, log);
 
                         filesCopied++;
 
-                        // Update progress
                         workToExecute.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();
-                        workToExecute.Progression = ((filesCopied * 100) / totalFiles).ToString();
+                        workToExecute.Progression = (totalFiles == 0 ? "100" : ((filesCopied * 100) / totalFiles).ToString());
                     }
 
-                    // Update state.json with progress
                     if (File.Exists(jsonFilePath))
                     {
                         string existingJsonContent = File.ReadAllText(jsonFilePath);
                         var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
 
-                        var workIndex = existingWorks.FindIndex(w => w.Name == workName);
+                        var workIndex = existingWorks.FindIndex(w => w.ID == id);
                         if (workIndex != -1)
                         {
                             existingWorks[workIndex].NbFilesLeftToDo = workToExecute.NbFilesLeftToDo;
@@ -246,7 +282,6 @@ namespace ConsoleApp.Model
                 }
                 catch (Exception ex)
                 {
-                    // Handle any errors during file copy
                     return $"ExecuteWorkError: {ex.Message}";
                 }
             }
@@ -254,36 +289,29 @@ namespace ConsoleApp.Model
             return "ExecuteWorkError";
         }
 
-        public string ManageLogs(string workName, string fileSource, string fileTarget, long fileSize, double fileTransferTime)
+        private static HashSet<string> ParseIds(string ids)
         {
-            // Define the path to the logs directory
-            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
-            string logsDirectoryPath = Path.Combine(projectRootPath, "Logs");
+            var result = new HashSet<string>();
+            if (string.IsNullOrWhiteSpace(ids))
+                return result;
 
-            // Ensure the logs directory exists
-            Directory.CreateDirectory(logsDirectoryPath);
-
-            // Define the log file path
-            string logFilePath = Path.Combine(logsDirectoryPath, $"{workName}_log.json");
-
-            // Create the log entry
-            var logEntry = new
+            foreach (var part in ids.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
-                Name = workName,
-                FileSource = fileSource,
-                FileTarget = fileTarget,
-                FileSize = fileSize,
-                FileTransferTime = fileTransferTime,
-                Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
-            };
-
-            // Serialize the log entry to JSON
-            string logEntryJson = JsonSerializer.Serialize(logEntry, new JsonSerializerOptions { WriteIndented = true });
-
-            // Append the log entry to the log file
-            File.AppendAllText(logFilePath, logEntryJson + Environment.NewLine);
-
-            return "LogCreated";
+                if (part.Contains('-'))
+                {
+                    var range = part.Split('-', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                    if (range.Length == 2 && int.TryParse(range[0], out int start) && int.TryParse(range[1], out int end) && start <= end)
+                    {
+                        for (int i = start; i <= end; i++)
+                            result.Add(i.ToString());
+                    }
+                }
+                else if (int.TryParse(part, out int singleId))
+                {
+                    result.Add(singleId.ToString());
+                }
+            }
+            return result;
         }
     }
 }

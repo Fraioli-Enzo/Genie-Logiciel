@@ -39,7 +39,34 @@ namespace ConsoleApp.ViewModel
             File.WriteAllText(configFilePath, updatedConfigContent);
         }
 
-        public string RunBackup(string choice, string name, string pathSource, string pathTarget, string type)
+        public void ChooseLogExtension(string logExtension)
+        {
+            if (logExtension != "json" && logExtension != "xml")
+            {
+                throw new ArgumentException("Invalid language. Only 'fr' and 'en' are supported.");
+            }
+
+            // Define the path to the config.json file
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string configFilePath = Path.Combine(projectRootPath, "config.json");
+
+            // Read the existing config file
+            var config = new Dictionary<string, string>();
+            if (File.Exists(configFilePath))
+            {
+                string configContent = File.ReadAllText(configFilePath);
+                config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent) ?? new Dictionary<string, string>();
+            }
+
+            // Update the language setting
+            config["log"] = logExtension;
+
+            // Write the updated config back to the file
+            string updatedConfigContent = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(configFilePath, updatedConfigContent);
+        }
+
+        public string RunBackup(string choice, string name, string pathSource, string pathTarget, string type, string id, string log)
         {
 
             switch (choice)
@@ -53,11 +80,11 @@ namespace ConsoleApp.ViewModel
                     return addWork;
 
                 case "3":
-                    string removeWork = workManager.RemoveWork(name);
+                    string removeWork = workManager.RemoveWork(id);
                     return removeWork;
 
                 case "4":
-                    string executeWork = workManager.ExecuteWork(name);
+                    string executeWork = workManager.ExecuteWork(id, log);
                     return executeWork;
 
                 case "5":

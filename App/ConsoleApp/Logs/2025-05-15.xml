@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LogEntry>
+  <Entry>
+    <Name>3</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (2).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible3\FichierTexteSource - Copie (2).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>1,5426</FileTransferTime>
+    <Time>15/05/2025 11:38:30</Time>
+  </Entry>
+  <Entry>
+    <Name>3</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (3).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible3\FichierTexteSource - Copie (3).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>1,0048</FileTransferTime>
+    <Time>15/05/2025 11:38:30</Time>
+  </Entry>
+  <Entry>
+    <Name>3</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (4).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible3\FichierTexteSource - Copie (4).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>1,0092</FileTransferTime>
+    <Time>15/05/2025 11:38:30</Time>
+  </Entry>
+</LogEntry>
