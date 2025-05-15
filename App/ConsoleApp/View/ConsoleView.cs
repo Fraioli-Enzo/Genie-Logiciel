@@ -57,7 +57,7 @@ namespace ConsoleApp.View
                             { "RemoveWorkSuccess", resourceManager.GetString("RemoveWorkSuccess") },
                             { "RemoveWorkError", resourceManager.GetString("RemoveWorkError") },
                             { "DisplayWorksError", resourceManager.GetString("DisplayWorksError") },
-                            { "EnterFileName", resourceManager.GetString("EnterFileName") },
+                            { "EnterFileID", resourceManager.GetString("EnterFileID") },
                             { "ExecuteWorkError", resourceManager.GetString("ExecuteWorkError") },
                             { "ExecuteWorkSuccess", resourceManager.GetString("ExecuteWorkSuccess") },
                         };
@@ -70,14 +70,18 @@ namespace ConsoleApp.View
                             string currentPathSource = null;
                             string currentPathTarget = null;
                             string name = null;
+                            string id = null;
                             string type = null;
                             string typeChoice = null;
 
                             if (choice == "3" || choice == "4")
                             {
+                                string datalist = viewModel.RunBackup("1", "_", "_", "_", "_", "_");
+
                                 Console.WriteLine();
-                                Console.WriteLine(responses["EnterFileName"]);
-                                name = Console.ReadLine();
+                                Console.WriteLine(datalist);
+                                Console.WriteLine(responses["EnterFileID"]);
+                                id = Console.ReadLine();
                             }
                             if (choice == "2")
                             {
@@ -215,7 +219,7 @@ namespace ConsoleApp.View
                             }
 
                             Console.WriteLine();
-                            string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type);
+                            string data = viewModel.RunBackup(choice, name, currentPathSource, currentPathTarget, type, id);
 
                             if (responses.ContainsKey(data))
                             {

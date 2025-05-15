@@ -39,7 +39,7 @@ namespace ConsoleApp.ViewModel
             File.WriteAllText(configFilePath, updatedConfigContent);
         }
 
-        public string RunBackup(string choice, string name, string pathSource, string pathTarget, string type)
+        public string RunBackup(string choice, string name, string pathSource, string pathTarget, string type, string id)
         {
 
             switch (choice)
@@ -53,11 +53,11 @@ namespace ConsoleApp.ViewModel
                     return addWork;
 
                 case "3":
-                    string removeWork = workManager.RemoveWork(name);
+                    string removeWork = workManager.RemoveWork(id);
                     return removeWork;
 
                 case "4":
-                    string executeWork = workManager.ExecuteWork(name);
+                    string executeWork = workManager.ExecuteWork(id);
                     return executeWork;
 
                 case "5":
