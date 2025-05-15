@@ -57,3 +57,7 @@ C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ref
 C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.pdb
 C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.genruntimeconfig.cache
 C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ref\ConsoleApp.dll
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\bin\Debug\net8.0\ClassLibrary1.dll
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\bin\Debug\net8.0\ClassLibrary1.pdb
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.csproj.AssemblyReference.cache
+C:\Users\enzof\Documents\CESI\Genie-Logiciel\App\ConsoleApp\obj\Debug\net8.0\ConsoleApp.csproj.Up2Date

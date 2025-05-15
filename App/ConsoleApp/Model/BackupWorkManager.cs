@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using LoggingLibrary;
+
 
 namespace ConsoleApp.Model
 {
@@ -226,7 +228,7 @@ namespace ConsoleApp.Model
                         double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
 
                         long fileSize = new FileInfo(file).Length;
-                        //ManageLogs(id, file, targetFilePath, fileSize, fileTransferTime);
+                        LoggingLibrary.Logger.Log(id, file, targetFilePath, fileSize, fileTransferTime);
 
                         filesCopied++;
 
@@ -259,38 +261,6 @@ namespace ConsoleApp.Model
             }
 
             return "ExecuteWorkError";
-        }
-
-        public string ManageLogs(string id, string fileSource, string fileTarget, long fileSize, double fileTransferTime)
-        {
-            // Define the path to the logs directory
-            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
-            string logsDirectoryPath = Path.Combine(projectRootPath, "Logs");
-
-            // Ensure the logs directory exists
-            Directory.CreateDirectory(logsDirectoryPath);
-
-            // Define the log file path
-            string logFilePath = Path.Combine(logsDirectoryPath, $"{id}_log.json");
-
-            // Create the log entry
-            var logEntry = new
-            {
-                Name = id,
-                FileSource = fileSource,
-                FileTarget = fileTarget,
-                FileSize = fileSize,
-                FileTransferTime = fileTransferTime,
-                Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
-            };
-
-            // Serialize the log entry to JSON
-            string logEntryJson = JsonSerializer.Serialize(logEntry, new JsonSerializerOptions { WriteIndented = true });
-
-            // Append the log entry to the log file
-            File.AppendAllText(logFilePath, logEntryJson + Environment.NewLine);
-
-            return "LogCreated";
         }
 
         private static HashSet<string> ParseIds(string ids)
