@@ -1,12 +1,11 @@
-﻿using ConsoleApp.View;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Resources;
-using ConsoleApp.Model;
+using WpfApp1.Model;
 using System.Xml.Serialization;
 using System.Text.Json;
 using System.IO;
 
-namespace ConsoleApp.ViewModel
+namespace WpfApp1.ViewModel
 {
     public class EasySafeViewModel
     {

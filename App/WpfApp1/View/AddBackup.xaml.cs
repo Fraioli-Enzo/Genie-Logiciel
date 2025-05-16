@@ -18,7 +18,7 @@ namespace WpfApp1
     /// <summary>
     /// Logique d'interaction pour AddBackup.xaml
     /// </summary>
-    public partial class AddBackup : Page
+    public partial class AddBackup : Window
     {
         public AddBackup()
         {
@@ -63,7 +63,7 @@ namespace WpfApp1
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)

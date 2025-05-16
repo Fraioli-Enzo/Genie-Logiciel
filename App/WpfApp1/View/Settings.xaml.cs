@@ -18,7 +18,7 @@ namespace WpfApp1
     /// <summary>
     /// Logique d'interaction pour Settings.xaml
     /// </summary>
-    public partial class Settings : Page
+    public partial class Settings : Window
     {
         public Settings()
         {
@@ -28,7 +28,7 @@ namespace WpfApp1
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)

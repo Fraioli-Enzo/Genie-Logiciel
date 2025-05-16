@@ -8,6 +8,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.Model;
+using System.Collections.ObjectModel;
+using System.Linq;
+using WpfApp1; // Pour accéder à AddBackup
 
 namespace WpfApp1
 {
@@ -16,13 +20,16 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
+        private BackupWorkManager backupWorkManager;
+
         public MainWindow()
         {
             InitializeComponent();
+            backupWorkManager = new BackupWorkManager();
+            BackupDataGrid.ItemsSource = backupWorkManager.Works;
         }
-
-
-
 
         private void BackupDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -31,7 +38,8 @@ namespace WpfApp1
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddBackup addWorkWindow = new AddBackup();
+            addWorkWindow.ShowDialog(); 
         }
 
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
@@ -41,7 +49,6 @@ namespace WpfApp1
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void ButtonLogger_Click(object sender, RoutedEventArgs e)
@@ -51,7 +58,10 @@ namespace WpfApp1
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
         {
-
+            Settings settingsWindow = new Settings();
+            settingsWindow.ShowDialog();
         }
+
+
     }
 }

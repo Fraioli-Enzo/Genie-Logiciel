@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 using LoggingLibrary;
 
 
-namespace ConsoleApp.Model
+namespace WpfApp1.Model
 {
     public class BackupWorkManager
     {
-        private const int MaxWorks = 5;
 
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
 
@@ -61,10 +60,6 @@ namespace ConsoleApp.Model
         
         public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
-            if (Works.Count >= MaxWorks)
-            {
-                return "AddWorkError";
-            }
 
             // Calculer le nombre total de fichiers et leur taille totale
             var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
