@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
+using System.Text.Json;
 
 namespace WpfApp1
 {
@@ -23,8 +24,51 @@ namespace WpfApp1
         public Settings()
         {
             InitializeComponent();
-        }
 
+            // Charger la langue et les logs depuis config.json
+            try
+            {
+                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+                string configPath = Path.Combine(projectRootPath, "config.json");
+                if (File.Exists(configPath))
+                {
+                    string json = File.ReadAllText(configPath);
+                    using var doc = JsonDocument.Parse(json);
+                    if (doc.RootElement.TryGetProperty("language", out var langProp))
+                    {
+                        string? lang = langProp.GetString();
+                        if (lang == "fr")
+                        {
+                            RadioButtonFR.IsChecked = true;
+                            RadioButtonEN.IsChecked = false;
+                        }
+                        else if (lang == "en")
+                        {
+                            RadioButtonFR.IsChecked = false;
+                            RadioButtonEN.IsChecked = true;
+                        }
+                    }
+                    if (doc.RootElement.TryGetProperty("log", out var logProp))
+                    {
+                        string? log = logProp.GetString();
+                        if (log == "json")
+                        {
+                            RadioButtonJSON.IsChecked = true;
+                            RadioButtonXML.IsChecked = false;
+                        }
+                        else if (log == "xml")
+                        {
+                            RadioButtonXML.IsChecked = true;
+                            RadioButtonJSON.IsChecked = false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors du chargement de la configuration : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {

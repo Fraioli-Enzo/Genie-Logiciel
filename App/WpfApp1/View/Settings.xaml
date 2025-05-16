@@ -81,8 +81,8 @@
             <StackPanel Margin="0,0,0,20">
                 <Label Content="Language" Style="{StaticResource ModernLabelStyle}"/>
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Name="RadioButtonFR" Content="English" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonFR_Checked" />
-                    <RadioButton Name="RadioButtonEN" Content="French" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonEN_Checked" />
+                    <RadioButton Name="RadioButtonEN" Content="English" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonFR_Checked" />
+                    <RadioButton Name="RadioButtonFR" Content="French" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonEN_Checked" />
                 </StackPanel>
             </StackPanel>
 
