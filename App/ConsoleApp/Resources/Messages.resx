@@ -243,4 +243,75 @@
     <value>Choisissez une extension (xml/json) :</value>
     <comment>-</comment>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Ajouter</value>
+    <comment>-</comment>
+  </data>
+  <data name="Name_Backup" xml:space="preserve">
+    <value>Nom du travail</value>
+    <comment>-</comment>
+  </data>
+  <data name="Delete_Backup" xml:space="preserve">
+    <value>Supprimer un travail</value>
+    <comment>-</comment>
+  </data>
+  <data name="Source_Path" xml:space="preserve">
+    <value>Chemin source</value>
+    <comment>-</comment>
+  </data>
+  <data name="Target_Path" xml:space="preserve">
+    <value>Chemin destinataire</value>
+    <comment>-</comment>
+  </data>
+  <data name="Execute_Backup" xml:space="preserve">
+    <value>Exécuter un travail</value>
+    <comment>-</comment>
+  </data>
+  <data name="Type_Save" xml:space="preserve">
+    <value>Type de sauvegarde</value>
+    <comment>-</comment>
+  </data>
+  <data name="Complet" xml:space="preserve">
+    <value>Complète</value>
+    <comment>-</comment>
+  </data>
+  <data name="Differential" xml:space="preserve">
+    <value>Différentielle</value>
+    <comment>-</comment>
+  </data>
+  <data name="Setting" xml:space="preserve">
+    <value>Paramètre</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annulé</value>
+    <comment>-</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Sauvegardé</value>
+    <comment>-</comment>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Anglais</value>
+    <comment>-</comment>
+  </data>
+  <data name="French" xml:space="preserve">
+    <value>Français</value>
+    <comment>_</comment>
+  </data>
+  <data name="Add_Backup" xml:space="preserve">
+    <value>Ajouter un travail</value>
+    <comment>-</comment>
+  </data>
+  <data name="Logger" xml:space="preserve">
+    <value>Journalisation</value>
+    <comment>-</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Langue</value>
+    <comment>-</comment>
+  </data>
+  <data name="Log_File_Type" xml:space="preserve">
+    <value>Type de fichier log</value>
+    <comment>-</comment>
+  </data>
 </root>

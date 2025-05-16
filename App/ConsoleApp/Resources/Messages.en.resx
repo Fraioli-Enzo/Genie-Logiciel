@@ -217,4 +217,58 @@
   <data name="LogChangeMessage" xml:space="preserve">
     <value>Choose a file extension (xml/json):</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Name_Backup" xml:space="preserve">
+    <value>Backup name</value>
+  </data>
+  <data name="Delete_Backup" xml:space="preserve">
+    <value>Delete backup</value>
+  </data>
+  <data name="Source_Path" xml:space="preserve">
+    <value>Source path</value>
+  </data>
+  <data name="Target_Path" xml:space="preserve">
+    <value>Target path</value>
+  </data>
+  <data name="Execute_Backup" xml:space="preserve">
+    <value>Execute backup</value>
+  </data>
+  <data name="Type_Save" xml:space="preserve">
+    <value>Type save</value>
+  </data>
+  <data name="Complet" xml:space="preserve">
+    <value>Complet</value>
+  </data>
+  <data name="Differential" xml:space="preserve">
+    <value>Differential</value>
+  </data>
+  <data name="Setting" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="French" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="Add_Backup" xml:space="preserve">
+    <value>Add backup</value>
+  </data>
+  <data name="Logger" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Log_File_Type" xml:space="preserve">
+    <value>Log file type</value>
+  </data>
 </root>
