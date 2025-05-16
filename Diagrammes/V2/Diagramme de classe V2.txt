@@ -1,0 +1,165 @@
+@startuml
+
+'========================
+' ENUMERATIONS (Model)
+'========================
+package Model {
+  enum Language {
+    FR
+    EN
+  }
+
+  enum State {
+    ACTIVE
+    INACTIVE
+    END
+  }
+
+  enum Type_Backup {
+    Complete
+    Differential
+  }
+
+  enum Type_File_Log {
+    XML
+    JSON
+  }
+
+}
+
+'========================
+' MODEL
+'========================
+package Model {
+  class Backup {
+    -Name_Backup: String
+    -Source_Path: String
+    -Target_Path: String
+    -Type_Backup: Type_Backup
+    -CryptoSoft: CryptoSoft
+    -progressInfo: Progression_Backup
+    +execute(): void
+    +getProgress(): float
+    +getCryptoSoft(): bool
+  }
+
+  class Progression_Backup {
+    -BackupName: String
+    -Source_Path: String
+    -Target_Path: String
+    -Files_Size: int
+    -Total_Files_Copy: int
+    -Total_Files_To_Copy: int
+    -State: State
+    -Progression: float
+    +getPercentage(): float
+    +Json(): String
+    +update(): void
+  }
+
+  class LogEntry {
+    -Backup_Name: String
+    -Source_Path: String
+    -Target_Path: String
+    -File_Size: int
+    -File_Transfer_Time: TimeSpan
+    -Date_Backup_Save: DateTime
+    -Encryption_Time: int
+    +Json(): String
+    +XML(): String
+  }
+
+  class Delete_Backup {
+    -Backups: List<Backup>
+    +Delete_Backup(name: String): bool
+  }
+
+  class CryptoSoft {
+    +Encrypt_File(): void
+  }
+
+  class Software_Detector {
+    -Name_Software : string
+    +Check_Software_Run () : bool
+    +Detect_Software() : void
+  }
+}
+
+'========================
+' VIEWMODEL
+'========================
+package ViewModel {
+  class Backup_Manager {
+    -backups: List<Model.Backup>
+    +Add_Backup(name: String, type: Model.Type_Backup, source: String, target: String): void
+    +Execute_Backup(selectedBackup: Model.Backup): void
+    +Get_Backups(): List<Model.Backup>
+    +Delete_Backup(name: String): void
+  }
+
+  class Logger {
+    -Log_Entries: List<Model.LogEntry>
+    -Type_File_Log: Model.Type_File_Log
+    +Log_Execution(backup: Model.Backup): void
+    +getHistory(): List<Model.LogEntry>
+  }
+
+  class Language_Manager {
+    -Current_Language: Model.Language
+    +setLanguage(lang: Model.Language): void
+    +getLanguage(): Model.Language
+    +toJson(): String
+  }
+}
+
+'========================
+' VIEW
+'========================
+package View {
+  class MainMenu {
+    +displayMainMenu(): void
+    +Select_Backup(): void
+    +Click_Add_Backup(): void
+    +Click_Execute_Backup(): void
+    +Click_Logger(): void
+    +Click_Delete_Backup(): void
+    +Click_Setting(): void
+  }
+
+  class Add_Backup_View {
+    +Display_Add_Backup_Form(): void
+    +Submit_Backup(name: String, type: Model.Type_Backup, source: String, target: String): void
+    +Quit(): void
+  }
+  
+  class Setting_View {
+    +DisplaySettingsForm(): void
+    +Change_Language(lang: Model.Language): void
+    +Change_Log_File_Type(Log_Type: Model.Type_File_Log): void
+    +Quit(): void
+  }
+}
+
+'========================
+' RELATIONS
+'========================
+
+View.MainMenu --> ViewModel.Backup_Manager
+View.MainMenu --> Add_Backup_View
+View.MainMenu --> Setting_View
+
+ViewModel.Backup_Manager *--> Model.Backup
+ViewModel.Backup_Manager ..> Model.Delete_Backup
+ViewModel.Backup_Manager ..> ViewModel.Logger
+ViewModel.Backup_Manager ..> Model.Software_Detector
+ViewModel.Logger *--> Model.LogEntry
+
+Model.Backup *--> Model.Progression_Backup
+Model.Backup *--> Model.CryptoSoft
+
+Add_Backup_View --> ViewModel.Backup_Manager
+
+Setting_View --> ViewModel.Language_Manager
+Setting_View ..> ViewModel.Logger
+
+@enduml
