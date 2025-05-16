@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 using LoggingLibrary;
 
 
-namespace ConsoleApp.Model
+namespace WpfApp1.Model
 {
     public class BackupWorkManager
     {
-        private const int MaxWorks = 5;
 
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
 
@@ -33,38 +32,8 @@ namespace ConsoleApp.Model
             }
         }
 
-        public string DisplayWorks()
-        {
-            // Déterminer le chemin du fichier state.json
-            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
-            string jsonFilePath = Path.Combine(projectRootPath, "state.json");
-
-            // Vérifier si le fichier existe
-            if (!File.Exists(jsonFilePath))
-            {
-                return "DisplayWorksError";
-            }
-
-            // Charger et désérialiser le contenu du fichier JSON
-            string jsonContent = File.ReadAllText(jsonFilePath);
-            var worksFromFile = JsonSerializer.Deserialize<List<BackupWork>>(jsonContent) ?? new List<BackupWork>();
-
-            // Vérifier si des travaux existent
-            if (worksFromFile.Count == 0)
-            {
-                return "DisplayWorksError";
-            }
-
-            // Retourner les travaux sous forme de chaîne formatée
-            return string.Join(Environment.NewLine, worksFromFile.Select((w, index) => $"{index + 1}. {w.Name} ({w.SourcePath} -> {w.TargetPath})"));
-        }
-        
         public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
-            if (Works.Count >= MaxWorks)
-            {
-                return "AddWorkError";
-            }
 
             // Calculer le nombre total de fichiers et leur taille totale
             var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);

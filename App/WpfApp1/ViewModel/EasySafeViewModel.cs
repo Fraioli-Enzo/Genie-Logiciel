@@ -1,12 +1,11 @@
-﻿using ConsoleApp.View;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Resources;
-using ConsoleApp.Model;
+using WpfApp1.Model;
 using System.Xml.Serialization;
 using System.Text.Json;
 using System.IO;
 
-namespace ConsoleApp.ViewModel
+namespace WpfApp1.ViewModel
 {
     public class EasySafeViewModel
     {
@@ -71,9 +70,6 @@ namespace ConsoleApp.ViewModel
 
             switch (choice)
             {
-                case "1":
-                    string displayWork = workManager.DisplayWorks();
-                    return displayWork;
 
                 case "2":
                     string addWork = workManager.AddWork(name, pathSource, pathTarget, type);
