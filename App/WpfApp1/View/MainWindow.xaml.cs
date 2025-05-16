@@ -45,34 +45,37 @@ namespace WpfApp1
 
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer la ligne sélectionnée dans le DataGrid
-            if (BackupDataGrid.SelectedItem is BackupWork selectedWork)
+            // Récupérer les lignes sélectionnées dans le DataGrid
+            var selectedItems = BackupDataGrid.SelectedItems;
+            if (selectedItems != null && selectedItems.Count > 0)
             {
-                // Exécuter le backup pour l'ID sélectionné
-                backupWorkManager.ExecuteWork(selectedWork.ID, "json");
-                MessageBox.Show("Sauvegarde exécutée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
+                var ids = string.Join(";", selectedWorks.Select(w => w.ID));
+                backupWorkManager.ExecuteWork(ids, "json");
+                MessageBox.Show("Sauvegarde(s) exécutée(s) avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Veuillez sélectionner un travail de sauvegarde à exécuter.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Veuillez sélectionner un ou plusieurs travaux de sauvegarde à exécuter.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer la ligne sélectionnée dans le DataGrid
-            if (BackupDataGrid.SelectedItem is BackupWork selectedWork)
+            // Récupérer les lignes sélectionnées dans le DataGrid
+            var selectedItems = BackupDataGrid.SelectedItems;
+            if (selectedItems != null && selectedItems.Count > 0)
             {
-                // Supprimez le backup pour l'ID sélectionné
-                backupWorkManager.RemoveWork(selectedWork.ID);
-                MessageBox.Show("Sauvegarde supprimée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
+                var ids = string.Join(";", selectedWorks.Select(w => w.ID));
+                backupWorkManager.RemoveWork(ids);
                 BackupDataGrid.ItemsSource = null;
                 BackupDataGrid.ItemsSource = backupWorkManager.Works;
+                MessageBox.Show("Sauvegarde(s) supprimée(s) avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Veuillez sélectionner un travail de sauvegarde à exécuter.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Veuillez sélectionner un ou plusieurs travaux de sauvegarde à supprimer.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
