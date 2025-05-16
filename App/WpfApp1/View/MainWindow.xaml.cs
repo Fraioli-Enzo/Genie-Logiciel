@@ -1,17 +1,11 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Text.Json;
 using WpfApp1.Model;
-using System.Collections.ObjectModel;
-using System.Linq;
-using WpfApp1; // Pour accéder à AddBackup
+using System.IO;
+using System.Resources;
+using System.Globalization;
+
 
 namespace WpfApp1
 {
@@ -23,12 +17,39 @@ namespace WpfApp1
 
 
         private BackupWorkManager backupWorkManager;
+        private object resourceManager;
 
         public MainWindow()
         {
             InitializeComponent();
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
+
+            LoadConfigAndUpdateUI(); 
+        }
+
+        // Nouvelle méthode pour charger la config et mettre à jour l'UI
+        private void LoadConfigAndUpdateUI()
+        {
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
+            string configFilePath = Path.Combine(projectRootPath, "config.json");
+            string configContent = File.ReadAllText(configFilePath);
+            var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
+            string language = config.ContainsKey("language") ? config["language"] : "en";
+
+            // Définir la culture du ResourceManager en fonction de la langue
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            this.resourceManager = new ResourceManager("WpfApp1.Resources.Messages", typeof(MainWindow).Assembly);
+
+            ButtonSettings.Content = ((ResourceManager)this.resourceManager).GetString("Setting");
+            ButtonAdd.Content = ((ResourceManager)this.resourceManager).GetString("Add_Backup");
+            ButtonDelete.Content = ((ResourceManager)this.resourceManager).GetString("Delete_Backup");
+            ButtonExecute.Content = ((ResourceManager)this.resourceManager).GetString("Execute_Backup");
+            ButtonLogger.Content = ((ResourceManager)this.resourceManager).GetString("Logger");
+            BackupDataGrid.Columns[1].Header = ((ResourceManager)this.resourceManager).GetString("Name_Backup");
+            BackupDataGrid.Columns[2].Header = ((ResourceManager)this.resourceManager).GetString("Source_Path");
+            BackupDataGrid.Columns[3].Header = ((ResourceManager)this.resourceManager).GetString("Target_Path");
+            MenuLabel.Content = ((ResourceManager)this.resourceManager).GetString("MainMenu");
         }
 
         private void BackupDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -43,20 +64,21 @@ namespace WpfApp1
             addWorkWindow.ShowDialog();
         }
 
+        // Fix for the CS1061 error in the ButtonExecute_Click method
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer les lignes sélectionnées dans le DataGrid
             var selectedItems = BackupDataGrid.SelectedItems;
             if (selectedItems != null && selectedItems.Count > 0)
             {
                 var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
                 var ids = string.Join(";", selectedWorks.Select(w => w.ID));
                 backupWorkManager.ExecuteWork(ids, "json");
-                MessageBox.Show("Sauvegarde(s) exécutée(s) avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Veuillez sélectionner un ou plusieurs travaux de sauvegarde à exécuter.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToExecute"), "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -71,11 +93,12 @@ namespace WpfApp1
                 backupWorkManager.RemoveWork(ids);
                 BackupDataGrid.ItemsSource = null;
                 BackupDataGrid.ItemsSource = backupWorkManager.Works;
-                MessageBox.Show("Sauvegarde(s) supprimée(s) avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Veuillez sélectionner un ou plusieurs travaux de sauvegarde à supprimer.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToDelete"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -88,6 +111,8 @@ namespace WpfApp1
         {
             Settings settingsWindow = new Settings();
             settingsWindow.ShowDialog();
+            // Après la fermeture de la fenêtre Settings, recharger la config et mettre à jour l'UI
+            LoadConfigAndUpdateUI();
         }
 
         private void AddBackupWindow_BackupAdded(object sender, EventArgs e)

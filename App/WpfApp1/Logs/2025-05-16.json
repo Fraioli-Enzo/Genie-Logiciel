@@ -166,3 +166,27 @@
   "FileTransferTime": 0.8933,
   "Time": "16/05/2025 14:21:32"
 }
+{
+  "Name": "1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.7888,
+  "Time": "16/05/2025 15:56:53"
+}
+{
+  "Name": "1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.4823,
+  "Time": "16/05/2025 15:56:54"
+}
+{
+  "Name": "1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.847,
+  "Time": "16/05/2025 15:56:54"
+}

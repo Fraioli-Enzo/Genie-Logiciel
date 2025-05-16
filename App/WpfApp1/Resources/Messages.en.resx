@@ -117,29 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EnterName" xml:space="preserve">
-    <value>Enter a name (or type 'exit'): </value>
-  </data>
-  <data name="ExitMessage" xml:space="preserve">
-    <value>Thank for using our application, see you!</value>
-  </data>
-  <data name="WelcomeMessage" xml:space="preserve">
-    <value>Choose what you want to do from this menu:
-1. Change language
-2. Change the log file extension
-3. Works management
-4. Exit</value>
-  </data>
   <data name="UpdatedName" xml:space="preserve">
     <value>Name update:</value>
-  </data>
-  <data name="RunBackupWelcomeMessage" xml:space="preserve">
-    <value>What would you like to do?
-1. Display jobs
-2. Add a job
-3. Delete a job
-4. Execute a job
-5. Exit</value>
   </data>
   <data name="AddWorkError" xml:space="preserve">
     <value>Unable to add this work.</value>
@@ -147,75 +126,14 @@
   <data name="AddWorkSuccess" xml:space="preserve">
     <value>Job added successfully.</value>
   </data>
-  <data name="RemoveWorkSuccess" xml:space="preserve">
-    <value>Work deleted successfully.</value>
-  </data>
-  <data name="DisplayWorksError" xml:space="preserve">
-    <value>Unable to display the workss.</value>
-  </data>
-  <data name="RunBackupDefaultError" xml:space="preserve">
-    <value>Unable to read the input, please try again.</value>
-  </data>
-  <data name="RunBackupExit" xml:space="preserve">
-    <value>Good bye!</value>
-  </data>
-  <data name="EnterFileID" xml:space="preserve">
-    <value>Please enter the backup ID (e.g. 1 or 1-3 or 1;3):</value>
-  </data>
-  <data name="RemoveWorkError" xml:space="preserve">
-    <value>Unable to delete this work.</value>
-  </data>
-  <data name="AddWorkSelect" xml:space="preserve">
-    <value>Enter the folder number to continue, 's' to select this folder, or 'q' to quit:</value>
-  </data>
   <data name="AddWorkCancel" xml:space="preserve">
     <value>Operation cancelled.</value>
-  </data>
-  <data name="AddWorkFolders" xml:space="preserve">
-    <value>Folders:</value>
-  </data>
-  <data name="AddWorkFiles" xml:space="preserve">
-    <value>Files:</value>
-  </data>
-  <data name="AddWorkDisk" xml:space="preserve">
-    <value>Please enter the drive letter (e.g., C):</value>
-  </data>
-  <data name="AddWorkDiskError" xml:space="preserve">
-    <value>The specified drive does not exist.
-
-</value>
-  </data>
-  <data name="RunBackupSaveName" xml:space="preserve">
-    <value>Please enter the name of the backup:</value>
-  </data>
-  <data name="RunBackupSaveType" xml:space="preserve">
-    <value>Please enter the type of backup:
-1. Full  
-2. Differential</value>
-  </data>
-  <data name="LanguageSelection" xml:space="preserve">
-    <value>Choose a language (fr/en):</value>
   </data>
   <data name="ExecuteWorkSuccess" xml:space="preserve">
     <value>Job executed successfully!</value>
   </data>
   <data name="ExecuteWorkError" xml:space="preserve">
     <value>Unable to execute the job.</value>
-  </data>
-  <data name="SourceFolderContent" xml:space="preserve">
-    <value>Source folder content: {0}</value>
-  </data>
-  <data name="SourceFolderSelected" xml:space="preserve">
-    <value>Selected source folder: {0}</value>
-  </data>
-  <data name="TargetFolderContent" xml:space="preserve">
-    <value>Target folder content: {0}</value>
-  </data>
-  <data name="TargetFolderSelected" xml:space="preserve">
-    <value>Selected target folder: {0}</value>
-  </data>
-  <data name="LogChangeMessage" xml:space="preserve">
-    <value>Choose a file extension (xml/json):</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
@@ -239,13 +157,13 @@
     <value>Type save</value>
   </data>
   <data name="Complet" xml:space="preserve">
-    <value>Complet</value>
+    <value>Full</value>
   </data>
   <data name="Differential" xml:space="preserve">
     <value>Differential</value>
   </data>
   <data name="Setting" xml:space="preserve">
-    <value>Setting</value>
+    <value>Settings</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -270,5 +188,26 @@
   </data>
   <data name="Log_File_Type" xml:space="preserve">
     <value>Log file type</value>
+  </data>
+  <data name="ExecuteSuccess" xml:space="preserve">
+    <value>Backup(s) executed successfully.</value>
+  </data>
+  <data name="DeleteSuccess" xml:space="preserve">
+    <value>Backup(s) deleted successfully.</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="SelectWorkToExecute" xml:space="preserve">
+    <value>Please select one or more backup jobs to execute.</value>
+  </data>
+  <data name="SelectWorkToDelete" xml:space="preserve">
+    <value>Please select one or more backup jobs to delete.</value>
+  </data>
+  <data name="NoSelection" xml:space="preserve">
+    <value>No selection</value>
+  </data>
+  <data name="MainMenu" xml:space="preserve">
+    <value>Main Menu</value>
   </data>
 </root>

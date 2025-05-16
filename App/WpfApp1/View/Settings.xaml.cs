@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+﻿using System.Windows;
 using System.IO;
 using System.Text.Json;
+using System.Resources;
+using System.Globalization;
+using WpfApp1.ViewModel;
+using System.Collections.Generic;
 
 namespace WpfApp1
 {
@@ -21,14 +13,35 @@ namespace WpfApp1
     /// </summary>
     public partial class Settings : Window
     {
+        private object resourceManager;
+        private readonly EasySafeViewModel viewModel = new EasySafeViewModel(); // Ajout du ViewModel
+
         public Settings()
         {
             InitializeComponent();
 
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string configFilePath = Path.Combine(projectRootPath, "config.json");
+            string configContent = File.ReadAllText(configFilePath);
+            var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
+            string language = config.ContainsKey("language") ? config["language"] : "en";
+
+            // Définir la culture du ResourceManager en fonction de la langue
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            this.resourceManager = new ResourceManager("WpfApp1.Resources.Messages", typeof(MainWindow).Assembly);
+
+            // Set the content of the buttons and labels using the resource manager
+            ButtonSave.Content = ((ResourceManager)this.resourceManager).GetString("Save");
+            ButtonCancel.Content = ((ResourceManager)this.resourceManager).GetString("Cancel");
+            LabelLanguage.Content = ((ResourceManager)this.resourceManager).GetString("Language");
+            LabelLog.Content = ((ResourceManager)this.resourceManager).GetString("Log_File_Type");
+            RadioButtonFR.Content = ((ResourceManager)this.resourceManager).GetString("French");
+            RadioButtonEN.Content = ((ResourceManager)this.resourceManager).GetString("English");
+            HeaderText.Text = ((ResourceManager)this.resourceManager).GetString("Setting");
+
             // Charger la langue et les logs depuis config.json
             try
             {
-                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
                 string configPath = Path.Combine(projectRootPath, "config.json");
                 if (File.Exists(configPath))
                 {
@@ -77,6 +90,12 @@ namespace WpfApp1
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
+            string selectedLanguage = RadioButtonFR.IsChecked == true ? "fr" : "en";
+            string selectedLogExtension = RadioButtonJSON.IsChecked == true ? "json" : "xml";
+            viewModel.ChooseLanguage(selectedLanguage);
+            viewModel.ChooseLogExtension(selectedLogExtension);
+
+            this.Close();
 
         }
 

@@ -1,18 +1,10 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.Resources;
+using System.Text.Json;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfApp1.Model;
 
 namespace WpfApp1
@@ -24,6 +16,7 @@ namespace WpfApp1
     {
         private BackupWorkManager backupWorkManager;
         public event EventHandler BackupAdded;
+        private object resourceManager;
 
         // Declare the fields as instance variables to fix the CS0103 errors
         private string name;
@@ -41,6 +34,27 @@ namespace WpfApp1
             pathSource = string.Empty;
             pathTarget = string.Empty;
             type = string.Empty;
+
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string configFilePath = Path.Combine(projectRootPath, "config.json");
+            string configContent = File.ReadAllText(configFilePath);
+            var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
+            string language = config.ContainsKey("language") ? config["language"] : "en";
+
+            // Définir la culture du ResourceManager en fonction de la langue
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            this.resourceManager = new ResourceManager("WpfApp1.Resources.Messages", typeof(MainWindow).Assembly);
+
+            // Set the content of the buttons and labels using the resource manager
+            ButtonAdd.Content = ((ResourceManager)this.resourceManager).GetString("Add");
+            ButtonCancel.Content = ((ResourceManager)this.resourceManager).GetString("Cancel");
+            LabelSource.Content = ((ResourceManager)this.resourceManager).GetString("Source_Path");
+            LabelTarget.Content = ((ResourceManager)this.resourceManager).GetString("Target_Path");
+            LabelName.Content = ((ResourceManager)this.resourceManager).GetString("Name_Backup");
+            RadioButtonFull.Content = ((ResourceManager)this.resourceManager).GetString("Complet");
+            RadioButtonDifferential.Content = ((ResourceManager)this.resourceManager).GetString("Differential");
+            HeaderText.Text = ((ResourceManager)this.resourceManager).GetString("Add_Backup");
+            Type_Save.Content = ((ResourceManager)this.resourceManager).GetString("Type_Save");
         }
 
         private void TextBoxName_TextChanged(object sender, TextChangedEventArgs e)

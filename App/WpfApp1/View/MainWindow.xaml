@@ -73,7 +73,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Main Menu" VerticalAlignment="Center" />
+            <Label Name="MenuLabel" Content="Main Menu" VerticalAlignment="Center" />
             <Button Name="ButtonSettings" Content="Settings" Margin="666,8,3,8" Click="ButtonSettings_Click" RenderTransformOrigin="0.5,0.5">
                 <Button.RenderTransform>
                     <TransformGroup>

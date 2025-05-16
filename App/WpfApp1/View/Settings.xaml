@@ -73,13 +73,13 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Text="Settings" Style="{StaticResource HeaderTextStyle}"/>
+        <TextBlock Name="HeaderText" Grid.Row="0" Text="Settings" Style="{StaticResource HeaderTextStyle}"/>
 
         <!-- Contenu des options -->
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <!-- Section Language -->
             <StackPanel Margin="0,0,0,20">
-                <Label Content="Language" Style="{StaticResource ModernLabelStyle}"/>
+                <Label Name="LabelLanguage" Content="Language" Style="{StaticResource ModernLabelStyle}"/>
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Name="RadioButtonEN" Content="English" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonFR_Checked" />
                     <RadioButton Name="RadioButtonFR" Content="French" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonEN_Checked" />
@@ -88,7 +88,7 @@
 
             <!-- Section Type File Log -->
             <StackPanel>
-                <Label Content="Type File Log" Style="{StaticResource ModernLabelStyle}"/>
+                <Label Name="LabelLog" Content="Type File Log" Style="{StaticResource ModernLabelStyle}"/>
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Name="RadioButtonXML" Content=".xml" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonXML_Checked" />
                     <RadioButton Name="RadioButtonJSON" Content=".json" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonJSON_Checked" />

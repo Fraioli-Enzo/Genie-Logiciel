@@ -69,6 +69,7 @@
 
         <!-- En-tête -->
         <TextBlock Grid.Row="0"
+                    Name="HeaderText"
                Text="Add Backup"
                FontSize="24"
                FontWeight="Bold"
@@ -97,21 +98,21 @@
             </Grid.RowDefinitions>
 
             <!-- Name Backup -->
-            <Label Content="Name Backup:" Grid.Row="0" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
+            <Label Name="LabelName" Content="Name Backup:" Grid.Row="0" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
             <TextBox Name="TextBoxName" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" TextChanged="TextBoxName_TextChanged" />
 
             <!-- Source Path -->
-            <Label Content="Source Path:" Grid.Row="1" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
+            <Label Name="LabelSource" Content="Source Path:" Grid.Row="1" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
             <TextBox Name="TextBoxSource" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" TextChanged="TextBoxSource_TextChanged" />
             <Button Name="ButtonSource" Grid.Row="1" Grid.Column="1" Content="..." Style="{StaticResource ModernButtonStyle}" Width="30" Height="30" HorizontalAlignment="Left" Margin="500,5,0,7" Click="ButtonSource_Click" />
 
             <!-- Target Path -->
-            <Label Content="Target Path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
+            <Label Name="LabelTarget" Content="Target Path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
             <TextBox Name="TextBoxTarget" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" TextChanged="TextBoxTarget_TextChanged" />
             <Button Name="ButtonTarget" Grid.Row="2" Grid.Column="1" Content="..." Style="{StaticResource ModernButtonStyle}" Width="30" Height="30"  HorizontalAlignment="Left" Margin="500,5,0,7" Click="ButtonTarget_Click" />
 
             <!-- Type Backup -->
-            <Label Content="Type:" Grid.Row="3" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
+            <Label Name="Type_Save" Content="Type:" Grid.Row="3" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Height="31" Margin="175,0,0,0">
                 <RadioButton Name="RadioButtonFull" Content="Full" GroupName="BackupTypeGroup" Margin="0,0,15,0" VerticalAlignment="Center" Checked="RadioButtonFull_Checked" />
                 <RadioButton Name="RadioButtonDifferential" Content="Differential" GroupName="BackupTypeGroup" VerticalAlignment="Center" Checked="RadioButtonDifferential_Checked" />
