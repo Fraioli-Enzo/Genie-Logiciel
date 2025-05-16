@@ -1,0 +1,105 @@
+﻿<Page x:Class="WpfApp1.Settings"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:local="clr-namespace:WpfApp1"
+       mc:Ignorable="d"
+       Title="Setting" Height="450" Width="800"
+       Background="#FAFAFA" FontFamily="Segoe UI">
+
+    <Page.Resources>
+        <!-- Couleurs -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#1976D2"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#64B5F6"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#424242"/>
+
+        <!-- Header -->
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <!-- Labels -->
+        <Style x:Key="ModernLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+        </Style>
+
+        <!-- RadioButtons -->
+        <Style x:Key="ModernRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+        </Style>
+
+        <!-- Boutons -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="*"/>
+            <!-- Contenu des options -->
+            <RowDefinition Height="Auto"/>
+            <!-- Boutons -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Settings" Style="{StaticResource HeaderTextStyle}"/>
+
+        <!-- Contenu des options -->
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <!-- Section Language -->
+            <StackPanel Margin="0,0,0,20">
+                <Label Content="Language" Style="{StaticResource ModernLabelStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Name="RadioButtonFR" Content="English" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonFR_Checked" />
+                    <RadioButton Name="RadioButtonEN" Content="French" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonEN_Checked" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Section Type File Log -->
+            <StackPanel>
+                <Label Content="Type File Log" Style="{StaticResource ModernLabelStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Name="RadioButtonXML" Content=".xml" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonXML_Checked" />
+                    <RadioButton Name="RadioButtonJSON" Content=".json" Style="{StaticResource ModernRadioButtonStyle}" Checked="RadioButtonJSON_Checked" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Boutons d'action -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Name="ButtonCancel" Content="Cancel" Style="{StaticResource ModernButtonStyle}" Width="100" Height="20" Click="ButtonCancel_Click" />
+            <Button Name="ButtonSave" Content="Save" Style="{StaticResource ModernButtonStyle}" Width="100" Height="20" Click="ButtonSave_Click" />
+        </StackPanel>
+    </Grid>
+</Page>
