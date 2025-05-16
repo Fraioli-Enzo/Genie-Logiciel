@@ -39,16 +39,41 @@ namespace WpfApp1
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddBackup addWorkWindow = new AddBackup();
-            addWorkWindow.ShowDialog(); 
+            addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
+            addWorkWindow.ShowDialog();
         }
 
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
-
+            // Récupérer la ligne sélectionnée dans le DataGrid
+            if (BackupDataGrid.SelectedItem is BackupWork selectedWork)
+            {
+                // Exécuter le backup pour l'ID sélectionné
+                backupWorkManager.ExecuteWork(selectedWork.ID, "json");
+                MessageBox.Show("Sauvegarde exécutée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un travail de sauvegarde à exécuter.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
+            // Récupérer la ligne sélectionnée dans le DataGrid
+            if (BackupDataGrid.SelectedItem is BackupWork selectedWork)
+            {
+                // Supprimez le backup pour l'ID sélectionné
+                backupWorkManager.RemoveWork(selectedWork.ID);
+                MessageBox.Show("Sauvegarde supprimée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                BackupDataGrid.ItemsSource = null;
+                BackupDataGrid.ItemsSource = backupWorkManager.Works;
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un travail de sauvegarde à exécuter.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ButtonLogger_Click(object sender, RoutedEventArgs e)
@@ -62,6 +87,12 @@ namespace WpfApp1
             settingsWindow.ShowDialog();
         }
 
-
+        private void AddBackupWindow_BackupAdded(object sender, EventArgs e)
+        {
+            // Rafraîchir la liste des sauvegardes affichées
+            backupWorkManager = new BackupWorkManager();
+            BackupDataGrid.ItemsSource = null;
+            BackupDataGrid.ItemsSource = backupWorkManager.Works;
+        }
     }
 }

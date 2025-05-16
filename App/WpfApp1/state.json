@@ -1,14 +1,1 @@
-[
-  {
-    "ID": "1",
-    "Name": "test1",
-    "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source",
-    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
-    "Type": "FULL",
-    "State": "INACTIVE",
-    "TotalFilesToCopy": "3",
-    "TotalFilesSize": "3459",
-    "NbFilesLeftToDo": "0",
-    "Progression": "100"
-  }
-]
+[]
