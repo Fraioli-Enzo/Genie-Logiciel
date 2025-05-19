@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="EasySave"
+        Title="EasySafe"
         Height="550"
         Width="900"
         Background="#FAFAFA"
         FontFamily="Segoe UI">
+        
 
 
     <Window.Resources>
@@ -74,7 +75,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label Name="MenuLabel" Content="Main Menu" VerticalAlignment="Center" />
-            <Button Name="ButtonSettings" Content="Settings" Margin="666,8,3,8" Click="ButtonSettings_Click" RenderTransformOrigin="0.5,0.5">
+            <Button Name="ButtonSettings" Content="Settings" Margin="0,8,3,8" Click="ButtonSettings_Click" HorizontalAlignment="Right" Width="191">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="1"/>
@@ -103,4 +104,4 @@
             <Button Name="ButtonLogger" Content="Logger" Width="120" Height="20" Click="ButtonLogger_Click" />
         </StackPanel>
     </Grid>
-    </Window>
+</Window>

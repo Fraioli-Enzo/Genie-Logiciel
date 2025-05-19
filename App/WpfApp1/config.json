@@ -1,6 +1,7 @@
 {
-  "language": "fr",
+  "language": "en",
   "log": "json",
+  "workingSoftware": "chrome",
   "extensionsToCrypto": [
     ".pdf",
     ".png"

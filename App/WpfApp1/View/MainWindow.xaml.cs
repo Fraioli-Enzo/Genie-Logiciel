@@ -20,6 +20,7 @@ namespace WpfApp1
         private BackupWorkManager backupWorkManager;
         private object resourceManager;
         private string logExtension;
+        private string workingSoftware;
         private string[] extensions;
 
         public MainWindow()
@@ -42,6 +43,7 @@ namespace WpfApp1
             string language = config != null && config.ContainsKey("language") ? config["language"].GetString() ?? "en" : "en";
             logExtension = config != null && config.ContainsKey("log") ? config["log"].GetString() ?? "json" : "json";
             extensions = config != null && config.ContainsKey("extensionsToCrypto") ? config["extensionsToCrypto"].EnumerateArray().Select(e => e.GetString()).ToArray() : Array.Empty<string>();
+            workingSoftware = config != null && config.ContainsKey("workingSoftware") ? config["workingSoftware"].GetString() ?? "" : "";
 
             // Définir la culture du ResourceManager en fonction de la langue
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
@@ -77,9 +79,20 @@ namespace WpfApp1
             {
                 var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
                 var ids = string.Join(";", selectedWorks.Select(w => w.ID));
-                backupWorkManager.ExecuteWork(ids, logExtension, extensions);
+                string result = backupWorkManager.ExecuteWork(ids, logExtension, extensions, workingSoftware);
 
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch(result)
+                {
+                    case "ExecuteWorkSuccess":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case "ProcessAlreadyRunning":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessAlreadyRunning"), "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                }
+                    
+   
             }
             else
             {

@@ -6,6 +6,8 @@ using System.Globalization;
 using WpfApp1.ViewModel;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace WpfApp1
 {
@@ -15,11 +17,19 @@ namespace WpfApp1
     public partial class Settings : Window
     {
         private object resourceManager;
-        private readonly EasySafeViewModel viewModel = new EasySafeViewModel(); // Ajout du ViewModel
+        private readonly EasySafeViewModel viewModel = new EasySafeViewModel();
+
+        public ObservableCollection<string> AvailableSoftwares { get; set; } = new ObservableCollection<string>
+        {
+            "CalculatorApp", "WINWORD", "EXCEL", "notepad", "chrome"
+        };
+
+        public ObservableCollection<string> SelectedSoftwares { get; set; } = new ObservableCollection<string>();
 
         public Settings()
         {
             InitializeComponent();
+            DataContext = this;
 
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string configFilePath = Path.Combine(projectRootPath, "config.json");
@@ -42,9 +52,8 @@ namespace WpfApp1
             HeaderText.Text = ((ResourceManager)this.resourceManager).GetString("Setting");
             LabelDetector.Content = ((ResourceManager)this.resourceManager).GetString("Detect_Software");
             Extension_File_Encrypt.Content = ((ResourceManager)this.resourceManager).GetString("Extension_File_Encrypt");
-            ButtonAdd.Content = ((ResourceManager)this.resourceManager).GetString("Add");
+            ButtonAddSoftware.Content = ((ResourceManager)this.resourceManager).GetString("Add");
             ButtonAdd_Ext.Content = ((ResourceManager)this.resourceManager).GetString("Add");
-
 
             // Charger la langue et les logs depuis config.json
             try
@@ -135,12 +144,24 @@ namespace WpfApp1
                             }
                         }
                     }
+
+                    if (doc.RootElement.TryGetProperty("workingSoftware", out var wsProp) && wsProp.ValueKind == JsonValueKind.String)
+                    {
+                        string? sw = wsProp.GetString();
+                        if (!string.IsNullOrWhiteSpace(sw) && !sw.Equals("null", StringComparison.OrdinalIgnoreCase) && !SelectedSoftwares.Contains(sw))
+                        {
+                            SelectedSoftwares.Add(sw);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erreur lors du chargement de la configuration : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            // Afficher les tags logiciels sélectionnés
+            RefreshSoftwareTags();
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
@@ -185,39 +206,13 @@ namespace WpfApp1
                 configDict = new Dictionary<string, object>();
             }
 
-            // Mettre à jour la clé "extensionsToCrypto"
             configDict["extensionsToCrypto"] = checkedExtensions;
+            configDict["workingSoftware"] = SelectedSoftwares.FirstOrDefault() ?? "null";
 
-            // Sauvegarder le fichier config.json
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(configFilePath, JsonSerializer.Serialize(configDict, options));
+
             this.Close();
-
-        }
-
-        private void RadioButtonFR_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RadioButtonEN_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RadioButtonXML_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RadioButtonJSON_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TextBoxTarget_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
         }
 
         private void AddExtensionCheckBox_Click(object sender, RoutedEventArgs e)
@@ -242,10 +237,8 @@ namespace WpfApp1
                         Style = (Style)FindResource("ExtensionTagStyle")
                     };
 
-                    // StackPanel horizontal pour TextBlock + bouton supprimer
                     StackPanel sp = new StackPanel { Orientation = Orientation.Horizontal };
 
-                    // TextBlock avec le nom de l'extension
                     TextBlock tb = new TextBlock
                     {
                         Text = extension,
@@ -255,12 +248,11 @@ namespace WpfApp1
                         Margin = new Thickness(0)
                     };
 
-                    // Bouton supprimer à coté du TextBlock
                     Button btnDelete = new Button
                     {
                         Content = "✕",
                         Style = (Style)FindResource("DeleteTagButtonStyle"),
-                        Tag = border // On met le Border dans Tag pour pouvoir le retrouver au clic
+                        Tag = border
                     };
                     btnDelete.Click += BtnDelete_Click;
 
@@ -285,6 +277,66 @@ namespace WpfApp1
             if (sender is Button btn && btn.Tag is Border border)
             {
                 ExtensionCheckBoxPanel.Children.Remove(border);
+            }
+        }
+
+        private void AddSoftwareButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedSoftwares.Clear();
+            RefreshSoftwareTags();
+
+            if (SoftwareDetectComboBox.SelectedItem is string selectedSoftware && !string.IsNullOrWhiteSpace(selectedSoftware))
+            {
+                if (!SelectedSoftwares.Contains(selectedSoftware))
+                {
+                    SelectedSoftwares.Add(selectedSoftware);
+                    RefreshSoftwareTags();
+                }
+                else
+                {
+                    MessageBox.Show("This software is already added.", "Duplicate", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+        }
+
+        private void RefreshSoftwareTags()
+        {
+            SoftwareTagPanel.Children.Clear();
+            foreach (var sw in SelectedSoftwares)
+            {
+                var border = new Border
+                {
+                    Style = (Style)FindResource("ExtensionTagStyle")
+                };
+                var sp = new StackPanel { Orientation = Orientation.Horizontal };
+                var tb = new TextBlock
+                {
+                    Text = sw,
+                    FontSize = 14,
+                    Foreground = (System.Windows.Media.Brush)FindResource("PrimaryColor"),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0)
+                };
+                var btnDelete = new Button
+                {
+                    Content = "✕",
+                    Style = (Style)FindResource("DeleteTagButtonStyle"),
+                    Tag = sw
+                };
+                btnDelete.Click += RemoveSoftwareTag_Click;
+                sp.Children.Add(tb);
+                sp.Children.Add(btnDelete);
+                border.Child = sp;
+                SoftwareTagPanel.Children.Add(border);
+            }
+        }
+
+        private void RemoveSoftwareTag_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string sw && SelectedSoftwares.Contains(sw))
+            {
+                SelectedSoftwares.Remove(sw);
+                RefreshSoftwareTags();
             }
         }
     }

@@ -7,7 +7,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using LoggingLibrary;
 using System.IO.Packaging;
-
+using System.Diagnostics;
+using System.Windows;
 
 namespace WpfApp1.Model
 {
@@ -33,7 +34,14 @@ namespace WpfApp1.Model
             }
         }
 
-        public string AddWork(string name, string pathSource, string pathTarget, string type)
+        public static bool IsProcessRunning(string processName)
+            {
+                // Ne pas inclure l'extension .exe dans le nom du processus
+                var processes = Process.GetProcessesByName(processName);
+                return processes.Length > 0;
+            }
+
+    public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
 
             // Calculer le nombre total de fichiers et leur taille totale
@@ -53,7 +61,6 @@ namespace WpfApp1.Model
                 nbFilesLeftToDo: totalFilesToCopy.ToString()
             );
 
-            // Create JSON content
             // Vérifier si le fichier state.json existe
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string jsonFilePath = Path.Combine(projectRootPath, "state.json");
@@ -61,19 +68,13 @@ namespace WpfApp1.Model
             List<BackupWork> existingWorks = new List<BackupWork>();
 
             if (File.Exists(jsonFilePath))
-            {
-                // Charger les travaux existants depuis le fichier JSON  
+            { 
                 string existingJsonContent = File.ReadAllText(jsonFilePath);
                 existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
             }
-
-            // Ajouter le nouveau travail à la liste existante  
+ 
             existingWorks.Add(newWork);
-
-            // Créer le contenu JSON mis à jour  
-            string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
-
-            // Sauvegarder le fichier JSON mis à jour  
+            string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true }); 
             File.WriteAllText(jsonFilePath, updatedJsonContent);
 
             Works.Add(newWork);
@@ -82,16 +83,13 @@ namespace WpfApp1.Model
 
         public string RemoveWork(string ids)
         {
-            // Parse les IDs à supprimer
             var idsToRemove = ParseIds(ids);
 
             if (idsToRemove.Count == 0)
                 return "RemoveWorkError";
 
-            // Supprime de la liste en mémoire
             Works.RemoveAll(w => idsToRemove.Contains(w.ID));
 
-            // Met à jour state.json
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
@@ -100,19 +98,22 @@ namespace WpfApp1.Model
                 string existingJsonContent = File.ReadAllText(jsonFilePath);
                 var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
 
-                // Supprime les travaux correspondants
                 existingWorks = existingWorks.Where(w => !idsToRemove.Contains(w.ID)).ToList();
 
                 string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(jsonFilePath, updatedJsonContent);
             }
 
-            // Vérifie si au moins un travail a été supprimé
             return "RemoveWorkSuccess";
         }
 
-        public string ExecuteWork(string ids, string log, string[] extensions)
+        public string ExecuteWork(string ids, string log, string[] extensions, string workingSoftware)
         {
+            if (IsProcessRunning(workingSoftware) && workingSoftware != "null") 
+            {
+                return "ProcessAlreadyRunning";
+            }
+
             var idsToExecute = ParseIds(ids);
             if (idsToExecute.Count == 0)
                 return "ExecuteWorkError";
@@ -128,12 +129,10 @@ namespace WpfApp1.Model
                 return "ExecuteWorkSuccess";
             if (results.Any(r => r == "SourceDirectoryNotFound"))
                 return "SourceDirectoryNotFound";
-            // Retourne le premier message d'erreur rencontré sinon
             var firstError = results.FirstOrDefault(r => r != "ExecuteWorkSuccess");
             return firstError ?? "ExecuteWorkError";
         }
 
-        // Ancienne logique d'exécution d'un seul travail, rendue privée
         private string ExecuteSingleWork(string id, string log, string[] extensions)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
@@ -171,7 +170,6 @@ namespace WpfApp1.Model
                 }
                 else
                 {
-                    // Type inconnu, ne rien faire
                     return "ExecuteWorkError";
                 }
 
