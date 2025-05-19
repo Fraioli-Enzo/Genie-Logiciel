@@ -38,8 +38,8 @@ namespace WpfApp1
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string configFilePath = Path.Combine(projectRootPath, "config.json");
             string configContent = File.ReadAllText(configFilePath);
-            var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
-            string language = config.ContainsKey("language") ? config["language"] : "en";
+            var config = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(configContent);
+            string language = config != null && config.ContainsKey("language") ? config["language"].GetString() ?? "en" : "en";
 
             // Définir la culture du ResourceManager en fonction de la langue
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
