@@ -1,4 +1,8 @@
 {
   "language": "fr",
-  "log": "json"
+  "log": "json",
+  "extensionsToCrypto": [
+    ".pdf",
+    ".png"
+  ]
 }

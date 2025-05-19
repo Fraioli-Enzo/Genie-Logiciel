@@ -6,7 +6,7 @@ using System.IO;
 using System.Resources;
 using System.Globalization;
 using System.Runtime.InteropServices;
-
+using System.Collections.Generic;
 
 namespace WpfApp1
 {
@@ -20,6 +20,7 @@ namespace WpfApp1
         private BackupWorkManager backupWorkManager;
         private object resourceManager;
         private string logExtension;
+        private string[] extensions;
 
         public MainWindow()
         {
@@ -36,9 +37,12 @@ namespace WpfApp1
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string configFilePath = Path.Combine(projectRootPath, "config.json");
             string configContent = File.ReadAllText(configFilePath);
-            var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
-            string language = config.ContainsKey("language") ? config["language"] : "en";
-            logExtension = config.ContainsKey("log") ? config["log"] : "json";
+            var config = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(configContent);
+
+            string language = config != null && config.ContainsKey("language") ? config["language"].GetString() ?? "en" : "en";
+            logExtension = config != null && config.ContainsKey("log") ? config["log"].GetString() ?? "json" : "json";
+            extensions = config != null && config.ContainsKey("extensionsToCrypto") ? config["extensionsToCrypto"].EnumerateArray().Select(e => e.GetString()).ToArray() : Array.Empty<string>();
+
             // Définir la culture du ResourceManager en fonction de la langue
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             this.resourceManager = new ResourceManager("WpfApp1.Resources.Messages", typeof(MainWindow).Assembly);
@@ -73,7 +77,7 @@ namespace WpfApp1
             {
                 var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
                 var ids = string.Join(";", selectedWorks.Select(w => w.ID));
-                backupWorkManager.ExecuteWork(ids, logExtension);
+                backupWorkManager.ExecuteWork(ids, logExtension, extensions);
 
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }

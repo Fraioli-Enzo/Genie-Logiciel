@@ -52,3 +52,165 @@
   "Time": "19/05/2025 10:00:41",
   "EncryptionTime": 3
 }
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.8509,
+  "Time": "19/05/2025 10:38:32",
+  "EncryptionTime": 1
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.7736,
+  "Time": "19/05/2025 10:38:32",
+  "EncryptionTime": 1
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.8768,
+  "Time": "19/05/2025 10:38:32",
+  "EncryptionTime": 2
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.1208,
+  "Time": "19/05/2025 10:39:27",
+  "EncryptionTime": 1
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.9127,
+  "Time": "19/05/2025 10:39:27",
+  "EncryptionTime": 2
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.8305,
+  "Time": "19/05/2025 10:39:27",
+  "EncryptionTime": 2
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.2006,
+  "Time": "19/05/2025 10:43:45",
+  "EncryptionTime": 1
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.8127,
+  "Time": "19/05/2025 10:43:45",
+  "EncryptionTime": 2
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.98,
+  "Time": "19/05/2025 10:43:45",
+  "EncryptionTime": 2
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 0.6778,
+  "Time": "19/05/2025 10:43:53",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 0.6301,
+  "Time": "19/05/2025 10:43:53",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 0.5374,
+  "Time": "19/05/2025 10:43:53",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.799,
+  "Time": "19/05/2025 10:53:12",
+  "EncryptionTime": 2
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.7699,
+  "Time": "19/05/2025 10:53:12",
+  "EncryptionTime": 1
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.879,
+  "Time": "19/05/2025 10:53:12",
+  "EncryptionTime": 2
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.134,
+  "Time": "19/05/2025 10:53:27",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 0.7827,
+  "Time": "19/05/2025 10:53:27",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Sauvegarde1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 0.5437,
+  "Time": "19/05/2025 10:53:27",
+  "EncryptionTime": 0
+}

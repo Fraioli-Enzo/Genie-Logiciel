@@ -3,6 +3,7 @@ using System.Resources;
 using WpfApp1.Model;
 using System.Xml.Serialization;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.IO;
 
 namespace WpfApp1.ViewModel
@@ -18,78 +19,57 @@ namespace WpfApp1.ViewModel
                 throw new ArgumentException("Invalid language. Only 'fr' and 'en' are supported.");
             }
 
-            // Define the path to the config.json file
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string configFilePath = Path.Combine(projectRootPath, "config.json");
 
-            // Read the existing config file
-            var config = new Dictionary<string, string>();
+            // Désérialisation générique pour supporter les tableaux
+            JsonObject configObj;
             if (File.Exists(configFilePath))
             {
                 string configContent = File.ReadAllText(configFilePath);
-                config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent) ?? new Dictionary<string, string>();
+                configObj = JsonNode.Parse(configContent)?.AsObject() ?? new JsonObject();
+            }
+            else
+            {
+                configObj = new JsonObject();
             }
 
-            // Update the language setting
-            config["language"] = language;
+            // Mise à jour de la langue
+            configObj["language"] = language;
 
-            // Write the updated config back to the file
-            string updatedConfigContent = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(configFilePath, updatedConfigContent);
+            // Sauvegarde du fichier config avec tous les types préservés
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            File.WriteAllText(configFilePath, configObj.ToJsonString(options));
         }
 
         public void ChooseLogExtension(string logExtension)
         {
             if (logExtension != "json" && logExtension != "xml")
             {
-                throw new ArgumentException("Invalid language. Only 'fr' and 'en' are supported.");
+                throw new ArgumentException("Invalid log extension. Only 'json' and 'xml' are supported.");
             }
 
-            // Define the path to the config.json file
-            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string configFilePath = Path.Combine(projectRootPath, "config.json");
 
-            // Read the existing config file
-            var config = new Dictionary<string, string>();
+            // Désérialisation générique pour supporter les tableaux
+            JsonObject configObj;
             if (File.Exists(configFilePath))
             {
                 string configContent = File.ReadAllText(configFilePath);
-                config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent) ?? new Dictionary<string, string>();
+                configObj = JsonNode.Parse(configContent)?.AsObject() ?? new JsonObject();
             }
-
-            // Update the language setting
-            config["log"] = logExtension;
-
-            // Write the updated config back to the file
-            string updatedConfigContent = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(configFilePath, updatedConfigContent);
-        }
-
-        public string RunBackup(string choice, string name, string pathSource, string pathTarget, string type, string id, string log)
-        {
-
-            switch (choice)
+            else
             {
-
-                case "2":
-                    string addWork = workManager.AddWork(name, pathSource, pathTarget, type);
-                    return addWork;
-
-                case "3":
-                    string removeWork = workManager.RemoveWork(id);
-                    return removeWork;
-
-                case "4":
-                    string executeWork = workManager.ExecuteWork(id, log);
-                    return executeWork;
-
-                case "5":
-                    return "RunBackupExit";
-
-                default:
-                    return "RunBackupDefaultError";
+                configObj = new JsonObject();
             }
-            
+
+            // Mise à jour du log
+            configObj["log"] = logExtension;
+
+            // Sauvegarde du fichier config avec tous les types préservés
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            File.WriteAllText(configFilePath, configObj.ToJsonString(options));
         }
     }
 }

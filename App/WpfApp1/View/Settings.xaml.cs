@@ -24,8 +24,9 @@ namespace WpfApp1
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string configFilePath = Path.Combine(projectRootPath, "config.json");
             string configContent = File.ReadAllText(configFilePath);
-            var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
-            string language = config.ContainsKey("language") ? config["language"] : "en";
+            var config = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(configContent);
+
+            string language = config != null && config.ContainsKey("language") ? config["language"].GetString() ?? "en" : "en";
 
             // Définir la culture du ResourceManager en fonction de la langue
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
@@ -39,6 +40,11 @@ namespace WpfApp1
             RadioButtonFR.Content = ((ResourceManager)this.resourceManager).GetString("French");
             RadioButtonEN.Content = ((ResourceManager)this.resourceManager).GetString("English");
             HeaderText.Text = ((ResourceManager)this.resourceManager).GetString("Setting");
+            LabelDetector.Content = ((ResourceManager)this.resourceManager).GetString("Detect_Software");
+            Extension_File_Encrypt.Content = ((ResourceManager)this.resourceManager).GetString("Extension_File_Encrypt");
+            ButtonAdd.Content = ((ResourceManager)this.resourceManager).GetString("Add");
+            ButtonAdd_Ext.Content = ((ResourceManager)this.resourceManager).GetString("Add");
+
 
             // Charger la langue et les logs depuis config.json
             try
@@ -76,6 +82,59 @@ namespace WpfApp1
                             RadioButtonJSON.IsChecked = false;
                         }
                     }
+
+                    if (doc.RootElement.TryGetProperty("extensionsToCrypto", out var extProp) && extProp.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var extElem in extProp.EnumerateArray())
+                        {
+                            string? extension = extElem.GetString();
+                            if (!string.IsNullOrWhiteSpace(extension))
+                            {
+                                // Vérifie si un type de fichier n'est pas déjà présent
+                                bool alreadyExists = ExtensionCheckBoxPanel.Children
+                                    .OfType<Border>()
+                                    .Select(b => b.Child)
+                                    .OfType<StackPanel>()
+                                    .Select(sp => sp.Children[0] as TextBlock)
+                                    .Any(tb => tb != null && tb.Text.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+                                if (!alreadyExists)
+                                {
+                                    Border border = new Border
+                                    {
+                                        Style = (Style)FindResource("ExtensionTagStyle")
+                                    };
+
+                                    StackPanel sp = new StackPanel { Orientation = Orientation.Horizontal };
+
+                                    // Remplacer la CheckBox par un TextBlock
+                                    TextBlock tb = new TextBlock
+                                    {
+                                        Text = extension,
+                                        FontSize = 14,
+                                        Foreground = (System.Windows.Media.Brush)FindResource("PrimaryColor"),
+                                        VerticalAlignment = VerticalAlignment.Center,
+                                        Margin = new Thickness(0)
+                                    };
+
+                                    Button btnDelete = new Button
+                                    {
+                                        Content = "✕",
+                                        Style = (Style)FindResource("DeleteTagButtonStyle"),
+                                        Tag = border
+                                    };
+                                    btnDelete.Click += BtnDelete_Click;
+
+                                    sp.Children.Add(tb);
+                                    sp.Children.Add(btnDelete);
+
+                                    border.Child = sp;
+
+                                    ExtensionCheckBoxPanel.Children.Add(border);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -96,6 +155,42 @@ namespace WpfApp1
             viewModel.ChooseLanguage(selectedLanguage);
             viewModel.ChooseLogExtension(selectedLogExtension);
 
+            // Récupérer toutes les extensions (TextBlock) affichées
+            var checkedExtensions = new List<string>();
+            foreach (var border in ExtensionCheckBoxPanel.Children.OfType<Border>())
+            {
+                if (border.Child is StackPanel sp && sp.Children[0] is TextBlock tb)
+                {
+                    string ext = tb.Text;
+                    // S'assurer que l'extension commence par un point
+                    if (!string.IsNullOrWhiteSpace(ext))
+                    {
+                        if (!ext.StartsWith(".")) ext = "." + ext;
+                        checkedExtensions.Add(ext.ToLowerInvariant());
+                    }
+                }
+            }
+
+            // Charger le fichier config.json
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
+            string configFilePath = Path.Combine(projectRootPath, "config.json");
+            Dictionary<string, object> configDict;
+            if (File.Exists(configFilePath))
+            {
+                string configContent = File.ReadAllText(configFilePath);
+                configDict = JsonSerializer.Deserialize<Dictionary<string, object>>(configContent) ?? new Dictionary<string, object>();
+            }
+            else
+            {
+                configDict = new Dictionary<string, object>();
+            }
+
+            // Mettre à jour la clé "extensionsToCrypto"
+            configDict["extensionsToCrypto"] = checkedExtensions;
+
+            // Sauvegarder le fichier config.json
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            File.WriteAllText(configFilePath, JsonSerializer.Serialize(configDict, options));
             this.Close();
 
         }
@@ -137,8 +232,8 @@ namespace WpfApp1
                     .OfType<Border>()
                     .Select(b => b.Child)
                     .OfType<StackPanel>()
-                    .Select(sp => sp.Children[0] as CheckBox)
-                    .Any(cb => cb != null && cb.Content.ToString().Equals(extension, StringComparison.OrdinalIgnoreCase));
+                    .Select(sp => sp.Children[0] as TextBlock)
+                    .Any(tb => tb != null && tb.Text.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
                 if (!alreadyExists)
                 {
@@ -147,18 +242,20 @@ namespace WpfApp1
                         Style = (Style)FindResource("ExtensionTagStyle")
                     };
 
-                    // StackPanel horizontal pour CheckBox + bouton supprimer
+                    // StackPanel horizontal pour TextBlock + bouton supprimer
                     StackPanel sp = new StackPanel { Orientation = Orientation.Horizontal };
 
-                    // CheckBox avec le nom de l'extension
-                    CheckBox cb = new CheckBox
+                    // TextBlock avec le nom de l'extension
+                    TextBlock tb = new TextBlock
                     {
-                        Content = extension,
-                        Style = (Style)FindResource("TagCheckBoxStyle"),
-                        IsChecked = true
+                        Text = extension,
+                        FontSize = 14,
+                        Foreground = (System.Windows.Media.Brush)FindResource("PrimaryColor"),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Margin = new Thickness(0)
                     };
 
-                    // Bouton supprimer à coté de la CheckBox
+                    // Bouton supprimer à coté du TextBlock
                     Button btnDelete = new Button
                     {
                         Content = "✕",
@@ -167,7 +264,7 @@ namespace WpfApp1
                     };
                     btnDelete.Click += BtnDelete_Click;
 
-                    sp.Children.Add(cb);
+                    sp.Children.Add(tb);
                     sp.Children.Add(btnDelete);
 
                     border.Child = sp;
