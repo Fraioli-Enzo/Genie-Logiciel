@@ -5560,4 +5560,52 @@
     <FileTransferTime>1,4183</FileTransferTime>
     <Time>19/05/2025 09:19:47</Time>
   </Entry>
+  <Entry>
+    <Name>1</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (2).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible2\FichierTexteSource - Copie (2).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>27,4456</FileTransferTime>
+    <Time>19/05/2025 09:43:45</Time>
+  </Entry>
+  <Entry>
+    <Name>1</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (3).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible2\FichierTexteSource - Copie (3).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>7,5837</FileTransferTime>
+    <Time>19/05/2025 09:43:45</Time>
+  </Entry>
+  <Entry>
+    <Name>1</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (4).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible2\FichierTexteSource - Copie (4).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>7,1377</FileTransferTime>
+    <Time>19/05/2025 09:43:46</Time>
+  </Entry>
+  <Entry>
+    <Name>1</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (2).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible2\FichierTexteSource - Copie (2).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>2,0854</FileTransferTime>
+    <Time>19/05/2025 09:46:39</Time>
+  </Entry>
+  <Entry>
+    <Name>1</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (3).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible2\FichierTexteSource - Copie (3).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>1,6138</FileTransferTime>
+    <Time>19/05/2025 09:46:39</Time>
+  </Entry>
+  <Entry>
+    <Name>1</Name>
+    <FileSource>C:\Users\enzof\Documents\Test_Source\FichierTexteSource - Copie (4).txt</FileSource>
+    <FileTarget>C:\Users\enzof\Documents\CESI\Test_Cible2\FichierTexteSource - Copie (4).txt</FileTarget>
+    <FileSize>1153</FileSize>
+    <FileTransferTime>1,1455</FileTransferTime>
+    <Time>19/05/2025 09:46:39</Time>
+  </Entry>
 </LogEntry>

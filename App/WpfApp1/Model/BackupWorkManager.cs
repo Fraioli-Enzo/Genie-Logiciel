@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using LoggingLibrary;
+using System.IO.Packaging;
 
 
 namespace WpfApp1.Model
@@ -136,6 +137,7 @@ namespace WpfApp1.Model
         private string ExecuteSingleWork(string id, string log)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
+            string nameBackup = workToExecute.Name;
             if (workToExecute != null)
             {
                 string sourcePath = workToExecute.SourcePath;
@@ -219,12 +221,27 @@ namespace WpfApp1.Model
 
                         File.Copy(file, targetFilePath, overwrite: true);
 
+                        // Liste des extensions à chiffrer
+                        string[] extensionsToEncrypt = { ".txt", ".docx", ".xlsx", ".pdf" };
+
+                        // Chiffrement du fichier si l'extension correspond
+                        int encryptionTime = 0;
+                        string fileExtension = Path.GetExtension(targetFilePath);
+                        if (extensionsToEncrypt.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
+                        {
+                            encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "test");
+                            if (encryptionTime == -99)
+                            {
+                                return "EncryptionError";
+                            }
+                        }
+
                         stopwatch.Stop();
                         double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
 
                         long fileSize = new FileInfo(file).Length;
-                        LoggingLibrary.Logger.Log(id, file, targetFilePath, fileSize, fileTransferTime, log);
-
+                        LoggingLibrary.Logger.Log(nameBackup, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime);
+                         
                         filesCopied++;
 
                         workToExecute.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();

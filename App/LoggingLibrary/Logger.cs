@@ -19,9 +19,10 @@ namespace LoggingLibrary
             public long FileSize { get; set; }
             public double FileTransferTime { get; set; }
             public string Time { get; set; }
+            public int EncryptionTime { get; set; }
         }
 
-        public static void Log(string id, string fileSource, string fileTarget, long fileSize, double fileTransferTime, string log)
+        public static void Log(string id, string fileSource, string fileTarget, long fileSize, double fileTransferTime, string log, int encryptionTime)
         {
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string logsDirectoryPath = Path.Combine(projectRootPath, "Logs");
@@ -38,7 +39,8 @@ namespace LoggingLibrary
                 FileTarget = fileTarget,
                 FileSize = fileSize,
                 FileTransferTime = fileTransferTime,
-                Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+                Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
+                EncryptionTime = encryptionTime
             };
 
             if (log.ToLower() == "xml")
@@ -52,6 +54,7 @@ namespace LoggingLibrary
                 entrySb.AppendLine($"    <FileSize>{logEntry.FileSize}</FileSize>");
                 entrySb.AppendLine($"    <FileTransferTime>{logEntry.FileTransferTime}</FileTransferTime>");
                 entrySb.AppendLine($"    <Time>{System.Security.SecurityElement.Escape(logEntry.Time)}</Time>");
+                entrySb.AppendLine($"    <EncryptionTime>{logEntry.EncryptionTime}</EncryptionTime>");
                 entrySb.AppendLine("  </Entry>");
                 string entryXml = entrySb.ToString();
 
