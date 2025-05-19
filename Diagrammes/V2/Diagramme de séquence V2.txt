@@ -1,0 +1,85 @@
+@startuml
+actor User
+
+' Participants par couche
+participant MainMenu
+participant Add_Backup_View
+participant Setting_View
+
+participant Backup_Manager
+participant Logger
+participant Language_Manager
+
+participant Backup
+participant Progression_Backup
+participant CryptoSoft
+participant Software_Detector
+participant Delete_Backup
+participant LogEntry
+
+'===============================
+== 1. Ajouter une sauvegarde ==
+'===============================
+
+User -> MainMenu : Click_Add_Backup()
+MainMenu -> Add_Backup_View : Display_Add_Backup_Form()
+
+User -> Add_Backup_View : Submit_Backup(name, type, source, target)
+Add_Backup_View -> Backup_Manager : Add_Backup(name, type, source, target)
+
+Backup_Manager -> Backup : new(name, source, target, type)
+activate Backup
+Backup -> Progression_Backup : new()
+Backup -> CryptoSoft : new()
+deactivate Backup
+
+Backup_Manager -> Logger : Log_Execution(backup)
+Logger -> LogEntry : new()
+Logger -> Logger : Add to Log_Entries
+
+'===============================
+== 2. Exécuter une sauvegarde ==
+'===============================
+
+User -> MainMenu : Click_Execute_Backup()
+MainMenu -> Backup_Manager : Execute_Backup(selectedBackup)
+
+Backup_Manager -> Software_Detector : Detect_Software()
+
+Backup_Manager -> Backup : execute()
+activate Backup
+Backup -> CryptoSoft : Encrypt_File()
+Backup -> Progression_Backup : update()
+
+loop pendant la copie
+    Backup -> Backup : getProgress()
+end
+
+Backup_Manager -> Logger : Log_Execution(backup)
+Logger -> LogEntry : new()
+Logger -> Logger : Add to Log_Entries
+deactivate Backup
+
+'===============================
+== 3. Supprimer une sauvegarde ==
+'===============================
+
+User -> MainMenu : Click_Delete_Backup()
+MainMenu -> Backup_Manager : Delete_Backup(name)
+
+Backup_Manager -> Delete_Backup : Delete_Backup(name)
+Delete_Backup --> Backup_Manager : bool
+
+'===============================
+== 4. Changer les paramètres ==
+'===============================
+
+User -> MainMenu : Click_Setting()
+MainMenu -> Setting_View : DisplaySettingsForm()
+
+User -> Setting_View : Change_Language(lang)
+Setting_View -> Language_Manager : setLanguage(lang)
+
+User -> Setting_View : Change_Log_File_Type(type)
+Setting_View -> Logger : set Type_File_Log
+@enduml
