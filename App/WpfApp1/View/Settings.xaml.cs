@@ -5,6 +5,7 @@ using System.Resources;
 using System.Globalization;
 using WpfApp1.ViewModel;
 using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace WpfApp1
 {
@@ -117,6 +118,77 @@ namespace WpfApp1
         private void RadioButtonJSON_Checked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void TextBoxTarget_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
+
+        private void AddExtensionCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            string extension = Type_File.Text.Trim();
+
+            // Vérifie si le champ de saisi n'est pas vide
+            if (!string.IsNullOrEmpty(extension))
+            {
+                // Vérifie si un type de fichier n'est pas dejà présent
+                bool alreadyExists = ExtensionCheckBoxPanel.Children
+                    .OfType<Border>()
+                    .Select(b => b.Child)
+                    .OfType<StackPanel>()
+                    .Select(sp => sp.Children[0] as CheckBox)
+                    .Any(cb => cb != null && cb.Content.ToString().Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+                if (!alreadyExists)
+                {
+                    Border border = new Border
+                    {
+                        Style = (Style)FindResource("ExtensionTagStyle")
+                    };
+
+                    // StackPanel horizontal pour CheckBox + bouton supprimer
+                    StackPanel sp = new StackPanel { Orientation = Orientation.Horizontal };
+
+                    // CheckBox avec le nom de l'extension
+                    CheckBox cb = new CheckBox
+                    {
+                        Content = extension,
+                        Style = (Style)FindResource("TagCheckBoxStyle"),
+                        IsChecked = true
+                    };
+
+                    // Bouton supprimer à coté de la CheckBox
+                    Button btnDelete = new Button
+                    {
+                        Content = "✕",
+                        Style = (Style)FindResource("DeleteTagButtonStyle"),
+                        Tag = border // On met le Border dans Tag pour pouvoir le retrouver au clic
+                    };
+                    btnDelete.Click += BtnDelete_Click;
+
+                    sp.Children.Add(cb);
+                    sp.Children.Add(btnDelete);
+
+                    border.Child = sp;
+
+                    ExtensionCheckBoxPanel.Children.Add(border);
+
+                    Type_File.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("This extension is already added.", "Duplicate", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is Border border)
+            {
+                ExtensionCheckBoxPanel.Children.Remove(border);
+            }
         }
     }
 }

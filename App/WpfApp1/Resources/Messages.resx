@@ -240,4 +240,20 @@
     <value>Menu Principal</value>
     <comment>-</comment>
   </data>
+  <data name="Type_File_Encrypt" xml:space="preserve">
+    <value>Type de fichier à encrypter</value>
+    <comment>-</comment>
+  </data>
+  <data name="Extension_File_Encrypt" xml:space="preserve">
+    <value>Extension de fichier à encrypter</value>
+    <comment>-</comment>
+  </data>
+  <data name="Detect_Software" xml:space="preserve">
+    <value>Logiciel à détecter</value>
+    <comment>-</comment>
+  </data>
+  <data name="This_extension_file_added" xml:space="preserve">
+    <value>Ce extension de fichier est déjà ajouté</value>
+    <comment>-</comment>
+  </data>
 </root>
