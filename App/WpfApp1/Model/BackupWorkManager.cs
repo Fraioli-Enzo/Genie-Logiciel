@@ -111,7 +111,7 @@ namespace WpfApp1.Model
             return "RemoveWorkSuccess";
         }
 
-        public string ExecuteWork(string ids, string log)
+        public string ExecuteWork(string ids, string log, string[] extensions)
         {
             var idsToExecute = ParseIds(ids);
             if (idsToExecute.Count == 0)
@@ -120,7 +120,7 @@ namespace WpfApp1.Model
             var results = new List<string>();
             foreach (var id in idsToExecute)
             {
-                var result = ExecuteSingleWork(id, log);
+                var result = ExecuteSingleWork(id, log, extensions);
                 results.Add(result);
             }
 
@@ -134,7 +134,7 @@ namespace WpfApp1.Model
         }
 
         // Ancienne logique d'exécution d'un seul travail, rendue privée
-        private string ExecuteSingleWork(string id, string log)
+        private string ExecuteSingleWork(string id, string log, string[] extensions)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
             string nameBackup = workToExecute.Name;
@@ -221,15 +221,12 @@ namespace WpfApp1.Model
 
                         File.Copy(file, targetFilePath, overwrite: true);
 
-                        // Liste des extensions à chiffrer
-                        string[] extensionsToEncrypt = { ".txt", ".docx", ".xlsx", ".pdf" };
-
                         // Chiffrement du fichier si l'extension correspond
                         int encryptionTime = 0;
                         string fileExtension = Path.GetExtension(targetFilePath);
-                        if (extensionsToEncrypt.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
+                        if (extensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
                         {
-                            encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "test");
+                            encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "ProtectedKey");
                             if (encryptionTime == -99)
                             {
                                 return "EncryptionError";
