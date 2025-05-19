@@ -210,4 +210,16 @@
   <data name="MainMenu" xml:space="preserve">
     <value>Main Menu</value>
   </data>
+  <data name="Type_File_Encrypt" xml:space="preserve">
+    <value>Type file to encrypt</value>
+  </data>
+  <data name="Extension_File_Encrypt" xml:space="preserve">
+    <value>Extension file to encrypt</value>
+  </data>
+  <data name="Detect_Software" xml:space="preserve">
+    <value>Software to detect</value>
+  </data>
+  <data name="This_extension_file_added" xml:space="preserve">
+    <value>This extension is already added</value>
+  </data>
 </root>
