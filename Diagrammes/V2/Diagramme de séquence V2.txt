@@ -1,7 +1,7 @@
 @startuml
 actor User
 
-' Participants par couche
+' Participants by layer
 participant MainMenu
 participant Add_Backup_View
 participant Setting_View
@@ -18,7 +18,7 @@ participant Delete_Backup
 participant LogEntry
 
 '===============================
-== 1. Ajouter une sauvegarde ==
+== 1. Add a Backup ==
 '===============================
 
 User -> MainMenu : Click_Add_Backup()
@@ -38,7 +38,7 @@ Logger -> LogEntry : new()
 Logger -> Logger : Add to Log_Entries
 
 '===============================
-== 2. Exécuter une sauvegarde ==
+== 2. Execute a Backup ==
 '===============================
 
 User -> MainMenu : Click_Execute_Backup()
@@ -51,7 +51,7 @@ activate Backup
 Backup -> CryptoSoft : Encrypt_File()
 Backup -> Progression_Backup : update()
 
-loop pendant la copie
+loop during copy
     Backup -> Backup : getProgress()
 end
 
@@ -61,7 +61,7 @@ Logger -> Logger : Add to Log_Entries
 deactivate Backup
 
 '===============================
-== 3. Supprimer une sauvegarde ==
+== 3. Delete a Backup ==
 '===============================
 
 User -> MainMenu : Click_Delete_Backup()
@@ -71,7 +71,7 @@ Backup_Manager -> Delete_Backup : Delete_Backup(name)
 Delete_Backup --> Backup_Manager : bool
 
 '===============================
-== 4. Changer les paramètres ==
+== 4. Change Settings ==
 '===============================
 
 User -> MainMenu : Click_Setting()
@@ -81,5 +81,5 @@ User -> Setting_View : Change_Language(lang)
 Setting_View -> Language_Manager : setLanguage(lang)
 
 User -> Setting_View : Change_Log_File_Type(type)
-Setting_View -> Logger : set Type_File_Log
+Setting_View -> Logger : set_Log_File_Type
 @enduml
