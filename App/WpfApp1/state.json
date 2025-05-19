@@ -1,14 +1,14 @@
 [
   {
     "ID": "1",
-    "Name": "Salut",
-    "SourcePath": "C:\\Users\\enzof\\Documents\\CESI",
-    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3",
+    "Name": "Sauvegarde1",
+    "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source",
+    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2",
     "Type": "FULL",
     "State": "INACTIVE",
-    "TotalFilesToCopy": "2618",
-    "TotalFilesSize": "40931744",
-    "NbFilesLeftToDo": "2618",
-    "Progression": "0"
+    "TotalFilesToCopy": "3",
+    "TotalFilesSize": "3459",
+    "NbFilesLeftToDo": "0",
+    "Progression": "100"
   }
 ]

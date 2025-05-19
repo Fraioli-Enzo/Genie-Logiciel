@@ -5,6 +5,7 @@ using WpfApp1.Model;
 using System.IO;
 using System.Resources;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 
 namespace WpfApp1
@@ -18,6 +19,7 @@ namespace WpfApp1
 
         private BackupWorkManager backupWorkManager;
         private object resourceManager;
+        private string logExtension;
 
         public MainWindow()
         {
@@ -36,7 +38,7 @@ namespace WpfApp1
             string configContent = File.ReadAllText(configFilePath);
             var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configContent);
             string language = config.ContainsKey("language") ? config["language"] : "en";
-
+            logExtension = config.ContainsKey("log") ? config["log"] : "json";
             // Définir la culture du ResourceManager en fonction de la langue
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             this.resourceManager = new ResourceManager("WpfApp1.Resources.Messages", typeof(MainWindow).Assembly);
@@ -64,7 +66,6 @@ namespace WpfApp1
             addWorkWindow.ShowDialog();
         }
 
-        // Fix for the CS1061 error in the ButtonExecute_Click method
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
             var selectedItems = BackupDataGrid.SelectedItems;
@@ -72,7 +73,7 @@ namespace WpfApp1
             {
                 var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
                 var ids = string.Join(";", selectedWorks.Select(w => w.ID));
-                backupWorkManager.ExecuteWork(ids, "json");
+                backupWorkManager.ExecuteWork(ids, logExtension);
 
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
