@@ -1,86 +1,85 @@
 @startuml
 actor User
 
-participant Program
+' Participants par couche
 participant MainMenu
+participant Add_Backup_View
+participant Setting_View
+
 participant Backup_Manager
-participant Language_Manager
 participant Logger
+participant Language_Manager
+
+participant Backup
+participant Progression_Backup
+participant CryptoSoft
 participant Software_Detector
-participant Model.Backup
-participant Model.Progression_Backup
-participant Model.LogEntry
-participant Model.Delete_Backup
-participant Model.Language
-participant Model.State
-participant Model.Type_Backup
-participant Model.Type_File_Log
-participant Model.CryptoSoft
+participant Delete_Backup
+participant LogEntry
 
-== Program Launch ==
-User -> Program : Start
-Program -> MainMenu : Backup_Menu()
+'===============================
+== 1. Ajouter une sauvegarde ==
+'===============================
 
-== Add a Backup ==
-User -> MainMenu : Backup_Menu()
-MainMenu -> Backup_Manager : Add_Backup(name, type, source, target)
+User -> MainMenu : Click_Add_Backup()
+MainMenu -> Add_Backup_View : Display_Add_Backup_Form()
 
-Backup_Manager -> Model.Backup : new(name, source, target, type)
-activate Model.Backup
-Model.Backup -> Model.Progression_Backup : new()
-Model.Backup -> Model.State : set to ACTIVE
-Model.Backup -> Model.Type_Backup : set (Complete / Differential)
-Model.Backup -> Model.CryptoSoft : new()
-deactivate Model.Backup
+User -> Add_Backup_View : Submit_Backup(name, type, source, target)
+Add_Backup_View -> Backup_Manager : Add_Backup(name, type, source, target)
+
+Backup_Manager -> Backup : new(name, source, target, type)
+activate Backup
+Backup -> Progression_Backup : new()
+Backup -> CryptoSoft : new()
+deactivate Backup
 
 Backup_Manager -> Logger : Log_Execution(backup)
-Logger -> Model.LogEntry : new()
+Logger -> LogEntry : new()
 Logger -> Logger : Add to Log_Entries
 
-Backup_Manager -> Backup_Manager : Add to backups
+'===============================
+== 2. Exécuter une sauvegarde ==
+'===============================
 
-== Execute a Backup ==
-User -> MainMenu : Backup_Menu()
-MainMenu -> Backup_Manager : Execute_Backup()
+User -> MainMenu : Click_Execute_Backup()
+MainMenu -> Backup_Manager : Execute_Backup(selectedBackup)
 
-Backup_Manager -> Software_Detector : Detect()
-Software_Detector -> Backup_Manager : detected_software []
+Backup_Manager -> Software_Detector : Detect_Software()
 
-loop for each backup in backups
-    alt backup.State == ACTIVE
-        Backup_Manager -> Model.Backup : execute()
+Backup_Manager -> Backup : execute()
+activate Backup
+Backup -> CryptoSoft : Encrypt_File()
+Backup -> Progression_Backup : update()
 
-        Model.Backup -> Model.CryptoSoft : Encrypt_File()
-
-        Model.Backup -> Model.Progression_Backup : update()
-        loop during copy
-            Model.Backup -> Model.Backup : getProgress()
-        end
-
-        alt Type_File_Log == JSON
-            Logger -> Logger : Save as JSON
-        else Type_File_Log == XML
-            Logger -> Logger : Save as XML
-        end
-
-        Model.Backup -> Model.Backup : getCryptoSoft()
-        Backup_Manager -> Logger : Log_Execution(backup)
-        Logger -> Model.LogEntry : new()
-        Logger -> Logger : Add to Log_Entries
-    else backup.State != ACTIVE
-        note right: Backup skipped
-    end
+loop pendant la copie
+    Backup -> Backup : getProgress()
 end
 
-== Delete a Backup ==
-User -> MainMenu : Backup_Menu()
-MainMenu -> Backup_Manager : Delete_Backup(name)
-Backup_Manager -> Model.Delete_Backup : Delete_Backup(name)
-Model.Delete_Backup -> Backup_Manager : bool
+Backup_Manager -> Logger : Log_Execution(backup)
+Logger -> LogEntry : new()
+Logger -> Logger : Add to Log_Entries
+deactivate Backup
 
-== Change Language ==
-User -> MainMenu : Language_Menu()
-MainMenu -> Language_Manager : setLanguage(lang)
-Language_Manager -> Model.Language : EN / FR
-Language_Manager -> Language_Manager : Current_Language updated
+'===============================
+== 3. Supprimer une sauvegarde ==
+'===============================
+
+User -> MainMenu : Click_Delete_Backup()
+MainMenu -> Backup_Manager : Delete_Backup(name)
+
+Backup_Manager -> Delete_Backup : Delete_Backup(name)
+Delete_Backup --> Backup_Manager : bool
+
+'===============================
+== 4. Changer les paramètres ==
+'===============================
+
+User -> MainMenu : Click_Setting()
+MainMenu -> Setting_View : DisplaySettingsForm()
+
+User -> Setting_View : Change_Language(lang)
+Setting_View -> Language_Manager : setLanguage(lang)
+
+User -> Setting_View : Change_Log_File_Type(type)
+Setting_View -> Logger : set Type_File_Log
 @enduml
