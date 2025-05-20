@@ -17,7 +17,9 @@
         <SolidColorBrush x:Key="PrimaryColor" Color="#1976D2"/>
         <SolidColorBrush x:Key="AccentColor" Color="#64B5F6"/>
         <SolidColorBrush x:Key="TextPrimary" Color="#424242"/>
-
+        <SolidColorBrush x:Key="PlayPauseStopColor" Color="#0D47A1"/>
+        <SolidColorBrush x:Key="PlayPauseStopHoverColor" Color="#D32F2F"/>
+        
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
             <Setter Property="Foreground" Value="White"/>
@@ -60,6 +62,30 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
         </Style>
+
+        <Style x:Key="PlayPauseStopButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PlayPauseStopColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource PlayPauseStopHoverColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="20" Cursor="">
@@ -94,6 +120,36 @@
                 <DataGridTextColumn Header="Source Path" Binding="{Binding SourcePath}" Width="*"/>
                 <DataGridTextColumn Header="Target Path" Binding="{Binding TargetPath}" Width="*"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+
+                <DataGridTemplateColumn Header="Actions" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}"/>
+                                <Button Content="| |" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}"/>
+                                <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Stopper"/>
+                                <Button Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" Command="{Binding DeleteCommand}" ToolTip="Supprimer">
+                                    <Button Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Supprimer" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Progress" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Width="120" Height="20" VerticalAlignment="Center">
+                                <ProgressBar Minimum="0" Maximum="100" Value="{Binding Progression}" />
+                                <TextBlock Text="{Binding Progression, StringFormat=' {0}%'}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="Black"
+                           FontWeight="Bold"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
