@@ -163,7 +163,6 @@ namespace WpfApp1.Model
 
                 var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
 
-                // Ajout : filtrage selon le type de sauvegarde
                 List<string> filesToCopy;
                 if (workToExecute.Type == "FULL")
                 {

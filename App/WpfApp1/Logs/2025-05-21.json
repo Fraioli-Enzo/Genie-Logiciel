@@ -457,3 +457,57 @@
   "Time": "21/05/2025 15:40:37",
   "EncryptionTime": 0
 }
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.9641,
+  "Time": "21/05/2025 15:41:47",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.1555,
+  "Time": "21/05/2025 15:41:49",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.3309,
+  "Time": "21/05/2025 15:41:51",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.839,
+  "Time": "21/05/2025 15:59:23",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.4468,
+  "Time": "21/05/2025 15:59:25",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.5737,
+  "Time": "21/05/2025 15:59:27",
+  "EncryptionTime": 3
+}

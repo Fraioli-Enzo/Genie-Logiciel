@@ -1,9 +1,10 @@
 {
   "language": "fr",
   "log": "json",
-  "workingSoftware": "null",
+  "workingSoftware": "chrome",
   "extensionsToCrypto": [
     ".pdf",
-    ".png"
+    ".png",
+    ".txt"
   ]
 }

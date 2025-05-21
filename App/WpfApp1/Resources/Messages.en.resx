@@ -223,7 +223,7 @@
     <value>This extension is already added</value>
   </data>
   <data name="ProcessAlreadyRunning" xml:space="preserve">
-    <value>The business process is already running.</value>
+    <value>The business process is running.</value>
   </data>
   <data name="Progress" xml:space="preserve">
     <value>Progress</value>
