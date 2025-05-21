@@ -1789,3 +1789,1209 @@
   "Time": "21/05/2025 17:03:17",
   "EncryptionTime": 5
 }
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.1698,
+  "Time": "21/05/2025 17:04:11",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.4493,
+  "Time": "21/05/2025 17:04:11",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.0663,
+  "Time": "21/05/2025 17:04:12",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.0516,
+  "Time": "21/05/2025 17:04:12",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.7008,
+  "Time": "21/05/2025 17:04:12",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 8.5419,
+  "Time": "21/05/2025 17:04:14",
+  "EncryptionTime": 6
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.9396,
+  "Time": "21/05/2025 17:04:14",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.1838,
+  "Time": "21/05/2025 17:04:14",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.2733,
+  "Time": "21/05/2025 17:04:14",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.6265,
+  "Time": "21/05/2025 17:04:15",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.8518,
+  "Time": "21/05/2025 17:04:15",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.408,
+  "Time": "21/05/2025 17:04:15",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.2738,
+  "Time": "21/05/2025 17:04:19",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.8955,
+  "Time": "21/05/2025 17:04:19",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.5442,
+  "Time": "21/05/2025 17:04:20",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.2454,
+  "Time": "21/05/2025 17:04:20",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.2441,
+  "Time": "21/05/2025 17:04:21",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.7529,
+  "Time": "21/05/2025 17:04:22",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.1077,
+  "Time": "21/05/2025 17:04:22",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.6596,
+  "Time": "21/05/2025 17:04:22",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.9743,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.5727,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.1987,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.6417,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.8794,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.2555,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.4269,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.3023,
+  "Time": "21/05/2025 17:04:28",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 8.0886,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.8375,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.5529,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.9312,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.8123,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.5558,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.812,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.5657,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 8.6275,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 6
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.2131,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.8502,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.1909,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.8518,
+  "Time": "21/05/2025 17:04:29",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.3355,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.0293,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.7964,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.3036,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.2496,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.2941,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.152,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.7767,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.2457,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.3606,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.3347,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.4126,
+  "Time": "21/05/2025 17:04:30",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.2524,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.9654,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.3306,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.4897,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.6301,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.4333,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.3925,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 20.6971,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 19
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.781,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.9496,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.3304,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.8686,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.9618,
+  "Time": "21/05/2025 17:04:31",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.3752,
+  "Time": "21/05/2025 17:04:32",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.4985,
+  "Time": "21/05/2025 17:04:32",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.4614,
+  "Time": "21/05/2025 17:04:32",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.1596,
+  "Time": "21/05/2025 17:04:32",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.5211,
+  "Time": "21/05/2025 17:04:32",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.2729,
+  "Time": "21/05/2025 17:04:32",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.9161,
+  "Time": "21/05/2025 17:04:38",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.3887,
+  "Time": "21/05/2025 17:04:38",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.5279,
+  "Time": "21/05/2025 17:04:38",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.4153,
+  "Time": "21/05/2025 17:04:39",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.4888,
+  "Time": "21/05/2025 17:04:44",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.4831,
+  "Time": "21/05/2025 17:04:44",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.5095,
+  "Time": "21/05/2025 17:04:44",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.5087,
+  "Time": "21/05/2025 17:04:44",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.7507,
+  "Time": "21/05/2025 17:04:45",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 3.4141,
+  "Time": "21/05/2025 17:04:45",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.7197,
+  "Time": "21/05/2025 17:04:45",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.777,
+  "Time": "21/05/2025 17:04:45",
+  "EncryptionTime": 1
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.7114,
+  "Time": "21/05/2025 17:04:45",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.696,
+  "Time": "21/05/2025 17:04:45",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.6983,
+  "Time": "21/05/2025 17:04:46",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.8913,
+  "Time": "21/05/2025 17:04:46",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.6541,
+  "Time": "21/05/2025 17:04:46",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.05,
+  "Time": "21/05/2025 17:04:46",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.8054,
+  "Time": "21/05/2025 17:04:46",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.2197,
+  "Time": "21/05/2025 17:04:46",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.6939,
+  "Time": "21/05/2025 17:04:47",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.9881,
+  "Time": "21/05/2025 17:04:47",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 8.1313,
+  "Time": "21/05/2025 17:04:47",
+  "EncryptionTime": 6
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.8253,
+  "Time": "21/05/2025 17:04:47",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.2864,
+  "Time": "21/05/2025 20:32:17",
+  "EncryptionTime": 2
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.431,
+  "Time": "21/05/2025 20:32:17",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.2721,
+  "Time": "21/05/2025 20:32:17",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.414,
+  "Time": "21/05/2025 20:32:18",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.8092,
+  "Time": "21/05/2025 20:32:18",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.5917,
+  "Time": "21/05/2025 20:32:19",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.5999,
+  "Time": "21/05/2025 20:32:25",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.0769,
+  "Time": "21/05/2025 20:32:25",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.8677,
+  "Time": "21/05/2025 20:32:25",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.5611,
+  "Time": "21/05/2025 20:32:26",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.8825,
+  "Time": "21/05/2025 20:32:26",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.0395,
+  "Time": "21/05/2025 20:32:26",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 9.946,
+  "Time": "21/05/2025 20:32:27",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.4125,
+  "Time": "21/05/2025 20:32:27",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 9.1474,
+  "Time": "21/05/2025 20:32:27",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 9.2256,
+  "Time": "21/05/2025 20:32:28",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 8.8665,
+  "Time": "21/05/2025 20:32:28",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.6968,
+  "Time": "21/05/2025 20:32:28",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.9446,
+  "Time": "21/05/2025 20:32:36",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.4926,
+  "Time": "21/05/2025 20:32:36",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.7221,
+  "Time": "21/05/2025 20:32:36",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.9913,
+  "Time": "21/05/2025 20:32:36",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.5831,
+  "Time": "21/05/2025 20:32:37",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 8.146,
+  "Time": "21/05/2025 20:32:37",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.5618,
+  "Time": "21/05/2025 20:32:37",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 4.4286,
+  "Time": "21/05/2025 20:32:38",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (10) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.5253,
+  "Time": "21/05/2025 20:32:53",
+  "EncryptionTime": 6
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.4501,
+  "Time": "21/05/2025 20:32:53",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (2).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (2).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.9158,
+  "Time": "21/05/2025 20:32:53",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.4347,
+  "Time": "21/05/2025 20:32:54",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (3).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (3).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 5.1235,
+  "Time": "21/05/2025 20:32:54",
+  "EncryptionTime": 3
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 8.0532,
+  "Time": "21/05/2025 20:32:54",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (4).txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (4).txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.0622,
+  "Time": "21/05/2025 20:32:55",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (5) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.235,
+  "Time": "21/05/2025 20:32:55",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (6) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 7.444,
+  "Time": "21/05/2025 20:32:58",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (7) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.3871,
+  "Time": "21/05/2025 20:32:58",
+  "EncryptionTime": 4
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (8) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.9389,
+  "Time": "21/05/2025 20:32:58",
+  "EncryptionTime": 5
+}
+{
+  "Name": "TEST1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierTexteSource - Copie (9) - Copie.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 6.4363,
+  "Time": "21/05/2025 20:32:59",
+  "EncryptionTime": 4
+}

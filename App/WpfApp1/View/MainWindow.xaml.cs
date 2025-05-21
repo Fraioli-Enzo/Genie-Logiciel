@@ -133,9 +133,18 @@ namespace WpfApp1
             }
         }
 
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        private async void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                string id = backup.ID;
+                await backupWorkManager.StopBackupAsync(id);
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopSuccess") ?? "Backup stopped.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToStop") ?? "Select a backup to stop.", "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)

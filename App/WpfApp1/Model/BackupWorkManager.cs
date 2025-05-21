@@ -9,6 +9,7 @@ using LoggingLibrary;
 using System.IO.Packaging;
 using System.Diagnostics;
 using System.Windows;
+using System.Threading; // Ajout pour CancellationToken
 
 namespace WpfApp1.Model
 {
@@ -30,6 +31,9 @@ namespace WpfApp1.Model
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
         public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
         private readonly ManualResetEventSlim _pauseEvent = new(true);
+
+        // Ajout : Dictionnaire pour stocker les tokens d'annulation par ID
+        private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
 
         // Ajoutez ces méthodes pour gérer la pause/reprise par ID
         public async Task PauseBackupAsync(string id)
@@ -57,6 +61,16 @@ namespace WpfApp1.Model
                     _pauseEvent.Set();
                 }
                 backup.IsPaused = false;
+            }
+        }
+
+        // Nouvelle méthode pour arrêter une sauvegarde
+        public async Task StopBackupAsync(string id)
+        {
+            await Task.Yield();
+            if (_cancellationTokens.TryGetValue(id, out var cts))
+            {
+                cts.Cancel();
             }
         }
 
@@ -169,8 +183,12 @@ namespace WpfApp1.Model
             var results = new List<string>();
             foreach (var id in idsToExecute)
             {
-                var result = await ExecuteSingleWorkAsync(id, log, extensions);
+                // Ajout : Créer un CancellationTokenSource pour chaque sauvegarde
+                var cts = new CancellationTokenSource();
+                _cancellationTokens[id] = cts;
+                var result = await ExecuteSingleWorkAsync(id, log, extensions, cts.Token);
                 results.Add(result);
+                _cancellationTokens.Remove(id); // Nettoyage après exécution
             }
 
             if (results.All(r => r == "ExecuteWorkSuccess"))
@@ -181,7 +199,8 @@ namespace WpfApp1.Model
             return firstError ?? "ExecuteWorkError";
         }
 
-        private async Task<string> ExecuteSingleWorkAsync(string id, string log, string[] extensions)
+        // Modifie la signature pour accepter un CancellationToken
+        private async Task<string> ExecuteSingleWorkAsync(string id, string log, string[] extensions, CancellationToken cancellationToken)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
             string nameBackup = workToExecute?.Name;
@@ -257,6 +276,13 @@ namespace WpfApp1.Model
 
                     foreach (var file in filesToCopy)
                     {
+                        // Ajout : Vérifier l'annulation avant chaque fichier
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            workToExecute.State = "STOPPED";
+                            return "BackupStopped";
+                        }
+
                         await Task.Run(() => _pauseEvent.Wait());
                         await Task.Delay(300); // Simule un délai sans bloquer l'UI
                         string relativePath = Path.GetRelativePath(sourcePath, file);
