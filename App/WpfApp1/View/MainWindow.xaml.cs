@@ -51,8 +51,8 @@ namespace WpfApp1
 
             ButtonSettings.Content = ((ResourceManager)this.resourceManager).GetString("Setting");
             ButtonAdd.Content = ((ResourceManager)this.resourceManager).GetString("Add_Backup");
-            ButtonDelete.Content = ((ResourceManager)this.resourceManager).GetString("Delete_Backup");
-            ButtonExecute.Content = ((ResourceManager)this.resourceManager).GetString("Execute_Backup");
+            //ButtonDelete.Content = ((ResourceManager)this.resourceManager).GetString("Delete_Backup");
+            //ButtonExecute.Content = ((ResourceManager)this.resourceManager).GetString("Execute_Backup");
             ButtonLogger.Content = ((ResourceManager)this.resourceManager).GetString("Logger");
             BackupDataGrid.Columns[1].Header = ((ResourceManager)this.resourceManager).GetString("Name_Backup");
             BackupDataGrid.Columns[2].Header = ((ResourceManager)this.resourceManager).GetString("Source_Path");
@@ -102,13 +102,10 @@ namespace WpfApp1
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer les lignes sélectionnées dans le DataGrid
-            var selectedItems = BackupDataGrid.SelectedItems;
-            if (selectedItems != null && selectedItems.Count > 0)
+            if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
-                var ids = string.Join(";", selectedWorks.Select(w => w.ID));
-                backupWorkManager.RemoveWork(ids);
+                string id = backup.ID;
+                backupWorkManager.RemoveWork(id);
                 BackupDataGrid.ItemsSource = null;
                 BackupDataGrid.ItemsSource = backupWorkManager.Works;
 
@@ -125,17 +122,25 @@ namespace WpfApp1
 
         }
 
+        private void ButtonPause_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
         {
             Settings settingsWindow = new Settings();
             settingsWindow.ShowDialog();
-            // Après la fermeture de la fenêtre Settings, recharger la config et mettre à jour l'UI
             LoadConfigAndUpdateUI();
         }
 
         private void AddBackupWindow_BackupAdded(object sender, EventArgs e)
         {
-            // Rafraîchir la liste des sauvegardes affichées
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;

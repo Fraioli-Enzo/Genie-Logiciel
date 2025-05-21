@@ -113,7 +113,7 @@
             </Button>
         </Grid>
 
-        <DataGrid x:Name="BackupDataGrid" Grid.Row="1" SelectionChanged="BackupDataGrid_SelectionChanged" AutoGenerateColumns="False">
+        <DataGrid x:Name="BackupDataGrid" Grid.Row="1" SelectionChanged="BackupDataGrid_SelectionChanged" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="Auto"/>
                 <DataGridTextColumn Header="Name Backup" Binding="{Binding Name}" Width="*"/>
@@ -121,16 +121,14 @@
                 <DataGridTextColumn Header="Target Path" Binding="{Binding TargetPath}" Width="*"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
 
-                <DataGridTemplateColumn Header="Actions" Width="200">
+                <DataGridTemplateColumn Header="Actions" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}"/>
-                                <Button Content="| |" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}"/>
-                                <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Stopper"/>
-                                <Button Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" Command="{Binding DeleteCommand}" ToolTip="Supprimer">
-                                    <Button Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Supprimer" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                                </Button>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Exécuter" Click="ButtonExecute_Click"/>
+                                <Button Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
+                                <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Stopper" Click="ButtonPause_Click"/>
+                                <Button Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Supprimer" Click="ButtonDelete_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -155,8 +153,8 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
             <Button Name="ButtonAdd" Content="Add Backup" Width="120" Height="20" Click="ButtonAdd_Click"  />
-            <Button Name="ButtonExecute" Content="Execute Backup(s)" Width="150" Height="20" Click="ButtonExecute_Click" />
-            <Button Name="ButtonDelete" Content="Delete Backup(s)" Width="150" Height="20" Click="ButtonDelete_Click" />
+            <!--<Button Name="ButtonExecute" Content="Execute Backup(s)" Width="150" Height="20" Click="ButtonExecute_Click" />
+            <Button Name="ButtonDelete" Content="Delete Backup(s)" Width="150" Height="20" Click="ButtonDelete_Click" />-->
             <Button Name="ButtonLogger" Content="Logger" Width="120" Height="20" Click="ButtonLogger_Click" />
         </StackPanel>
     </Grid>

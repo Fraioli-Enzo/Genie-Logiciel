@@ -1,9 +1,9 @@
 [
   {
     "ID": "1",
-    "Name": "Sauvegarde1",
+    "Name": "test1",
     "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source",
-    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2",
+    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
     "Type": "FULL",
     "State": "INACTIVE",
     "TotalFilesToCopy": "3",
