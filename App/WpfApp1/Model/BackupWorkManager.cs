@@ -28,6 +28,8 @@ namespace WpfApp1.Model
     {
 
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
+        // Event to notify progress changes
+        public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
 
         public BackupWorkManager()
         {
@@ -119,9 +121,9 @@ namespace WpfApp1.Model
             return "RemoveWorkSuccess";
         }
 
-        public string ExecuteWork(string ids, string log, string[] extensions, string workingSoftware)
+        public async Task<string> ExecuteWorkAsync(string ids, string log, string[] extensions, string workingSoftware)
         {
-            if (IsProcessRunning(workingSoftware) && workingSoftware != "null") 
+            if (IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
                 return "ProcessAlreadyRunning";
             }
@@ -133,7 +135,7 @@ namespace WpfApp1.Model
             var results = new List<string>();
             foreach (var id in idsToExecute)
             {
-                var result = ExecuteSingleWork(id, log, extensions);
+                var result = await ExecuteSingleWorkAsync(id, log, extensions);
                 results.Add(result);
             }
 
@@ -145,13 +147,10 @@ namespace WpfApp1.Model
             return firstError ?? "ExecuteWorkError";
         }
 
-        // Event to notify progress changes
-        public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
-
-        private string ExecuteSingleWork(string id, string log, string[] extensions)
+        private async Task<string> ExecuteSingleWorkAsync(string id, string log, string[] extensions)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
-            string nameBackup = workToExecute.Name;
+            string nameBackup = workToExecute?.Name;
             if (workToExecute != null)
             {
                 string sourcePath = workToExecute.SourcePath;
@@ -196,7 +195,7 @@ namespace WpfApp1.Model
                 workToExecute.NbFilesLeftToDo = totalFiles.ToString();
                 workToExecute.Progression = "0";
 
-                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
+                string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
                 string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
                 if (File.Exists(jsonFilePath))
@@ -225,6 +224,7 @@ namespace WpfApp1.Model
 
                     foreach (var file in filesToCopy)
                     {
+                        await Task.Delay(2000); // Simule un délai sans bloquer l'UI
                         string relativePath = Path.GetRelativePath(sourcePath, file);
                         string targetFilePath = Path.Combine(targetPath, relativePath);
 
@@ -251,13 +251,11 @@ namespace WpfApp1.Model
 
                         long fileSize = new FileInfo(file).Length;
                         LoggingLibrary.Logger.Log(nameBackup, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime);
-                         
+
                         filesCopied++;
 
                         workToExecute.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();
                         workToExecute.Progression = (totalFiles == 0 ? "100" : ((filesCopied * 100) / totalFiles).ToString());
-
-                        // Notify progress change
                         ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(workToExecute.ID, int.Parse(workToExecute.Progression)));
                     }
 

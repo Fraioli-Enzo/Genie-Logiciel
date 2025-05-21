@@ -72,14 +72,14 @@ namespace WpfApp1
             addWorkWindow.ShowDialog();
         }
 
-        private void ButtonExecute_Click(object sender, RoutedEventArgs e)
+        private async void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
                 string id = backup.ID;
-                string result = backupWorkManager.ExecuteWork(id, logExtension, extensions, workingSoftware);
+                string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware);
 
-                switch(result)
+                switch (result)
                 {
                     case "ExecuteWorkSuccess":
                         MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
