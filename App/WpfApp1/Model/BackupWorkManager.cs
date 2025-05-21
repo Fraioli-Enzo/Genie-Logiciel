@@ -125,6 +125,11 @@ namespace WpfApp1.Model
         {
             if (IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
+                var workToExecute = Works.FirstOrDefault(w => w.ID == ids);
+                string nameBackup = workToExecute?.Name;
+                string sourcePath = workToExecute.SourcePath;
+                string targetPath = workToExecute.TargetPath;
+                LoggingLibrary.Logger.Log(nameBackup, "Error", "Error", 0, 0, log, 0);
                 return "ProcessAlreadyRunning";
             }
 
@@ -223,7 +228,7 @@ namespace WpfApp1.Model
 
                     foreach (var file in filesToCopy)
                     {
-                        await Task.Delay(2000); // Simule un délai sans bloquer l'UI
+                        await Task.Delay(1000); // Simule un délai sans bloquer l'UI
                         string relativePath = Path.GetRelativePath(sourcePath, file);
                         string targetFilePath = Path.Combine(targetPath, relativePath);
 
