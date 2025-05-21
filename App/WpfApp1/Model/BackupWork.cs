@@ -18,6 +18,7 @@ namespace WpfApp1.Model
         public string TotalFilesToCopy { get; set; }
         public string TotalFilesSize { get; set; }
         public string NbFilesLeftToDo { get; set; }
+        public bool IsPaused { get; set; }
 
         private string _progression;
         public string Progression

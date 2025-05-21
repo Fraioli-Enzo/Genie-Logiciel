@@ -28,8 +28,37 @@ namespace WpfApp1.Model
     {
 
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
-        // Event to notify progress changes
         public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
+        private readonly ManualResetEventSlim _pauseEvent = new(true);
+
+        // Ajoutez ces méthodes pour gérer la pause/reprise par ID
+        public async Task PauseBackupAsync(string id)
+        {
+            await Task.Yield();
+            var backup = Works.FirstOrDefault(w => w.ID == id);
+            if (backup != null)
+            {
+                if (backup.ID == Works.FirstOrDefault(w => !w.IsPaused)?.ID)
+                {
+                    _pauseEvent.Reset();
+                }
+                backup.IsPaused = true;
+            }
+        }
+
+        public async Task ResumeBackupAsync(string id)
+        {
+            await Task.Yield();
+            var backup = Works.FirstOrDefault(w => w.ID == id);
+            if (backup != null)
+            {
+                if (backup.ID == Works.FirstOrDefault(w => w.IsPaused)?.ID)
+                {
+                    _pauseEvent.Set();
+                }
+                backup.IsPaused = false;
+            }
+        }
 
         public BackupWorkManager()
         {
@@ -228,7 +257,8 @@ namespace WpfApp1.Model
 
                     foreach (var file in filesToCopy)
                     {
-                        await Task.Delay(1000); // Simule un délai sans bloquer l'UI
+                        await Task.Run(() => _pauseEvent.Wait());
+                        await Task.Delay(300); // Simule un délai sans bloquer l'UI
                         string relativePath = Path.GetRelativePath(sourcePath, file);
                         string targetFilePath = Path.Combine(targetPath, relativePath);
 

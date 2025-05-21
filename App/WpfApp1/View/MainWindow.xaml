@@ -127,7 +127,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Exécuter" Click="ButtonExecute_Click"/>
                                 <Button Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
-                                <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Stopper" Click="ButtonPause_Click"/>
+                                <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Stopper" Click="ButtonStop_Click"/>
                                 <Button Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Supprimer" Click="ButtonDelete_Click"/>
                             </StackPanel>
                         </DataTemplate>

@@ -22,6 +22,7 @@ namespace WpfApp1
         private string logExtension;
         private string workingSoftware;
         private string[] extensions;
+        private bool test = true;
 
         public MainWindow()
         {
@@ -112,9 +113,24 @@ namespace WpfApp1
             }
         }
 
-        private void ButtonPause_Click(object sender, RoutedEventArgs e)
+        private async void ButtonPause_Click(object sender, RoutedEventArgs e)
         {
-
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                string id = backup.ID;
+                if (backup.IsPaused)
+                {
+                    await Task.Run(() => backupWorkManager.ResumeBackupAsync(id));
+                }
+                else
+                {
+                    await Task.Run(() => backupWorkManager.PauseBackupAsync(id));
+                }
+            }
+            else
+            {
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToPause"), "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
