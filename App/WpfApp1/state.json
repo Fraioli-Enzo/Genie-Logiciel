@@ -1,7 +1,7 @@
 [
   {
     "ID": "1",
-    "Name": "test1",
+    "Name": "TEST1",
     "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source",
     "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
     "Type": "FULL",

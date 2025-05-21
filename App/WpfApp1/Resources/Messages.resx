@@ -260,4 +260,8 @@
     <value>Le processus métier est déjà en cours d'exécution.</value>
     <comment>-</comment>
   </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progression</value>
+    <comment>-</comment>
+  </data>
 </root>

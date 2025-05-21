@@ -32,7 +32,6 @@ namespace WpfApp1
             LoadConfigAndUpdateUI(); 
         }
 
-        // Nouvelle méthode pour charger la config et mettre à jour l'UI
         private void LoadConfigAndUpdateUI()
         {
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
@@ -57,6 +56,7 @@ namespace WpfApp1
             BackupDataGrid.Columns[1].Header = ((ResourceManager)this.resourceManager).GetString("Name_Backup");
             BackupDataGrid.Columns[2].Header = ((ResourceManager)this.resourceManager).GetString("Source_Path");
             BackupDataGrid.Columns[3].Header = ((ResourceManager)this.resourceManager).GetString("Target_Path");
+            BackupDataGrid.Columns[6].Header = ((ResourceManager)this.resourceManager).GetString("Progress");
             MenuLabel.Content = ((ResourceManager)this.resourceManager).GetString("MainMenu");
         }
 
@@ -74,12 +74,10 @@ namespace WpfApp1
 
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
-            var selectedItems = BackupDataGrid.SelectedItems;
-            if (selectedItems != null && selectedItems.Count > 0)
+            if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                var selectedWorks = selectedItems.Cast<BackupWork>().ToList();
-                var ids = string.Join(";", selectedWorks.Select(w => w.ID));
-                string result = backupWorkManager.ExecuteWork(ids, logExtension, extensions, workingSoftware);
+                string id = backup.ID;
+                string result = backupWorkManager.ExecuteWork(id, logExtension, extensions, workingSoftware);
 
                 switch(result)
                 {
@@ -89,10 +87,7 @@ namespace WpfApp1
                     case "ProcessAlreadyRunning":
                         MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessAlreadyRunning"), "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
-
                 }
-                    
-   
             }
             else
             {
@@ -117,11 +112,6 @@ namespace WpfApp1
             }
         }
 
-        private void ButtonLogger_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ButtonPause_Click(object sender, RoutedEventArgs e)
         {
 
@@ -144,6 +134,11 @@ namespace WpfApp1
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
+        }
+
+        private void ButtonLogger_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

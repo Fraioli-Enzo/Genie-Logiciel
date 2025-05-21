@@ -12,6 +12,18 @@ using System.Windows;
 
 namespace WpfApp1.Model
 {
+    public class ProgressChangedEventArgs : EventArgs
+    {
+        public string WorkId { get; }
+        public int Progression { get; }
+
+        public ProgressChangedEventArgs(string workId, int progression)
+        {
+            WorkId = workId;
+            Progression = progression;
+        }
+    }
+
     public class BackupWorkManager
     {
 
@@ -41,7 +53,7 @@ namespace WpfApp1.Model
                 return processes.Length > 0;
             }
 
-    public string AddWork(string name, string pathSource, string pathTarget, string type)
+        public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
 
             // Calculer le nombre total de fichiers et leur taille totale
@@ -132,6 +144,9 @@ namespace WpfApp1.Model
             var firstError = results.FirstOrDefault(r => r != "ExecuteWorkSuccess");
             return firstError ?? "ExecuteWorkError";
         }
+
+        // Event to notify progress changes
+        public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
 
         private string ExecuteSingleWork(string id, string log, string[] extensions)
         {
@@ -241,6 +256,9 @@ namespace WpfApp1.Model
 
                         workToExecute.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();
                         workToExecute.Progression = (totalFiles == 0 ? "100" : ((filesCopied * 100) / totalFiles).ToString());
+
+                        // Notify progress change
+                        ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(workToExecute.ID, int.Parse(workToExecute.Progression)));
                     }
 
                     if (File.Exists(jsonFilePath))

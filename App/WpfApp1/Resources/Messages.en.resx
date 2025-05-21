@@ -225,4 +225,7 @@
   <data name="ProcessAlreadyRunning" xml:space="preserve">
     <value>The business process is already running.</value>
   </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
 </root>
