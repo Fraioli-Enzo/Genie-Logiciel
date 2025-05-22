@@ -9,16 +9,12 @@ using WpfApp1.Model;
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Logique d'interaction pour AddBackup.xaml
-    /// </summary>
     public partial class AddBackup : Window
     {
         private BackupWorkManager backupWorkManager;
         public event EventHandler BackupAdded;
         private object resourceManager;
 
-        // Declare the fields as instance variables to fix the CS0103 errors
         private string name;
         private string pathSource;
         private string pathTarget;
@@ -57,21 +53,6 @@ namespace WpfApp1
             Type_Save.Content = ((ResourceManager)this.resourceManager).GetString("Type_Save");
         }
 
-        private void TextBoxName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBoxSource_TextChanged(object sender, TextChangedEventArgs e)
-        {
- 
-        }
-
-        private void TextBoxTarget_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ButtonSource_Click(object sender, RoutedEventArgs e)
         {
             var dialogSource = new OpenFolderDialog();
@@ -92,13 +73,11 @@ namespace WpfApp1
 
         private void RadioButtonFull_Checked(object sender, RoutedEventArgs e)
         {
-            // Update the 'type' field when the full backup radio button is checked
             type = "FULL";
         }
 
         private void RadioButtonDifferential_Checked(object sender, RoutedEventArgs e)
         {
-            // Update the 'type' field when the differential backup radio button is checked
             type = "DIFFERENTIAL";
         }
 

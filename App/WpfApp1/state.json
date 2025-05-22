@@ -1,14 +1,41 @@
 [
   {
     "ID": "1",
-    "Name": "test1",
+    "Name": "Source1",
     "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source",
     "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
     "Type": "FULL",
     "State": "INACTIVE",
-    "TotalFilesToCopy": "3",
-    "TotalFilesSize": "3459",
+    "TotalFilesToCopy": "4",
+    "TotalFilesSize": "4612",
     "NbFilesLeftToDo": "0",
+    "IsPaused": false,
+    "Progression": "100"
+  },
+  {
+    "ID": "2",
+    "Name": "Source2",
+    "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source2",
+    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2",
+    "Type": "FULL",
+    "State": "INACTIVE",
+    "TotalFilesToCopy": "4",
+    "TotalFilesSize": "4612",
+    "NbFilesLeftToDo": "0",
+    "IsPaused": false,
+    "Progression": "100"
+  },
+  {
+    "ID": "3",
+    "Name": "Source3",
+    "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source3",
+    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3",
+    "Type": "FULL",
+    "State": "INACTIVE",
+    "TotalFilesToCopy": "4",
+    "TotalFilesSize": "4612",
+    "NbFilesLeftToDo": "0",
+    "IsPaused": false,
     "Progression": "100"
   }
 ]

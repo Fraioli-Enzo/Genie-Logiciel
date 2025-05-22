@@ -99,16 +99,16 @@
 
             <!-- Name Backup -->
             <Label Name="LabelName" Content="Name Backup:" Grid.Row="0" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
-            <TextBox Name="TextBoxName" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" TextChanged="TextBoxName_TextChanged" />
+            <TextBox Name="TextBoxName" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" />
 
             <!-- Source Path -->
             <Label Name="LabelSource" Content="Source Path:" Grid.Row="1" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
-            <TextBox Name="TextBoxSource" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" TextChanged="TextBoxSource_TextChanged" />
+            <TextBox Name="TextBoxSource" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" />
             <Button Name="ButtonSource" Grid.Row="1" Grid.Column="1" Content="..." Style="{StaticResource ModernButtonStyle}" Width="30" Height="30" HorizontalAlignment="Left" Margin="500,5,0,7" Click="ButtonSource_Click" />
 
             <!-- Target Path -->
             <Label Name="LabelTarget" Content="Target Path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
-            <TextBox Name="TextBoxTarget" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" TextChanged="TextBoxTarget_TextChanged" />
+            <TextBox Name="TextBoxTarget" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" />
             <Button Name="ButtonTarget" Grid.Row="2" Grid.Column="1" Content="..." Style="{StaticResource ModernButtonStyle}" Width="30" Height="30"  HorizontalAlignment="Left" Margin="500,5,0,7" Click="ButtonTarget_Click" />
 
             <!-- Type Backup -->

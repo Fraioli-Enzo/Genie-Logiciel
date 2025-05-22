@@ -179,6 +179,7 @@
   </data>
   <data name="Setting" xml:space="preserve">
     <value>Paramètres</value>
+    <comment>-</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>
@@ -256,8 +257,12 @@
     <value>Ce extension de fichier est déjà ajouté</value>
     <comment>-</comment>
   </data>
-  <data name="ProcessAlreadyRunning" xml:space="preserve">
-    <value>Le processus métier est déjà en cours d'exécution.</value>
+  <data name="ProcessRunning" xml:space="preserve">
+    <value>Le processus métier est en cours d'exécution.</value>
+    <comment>-</comment>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progression</value>
     <comment>-</comment>
   </data>
 </root>

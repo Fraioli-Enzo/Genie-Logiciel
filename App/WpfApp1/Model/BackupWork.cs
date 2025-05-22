@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace WpfApp1.Model
 {
-    public class BackupWork
+    public class BackupWork : INotifyPropertyChanged
     {
         public string ID { get; set; }
         public string Name { get; set; }
@@ -17,7 +18,23 @@ namespace WpfApp1.Model
         public string TotalFilesToCopy { get; set; }
         public string TotalFilesSize { get; set; }
         public string NbFilesLeftToDo { get; set; }
-        public string Progression { get; set; }
+        public bool IsPaused { get; set; }
+
+        private string _progression;
+        public string Progression
+        {
+            get => _progression;
+            set
+            {
+                if (_progression != value)
+                {
+                    _progression = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Progression)));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public BackupWork(string id, string name, string sourcePath, string targetPath, string type, string totalFilesToCopy, string totalFilesSize, string nbFilesLeftToDo, string state = "INACTIVE", string progression = "0")
         {
@@ -30,7 +47,7 @@ namespace WpfApp1.Model
             TotalFilesToCopy = totalFilesToCopy;
             TotalFilesSize = totalFilesSize;
             NbFilesLeftToDo = nbFilesLeftToDo;
-            Progression = progression;
+            _progression = progression;
         }
     }
 }
