@@ -925,3 +925,264 @@
   "Time": "22/05/2025 10:49:56",
   "EncryptionTime": 0
 }
+{
+  "Name": "Source1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FicherSource1.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FicherSource1.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.2218,
+  "Time": "22/05/2025 10:54:19",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FicherSource1.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FicherSource1.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.4153,
+  "Time": "22/05/2025 10:54:19",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FicherSource3.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FicherSource3.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.0159,
+  "Time": "22/05/2025 10:54:21",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.2.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.2.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.0485,
+  "Time": "22/05/2025 10:54:22",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.335,
+  "Time": "22/05/2025 10:54:55",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.4.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.4.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.6225,
+  "Time": "22/05/2025 10:54:55",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FicherSource3.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FicherSource3.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.3577,
+  "Time": "22/05/2025 10:55:07",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.2.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.2.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.7937,
+  "Time": "22/05/2025 10:55:07",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.821,
+  "Time": "22/05/2025 10:55:07",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FicherSource2.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FicherSource2.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.2115,
+  "Time": "22/05/2025 10:55:19",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FicherSource2.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FicherSource2.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.5141,
+  "Time": "22/05/2025 10:55:20",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FichierSource2.2.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierSource2.2.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.3843,
+  "Time": "22/05/2025 10:55:20",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FichierSource2.4.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierSource2.4.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.4593,
+  "Time": "22/05/2025 10:55:20",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FicherSource3.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FicherSource3.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.428,
+  "Time": "22/05/2025 10:55:42",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.2.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.2.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.2953,
+  "Time": "22/05/2025 10:55:42",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.0708,
+  "Time": "22/05/2025 10:55:42",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.4.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.4.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.6082,
+  "Time": "22/05/2025 10:55:43",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FicherSource3.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FicherSource3.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.848,
+  "Time": "22/05/2025 10:55:48",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.2.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.2.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.2236,
+  "Time": "22/05/2025 10:55:49",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FicherSource1.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FicherSource1.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.7485,
+  "Time": "22/05/2025 10:55:51",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FicherSource1.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FicherSource1.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.3713,
+  "Time": "22/05/2025 10:55:51",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FicherSource2.1.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FicherSource2.1.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.5879,
+  "Time": "22/05/2025 10:55:53",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FicherSource2.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FicherSource2.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.0837,
+  "Time": "22/05/2025 10:56:01",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FichierSource2.2.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierSource2.2.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.6464,
+  "Time": "22/05/2025 10:56:02",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source2",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source2\\FichierSource2.4.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible2\\FichierSource2.4.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.0253,
+  "Time": "22/05/2025 10:56:02",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierSource1.2.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierSource1.2.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.0805,
+  "Time": "22/05/2025 10:56:05",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.3.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.3.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.9184,
+  "Time": "22/05/2025 10:56:06",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source1",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source\\FichierSource1.4.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible\\FichierSource1.4.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 1.4541,
+  "Time": "22/05/2025 10:56:06",
+  "EncryptionTime": 0
+}
+{
+  "Name": "Source3",
+  "FileSource": "C:\\Users\\enzof\\Documents\\Test_Source3\\FichierSource3.4.txt",
+  "FileTarget": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3\\FichierSource3.4.txt",
+  "FileSize": 1153,
+  "FileTransferTime": 2.0117,
+  "Time": "22/05/2025 10:56:06",
+  "EncryptionTime": 0
+}

@@ -96,6 +96,8 @@ namespace WpfApp1
             {
                 string id = backup.ID;
                 string result = backupWorkManager.PauseWork(id);
+                BackupDataGrid.ItemsSource = null;
+                BackupDataGrid.ItemsSource = backupWorkManager.Works;
             }
             else
             {

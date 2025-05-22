@@ -19,7 +19,8 @@
         <SolidColorBrush x:Key="TextPrimary" Color="#424242"/>
         <SolidColorBrush x:Key="PlayPauseStopColor" Color="#0D47A1"/>
         <SolidColorBrush x:Key="PlayPauseStopHoverColor" Color="#D32F2F"/>
-        
+        <SolidColorBrush x:Key="PauseActiveColor" Color="Orange"/>
+
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
             <Setter Property="Foreground" Value="White"/>
@@ -126,7 +127,23 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Exécuter" Click="ButtonExecute_Click"/>
-                                <Button Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
+                                <Button Content="||"
+                                Command="{Binding PauseCommand}"
+                                Width="30"
+                                Height="30"
+                                Margin="2"
+                                ToolTip="Pause"
+                                Click="ButtonPause_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource PauseActiveColor}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                                 <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Stopper" Click="ButtonStop_Click"/>
                                 <Button Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PlayPauseStopButtonStyle}" ToolTip="Supprimer" Click="ButtonDelete_Click"/>
                             </StackPanel>
