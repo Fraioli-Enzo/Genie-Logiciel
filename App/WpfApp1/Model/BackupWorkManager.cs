@@ -112,6 +112,18 @@ namespace WpfApp1.Model
             }
             return "PauseWorkError";
         }
+        public string StopWork(string id)
+        {
+            var work = Works.FirstOrDefault(w => w.ID == id);
+            if (work != null)
+            {
+                work.IsStopped = true;
+                work.IsPaused = false;
+                return "StopWorkSuccess";
+            }
+            return "StopWorkError";
+        }
+
         public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
@@ -223,10 +235,17 @@ namespace WpfApp1.Model
 
                 for (int i = 0; i < filesToCopy.Count; i++)
                 {
+                    // Pause
                     while (work.IsPaused)
+                        await Task.Delay(200);
+
+                    // Stop
+                    if (work.IsStopped)
                     {
-                        await Task.Delay(200); // Attendre 200ms avant de revérifier
+                        __DeleteFilesInTargetPath(work);
+                        return "WorkStopped";
                     }
+
 
                     var file = filesToCopy[i];
                     await Task.Delay(300); // Simule un délai sans bloquer l'UI
@@ -265,7 +284,26 @@ namespace WpfApp1.Model
                 }
 
                 return "ExecuteWorkSuccess";
+
+                void __DeleteFilesInTargetPath(BackupWork work)
+                {
+                    if (Directory.Exists(work.TargetPath))
+                    {
+                        var files = Directory.GetFiles(work.TargetPath, "*", SearchOption.AllDirectories);
+                        foreach (var file in files)
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    work.IsStopped = false;
+                    work.Progression = "0";
+                    work.NbFilesLeftToDo = work.TotalFilesToCopy;
+                }
+
             }
+
+
+
         }
     }
 }
