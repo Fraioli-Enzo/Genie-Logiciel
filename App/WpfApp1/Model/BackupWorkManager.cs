@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Diagnostics;
+using System.Windows;
 
 namespace WpfApp1.Model
 {
@@ -101,6 +102,16 @@ namespace WpfApp1.Model
             return "RemoveWorkSuccess";
         }
 
+        public string PauseWork(string id)
+        {
+            var workToPause = Works.FirstOrDefault(w => w.ID == id);
+            if (workToPause != null)
+            {
+                workToPause.IsPaused = !(workToPause.IsPaused);
+                return "PauseWorkSuccess";
+            }
+            return "PauseWorkError";
+        }
         public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
@@ -109,7 +120,7 @@ namespace WpfApp1.Model
             if (_IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
                 LoggingLibrary.Logger.Log(nameBackup, "Error", "Error", 0, 0, log, 0);
-                return "ProcessAlreadyRunning";
+                return "ProcessRunning";
             }
 
             if (workToExecute == null)
@@ -212,6 +223,11 @@ namespace WpfApp1.Model
 
                 for (int i = 0; i < filesToCopy.Count; i++)
                 {
+                    while (work.IsPaused)
+                    {
+                        await Task.Delay(200); // Attendre 200ms avant de revérifier
+                    }
+
                     var file = filesToCopy[i];
                     await Task.Delay(300); // Simule un délai sans bloquer l'UI
                     string relativePath = Path.GetRelativePath(work.SourcePath, file);

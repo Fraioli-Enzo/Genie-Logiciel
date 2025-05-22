@@ -60,9 +60,7 @@ namespace WpfApp1
         {
 
         }
-        private void ButtonPause_Click(object sender, RoutedEventArgs e)
-        {
-        }
+
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
         }
@@ -81,14 +79,27 @@ namespace WpfApp1
                     case "ExecuteWorkSuccess":
                         MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
-                    case "ProcessAlreadyRunning":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessAlreadyRunning"), "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    case "ProcessRunning":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
                 }
             }
             else
             {
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToExecute"), "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void ButtonPause_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                string id = backup.ID;
+                string result = backupWorkManager.PauseWork(id);
+            }
+            else
+            {
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToPause"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

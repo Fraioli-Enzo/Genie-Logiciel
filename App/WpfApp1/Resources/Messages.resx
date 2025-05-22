@@ -257,7 +257,7 @@
     <value>Ce extension de fichier est déjà ajouté</value>
     <comment>-</comment>
   </data>
-  <data name="ProcessAlreadyRunning" xml:space="preserve">
+  <data name="ProcessRunning" xml:space="preserve">
     <value>Le processus métier est en cours d'exécution.</value>
     <comment>-</comment>
   </data>

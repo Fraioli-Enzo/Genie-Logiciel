@@ -222,7 +222,7 @@
   <data name="This_extension_file_added" xml:space="preserve">
     <value>This extension is already added</value>
   </data>
-  <data name="ProcessAlreadyRunning" xml:space="preserve">
+  <data name="ProcessRunning" xml:space="preserve">
     <value>The business process is running.</value>
   </data>
   <data name="Progress" xml:space="preserve">
