@@ -4,6 +4,7 @@
   "workingSoftware": "null",
   "extensionsToCrypto": [
     ".pdf",
-    ".png"
+    ".png",
+    ".txt"
   ]
 }
