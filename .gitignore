@@ -2,6 +2,6 @@
 bin/
 obj/
 App/WpfApp1/config.json
-App/ConsoleApp/state.json
+App/WpfApp1/state.json
 Logs/
 
