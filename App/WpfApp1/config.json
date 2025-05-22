@@ -3,8 +3,6 @@
   "log": "json",
   "workingSoftware": "null",
   "extensionsToCrypto": [
-    ".pdf",
-    ".png",
     ".txt"
   ]
 }

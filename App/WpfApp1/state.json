@@ -1,13 +1,13 @@
 [
   {
-    "ID": "1",
-    "Name": "TEST1",
+    "ID": "3",
+    "Name": "Enzo3",
     "SourcePath": "C:\\Users\\enzof\\Documents\\Test_Source",
-    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible",
+    "TargetPath": "C:\\Users\\enzof\\Documents\\CESI\\Test_Cible3",
     "Type": "FULL",
     "State": "INACTIVE",
-    "TotalFilesToCopy": "12",
-    "TotalFilesSize": "13836",
+    "TotalFilesToCopy": "2",
+    "TotalFilesSize": "2306",
     "NbFilesLeftToDo": "0",
     "IsPaused": false,
     "Progression": "100"

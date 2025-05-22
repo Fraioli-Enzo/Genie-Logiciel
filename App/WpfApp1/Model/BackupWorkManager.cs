@@ -1,15 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
-using LoggingLibrary;
-using System.IO.Packaging;
 using System.Diagnostics;
-using System.Windows;
-using System.Threading; // Ajout pour CancellationToken
 
 namespace WpfApp1.Model
 {
@@ -27,52 +18,9 @@ namespace WpfApp1.Model
 
     public class BackupWorkManager
     {
-
+        //----------------------------GENERAL----------------------------------------
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
         public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
-        private readonly ManualResetEventSlim _pauseEvent = new(true);
-
-        // Ajout : Dictionnaire pour stocker les tokens d'annulation par ID
-        private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
-
-        // Ajoutez ces méthodes pour gérer la pause/reprise par ID
-        public async Task PauseBackupAsync(string id)
-        {
-            await Task.Yield();
-            var backup = Works.FirstOrDefault(w => w.ID == id);
-            if (backup != null)
-            {
-                if (backup.ID == Works.FirstOrDefault(w => !w.IsPaused)?.ID)
-                {
-                    _pauseEvent.Reset();
-                }
-                backup.IsPaused = true;
-            }
-        }
-
-        public async Task ResumeBackupAsync(string id)
-        {
-            await Task.Yield();
-            var backup = Works.FirstOrDefault(w => w.ID == id);
-            if (backup != null)
-            {
-                if (backup.ID == Works.FirstOrDefault(w => w.IsPaused)?.ID)
-                {
-                    _pauseEvent.Set();
-                }
-                backup.IsPaused = false;
-            }
-        }
-
-        // Nouvelle méthode pour arrêter une sauvegarde
-        public async Task StopBackupAsync(string id)
-        {
-            await Task.Yield();
-            if (_cancellationTokens.TryGetValue(id, out var cts))
-            {
-                cts.Cancel();
-            }
-        }
 
         public BackupWorkManager()
         {
@@ -91,13 +39,7 @@ namespace WpfApp1.Model
             }
         }
 
-        public static bool IsProcessRunning(string processName)
-            {
-                // Ne pas inclure l'extension .exe dans le nom du processus
-                var processes = Process.GetProcessesByName(processName);
-                return processes.Length > 0;
-            }
-
+        //--------------------------ACTIONS FUNCTIONS------------------------------------------
         public string AddWork(string name, string pathSource, string pathTarget, string type)
         {
 
@@ -125,29 +67,24 @@ namespace WpfApp1.Model
             List<BackupWork> existingWorks = new List<BackupWork>();
 
             if (File.Exists(jsonFilePath))
-            { 
+            {
                 string existingJsonContent = File.ReadAllText(jsonFilePath);
                 existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
             }
- 
+
             existingWorks.Add(newWork);
-            string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true }); 
+            string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(jsonFilePath, updatedJsonContent);
 
             Works.Add(newWork);
             return "AddWorkSuccess";
         }
 
-        public string RemoveWork(string ids)
+        public string RemoveWork(string id)
         {
-            var idsToRemove = ParseIds(ids);
+            Works.RemoveAll(w => id.Contains(w.ID));
 
-            if (idsToRemove.Count == 0)
-                return "RemoveWorkError";
-
-            Works.RemoveAll(w => idsToRemove.Contains(w.ID));
-
-            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
             if (File.Exists(jsonFilePath))
@@ -155,7 +92,7 @@ namespace WpfApp1.Model
                 string existingJsonContent = File.ReadAllText(jsonFilePath);
                 var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
 
-                existingWorks = existingWorks.Where(w => !idsToRemove.Contains(w.ID)).ToList();
+                existingWorks = existingWorks.Where(w => !id.Contains(w.ID)).ToList();
 
                 string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(jsonFilePath, updatedJsonContent);
@@ -164,89 +101,88 @@ namespace WpfApp1.Model
             return "RemoveWorkSuccess";
         }
 
-        public async Task<string> ExecuteWorkAsync(string ids, string log, string[] extensions, string workingSoftware)
+        public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware)
         {
-            if (IsProcessRunning(workingSoftware) && workingSoftware != "null")
+            var workToExecute = Works.FirstOrDefault(w => w.ID == id);
+            string nameBackup = workToExecute?.Name;
+
+            if (_IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
-                var workToExecute = Works.FirstOrDefault(w => w.ID == ids);
-                string nameBackup = workToExecute?.Name;
-                string sourcePath = workToExecute.SourcePath;
-                string targetPath = workToExecute.TargetPath;
                 LoggingLibrary.Logger.Log(nameBackup, "Error", "Error", 0, 0, log, 0);
                 return "ProcessAlreadyRunning";
             }
 
-            var idsToExecute = ParseIds(ids);
-            if (idsToExecute.Count == 0)
+            if (workToExecute == null)
                 return "ExecuteWorkError";
 
-            var results = new List<string>();
-            foreach (var id in idsToExecute)
+            if (!Directory.Exists(workToExecute.SourcePath))
+                return "SourceDirectoryNotFound";
+
+            var filesToCopy = _GetFilesToCopy(workToExecute);
+            if (filesToCopy == null)
+                return "ExecuteWorkError";
+
+            _UpdateWorkFileStats(workToExecute, filesToCopy);
+
+            _UpdateWorkStateInJson(workToExecute);
+
+            Directory.CreateDirectory(workToExecute.TargetPath);
+
+            try
             {
-                // Ajout : Créer un CancellationTokenSource pour chaque sauvegarde
-                var cts = new CancellationTokenSource();
-                _cancellationTokens[id] = cts;
-                var result = await ExecuteSingleWorkAsync(id, log, extensions, cts.Token);
-                results.Add(result);
-                _cancellationTokens.Remove(id); // Nettoyage après exécution
+                var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions);
+                _UpdateWorkStateInJson(workToExecute);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return $"ExecuteWorkError: {ex.Message}";
             }
 
-            if (results.All(r => r == "ExecuteWorkSuccess"))
-                return "ExecuteWorkSuccess";
-            if (results.Any(r => r == "SourceDirectoryNotFound"))
-                return "SourceDirectoryNotFound";
-            var firstError = results.FirstOrDefault(r => r != "ExecuteWorkSuccess");
-            return firstError ?? "ExecuteWorkError";
-        }
-
-        // Modifie la signature pour accepter un CancellationToken
-        private async Task<string> ExecuteSingleWorkAsync(string id, string log, string[] extensions, CancellationToken cancellationToken)
-        {
-            var workToExecute = Works.FirstOrDefault(w => w.ID == id);
-            string nameBackup = workToExecute?.Name;
-            if (workToExecute != null)
+            bool _IsProcessRunning(string processName)
             {
-                string sourcePath = workToExecute.SourcePath;
-                string targetPath = workToExecute.TargetPath;
+                var processes = Process.GetProcessesByName(processName);
+                return processes.Length > 0;
+            }
 
-                if (!Directory.Exists(sourcePath))
+            List<string>? _GetFilesToCopy(BackupWork work)
+            {
+                var allFiles = Directory.GetFiles(work.SourcePath, "*", SearchOption.AllDirectories);
+
+                if (work.Type == "FULL")
                 {
-                    return "SourceDirectoryNotFound";
+                    return allFiles.ToList();
                 }
-
-                var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
-
-                List<string> filesToCopy;
-                if (workToExecute.Type == "FULL")
+                else if (work.Type == "DIFFERENTIAL")
                 {
-                    filesToCopy = allFiles.ToList();
-                }
-                else if (workToExecute.Type == "DIFFERENTIAL")
-                {
-                    filesToCopy = new List<string>();
+                    var filesToCopy = new List<string>();
                     foreach (var file in allFiles)
                     {
-                        string relativePath = Path.GetRelativePath(sourcePath, file);
-                        string targetFilePath = Path.Combine(targetPath, relativePath);
+                        string relativePath = Path.GetRelativePath(work.SourcePath, file);
+                        string targetFilePath = Path.Combine(work.TargetPath, relativePath);
                         if (!File.Exists(targetFilePath))
                         {
                             filesToCopy.Add(file);
                         }
                     }
+                    return filesToCopy;
                 }
-                else
-                {
-                    return "ExecuteWorkError";
-                }
+                return null;
+            }
 
+            void _UpdateWorkFileStats(BackupWork work, List<string> filesToCopy)
+            {
                 int totalFiles = filesToCopy.Count;
                 long totalSize = filesToCopy.Sum(file => new FileInfo(file).Length);
 
-                workToExecute.TotalFilesToCopy = totalFiles.ToString();
-                workToExecute.TotalFilesSize = totalSize.ToString();
-                workToExecute.NbFilesLeftToDo = totalFiles.ToString();
-                workToExecute.Progression = "0";
+                work.TotalFilesToCopy = totalFiles.ToString();
+                work.TotalFilesSize = totalSize.ToString();
+                work.NbFilesLeftToDo = totalFiles.ToString();
+                work.Progression = "0";
+            }
 
+            void _UpdateWorkStateInJson(BackupWork work)
+            {
                 string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
                 string jsonFilePath = Path.Combine(projectRootPath, "state.json");
 
@@ -255,120 +191,65 @@ namespace WpfApp1.Model
                     string existingJsonContent = File.ReadAllText(jsonFilePath);
                     var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
 
-                    var workIndex = existingWorks.FindIndex(w => w.ID == id);
+                    var workIndex = existingWorks.FindIndex(w => w.ID == work.ID);
                     if (workIndex != -1)
                     {
-                        existingWorks[workIndex].TotalFilesToCopy = workToExecute.TotalFilesToCopy;
-                        existingWorks[workIndex].TotalFilesSize = workToExecute.TotalFilesSize;
-                        existingWorks[workIndex].NbFilesLeftToDo = workToExecute.NbFilesLeftToDo;
-                        existingWorks[workIndex].Progression = workToExecute.Progression;
+                        existingWorks[workIndex].TotalFilesToCopy = work.TotalFilesToCopy;
+                        existingWorks[workIndex].TotalFilesSize = work.TotalFilesSize;
+                        existingWorks[workIndex].NbFilesLeftToDo = work.NbFilesLeftToDo;
+                        existingWorks[workIndex].Progression = work.Progression;
                     }
 
                     string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
                     File.WriteAllText(jsonFilePath, updatedJsonContent);
                 }
-
-                Directory.CreateDirectory(targetPath);
-
-                try
-                {
-                    int filesCopied = 0;
-
-                    foreach (var file in filesToCopy)
-                    {
-                        // Ajout : Vérifier l'annulation avant chaque fichier
-                        if (cancellationToken.IsCancellationRequested)
-                        {
-                            workToExecute.State = "STOPPED";
-                            return "BackupStopped";
-                        }
-
-                        await Task.Run(() => _pauseEvent.Wait());
-                        await Task.Delay(300); // Simule un délai sans bloquer l'UI
-                        string relativePath = Path.GetRelativePath(sourcePath, file);
-                        string targetFilePath = Path.Combine(targetPath, relativePath);
-
-                        Directory.CreateDirectory(Path.GetDirectoryName(targetFilePath)!);
-
-                        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
-                        File.Copy(file, targetFilePath, overwrite: true);
-
-                        // Chiffrement du fichier si l'extension correspond
-                        int encryptionTime = 0;
-                        string fileExtension = Path.GetExtension(targetFilePath);
-                        if (extensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
-                        {
-                            encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "ProtectedKey");
-                            if (encryptionTime == -99)
-                            {
-                                return "EncryptionError";
-                            }
-                        }
-
-                        stopwatch.Stop();
-                        double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
-
-                        long fileSize = new FileInfo(file).Length;
-                        LoggingLibrary.Logger.Log(nameBackup, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime);
-
-                        filesCopied++;
-
-                        workToExecute.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();
-                        workToExecute.Progression = (totalFiles == 0 ? "100" : ((filesCopied * 100) / totalFiles).ToString());
-                        ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(workToExecute.ID, int.Parse(workToExecute.Progression)));
-                    }
-
-                    if (File.Exists(jsonFilePath))
-                    {
-                        string existingJsonContent = File.ReadAllText(jsonFilePath);
-                        var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
-
-                        var workIndex = existingWorks.FindIndex(w => w.ID == id);
-                        if (workIndex != -1)
-                        {
-                            existingWorks[workIndex].NbFilesLeftToDo = workToExecute.NbFilesLeftToDo;
-                            existingWorks[workIndex].Progression = workToExecute.Progression;
-                        }
-
-                        string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
-                        File.WriteAllText(jsonFilePath, updatedJsonContent);
-                    }
-
-                    return "ExecuteWorkSuccess";
-                }
-                catch (Exception ex)
-                {
-                    return $"ExecuteWorkError: {ex.Message}";
-                }
             }
 
-            return "ExecuteWorkError";
-        }
-
-        private static HashSet<string> ParseIds(string ids)
-        {
-            var result = new HashSet<string>();
-            if (string.IsNullOrWhiteSpace(ids))
-                return result;
-
-            foreach (var part in ids.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            async Task<string> _CopyAndEncryptFilesAsync(BackupWork work, List<string> filesToCopy, string log, string[] extensions)
             {
-                if (part.Contains('-'))
+                int totalFiles = filesToCopy.Count;
+                int filesCopied = 0;
+
+                for (int i = 0; i < filesToCopy.Count; i++)
                 {
-                    var range = part.Split('-', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-                    if (range.Length == 2 && int.TryParse(range[0], out int start) && int.TryParse(range[1], out int end) && start <= end)
+                    var file = filesToCopy[i];
+                    await Task.Delay(300); // Simule un délai sans bloquer l'UI
+                    string relativePath = Path.GetRelativePath(work.SourcePath, file);
+                    string targetFilePath = Path.Combine(work.TargetPath, relativePath);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(targetFilePath)!);
+
+                    var stopwatch = Stopwatch.StartNew();
+
+                    File.Copy(file, targetFilePath, overwrite: true);
+
+                    // Chiffrement du fichier si l'extension correspond
+                    int encryptionTime = 0;
+                    string fileExtension = Path.GetExtension(targetFilePath);
+                    if (extensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
                     {
-                        for (int i = start; i <= end; i++)
-                            result.Add(i.ToString());
+                        encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "ProtectedKey");
+                        if (encryptionTime == -99)
+                        {
+                            return "EncryptionError";
+                        }
                     }
+
+                    stopwatch.Stop();
+                    double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
+
+                    long fileSize = new FileInfo(file).Length;
+                    LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime);
+
+                    filesCopied++;
+
+                    work.NbFilesLeftToDo = (totalFiles - filesCopied).ToString();
+                    work.Progression = (totalFiles == 0 ? "100" : ((filesCopied * 100) / totalFiles).ToString());
+                    ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(work.ID, int.Parse(work.Progression)));
                 }
-                else if (int.TryParse(part, out int singleId))
-                {
-                    result.Add(singleId.ToString());
-                }
+
+                return "ExecuteWorkSuccess";
             }
-            return result;
         }
     }
 }

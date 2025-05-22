@@ -11,9 +11,6 @@ using System.Linq;
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Logique d'interaction pour Settings.xaml
-    /// </summary>
     public partial class Settings : Window
     {
         private object resourceManager;

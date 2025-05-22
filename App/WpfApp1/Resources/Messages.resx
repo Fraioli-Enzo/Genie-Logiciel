@@ -179,6 +179,7 @@
   </data>
   <data name="Setting" xml:space="preserve">
     <value>Paramètres</value>
+    <comment>-</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>

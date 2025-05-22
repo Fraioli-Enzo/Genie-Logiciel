@@ -113,7 +113,7 @@
             </Button>
         </Grid>
 
-        <DataGrid x:Name="BackupDataGrid" Grid.Row="1" SelectionChanged="BackupDataGrid_SelectionChanged" AutoGenerateColumns="False">
+        <DataGrid x:Name="BackupDataGrid" Grid.Row="1" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="Auto"/>
                 <DataGridTextColumn Header="Name Backup" Binding="{Binding Name}" Width="*"/>

@@ -10,19 +10,13 @@ using System.Collections.Generic;
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-
-
         private BackupWorkManager backupWorkManager;
         private object resourceManager;
         private string logExtension;
         private string workingSoftware;
         private string[] extensions;
-        private bool test = true;
 
         public MainWindow()
         {
@@ -61,17 +55,19 @@ namespace WpfApp1
             MenuLabel.Content = ((ResourceManager)this.resourceManager).GetString("MainMenu");
         }
 
-        private void BackupDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //------------------------------------TO DO--------------------------------------
+        private void ButtonLogger_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        private void ButtonPause_Click(object sender, RoutedEventArgs e)
         {
-            AddBackup addWorkWindow = new AddBackup();
-            addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
-            addWorkWindow.ShowDialog();
         }
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        //---------------------------------ACTIONS-------------------------------------
 
         private async void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
@@ -113,38 +109,13 @@ namespace WpfApp1
             }
         }
 
-        private async void ButtonPause_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is BackupWork backup)
-            {
-                string id = backup.ID;
-                if (backup.IsPaused)
-                {
-                    await Task.Run(() => backupWorkManager.ResumeBackupAsync(id));
-                }
-                else
-                {
-                    await Task.Run(() => backupWorkManager.PauseBackupAsync(id));
-                }
-            }
-            else
-            {
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToPause"), "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
+        //---------------------------------OPEN WINDOWS-------------------------------------
 
-        private async void ButtonStop_Click(object sender, RoutedEventArgs e)
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.DataContext is BackupWork backup)
-            {
-                string id = backup.ID;
-                await backupWorkManager.StopBackupAsync(id);
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopSuccess") ?? "Backup stopped.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToStop") ?? "Select a backup to stop.", "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            AddBackup addWorkWindow = new AddBackup();
+            addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
+            addWorkWindow.ShowDialog();
         }
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
@@ -159,11 +130,6 @@ namespace WpfApp1
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
-        }
-
-        private void ButtonLogger_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
