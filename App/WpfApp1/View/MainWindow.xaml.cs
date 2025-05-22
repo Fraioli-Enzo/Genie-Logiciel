@@ -61,10 +61,6 @@ namespace WpfApp1
 
         }
 
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
         //---------------------------------ACTIONS-------------------------------------
 
         private async void ButtonExecute_Click(object sender, RoutedEventArgs e)
@@ -102,6 +98,21 @@ namespace WpfApp1
             else
             {
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToPause"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                string id = backup.ID;
+                string result = backupWorkManager.StopWork(id);
+                BackupDataGrid.ItemsSource = null;
+                BackupDataGrid.ItemsSource = backupWorkManager.Works;
+            }
+            else
+            {
+                MessageBox.Show("Sélectionnez un travail à stopper.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

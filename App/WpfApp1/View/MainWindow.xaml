@@ -190,7 +190,9 @@
             </Button>
         </Grid>
 
-        <DataGrid x:Name="BackupDataGrid" Grid.Row="1" AutoGenerateColumns="False">
+        <DataGrid x:Name="BackupDataGrid" Grid.Row="1" AutoGenerateColumns="False" 
+                  IsReadOnly="True" 
+                  >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="Auto"/>
                 <DataGridTextColumn Header="Name Backup" Binding="{Binding Name}" Width="*"/>
@@ -202,10 +204,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-
                                 <Button Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StartButtonStyle}" ToolTip="Exécuter" Click="ButtonExecute_Click"/>
                                 <Button Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
-                                <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StopButtonStyle}" ToolTip="Stopper" Click="ButtonPause_Click"/>
+                                <Button Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StopButtonStyle}" ToolTip="Stopper" Click="ButtonStop_Click"/>
                                 <Button Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource DeleteButtonStyle}" ToolTip="Supprimer" Click="ButtonDelete_Click"/>
                             </StackPanel>
                         </DataTemplate>
@@ -218,10 +219,10 @@
                             <Grid Width="120" Height="20" VerticalAlignment="Center">
                                 <ProgressBar Minimum="0" Maximum="100" Value="{Binding Progression}" />
                                 <TextBlock Text="{Binding Progression, StringFormat=' {0}%'}"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Foreground="Black"
-                           FontWeight="Bold"/>
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="Black"
+                                   FontWeight="Bold"/>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

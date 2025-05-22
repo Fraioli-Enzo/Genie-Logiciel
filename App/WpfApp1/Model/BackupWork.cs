@@ -34,6 +34,21 @@ namespace WpfApp1.Model
             }
         }
 
+        private bool _isStopped;
+        public bool IsStopped
+        {
+            get => _isStopped;
+            set
+            {
+                if (_isStopped != value)
+                {
+                    _isStopped = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStopped)));
+                }
+            }
+        }
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public BackupWork(string id, string name, string sourcePath, string targetPath, string type, string totalFilesToCopy, string totalFilesSize, string nbFilesLeftToDo, string state = "INACTIVE", string progression = "0")
