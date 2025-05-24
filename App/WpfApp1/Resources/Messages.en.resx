@@ -228,4 +228,16 @@
   <data name="Progress" xml:space="preserve">
     <value>Progress</value>
   </data>
+  <data name="PauseWorkSuccess" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PauseWorkError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="StopWorkSuccess" xml:space="preserve">
+    <value />
+  </data>
+  <data name="StopWorkError" xml:space="preserve">
+    <value />
+  </data>
 </root>

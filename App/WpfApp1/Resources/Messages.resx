@@ -265,4 +265,20 @@
     <value>Progression</value>
     <comment>-</comment>
   </data>
+  <data name="PauseWorkSuccess" xml:space="preserve">
+    <value>Travail mis en pause !</value>
+    <comment>-</comment>
+  </data>
+  <data name="PauseWorkError" xml:space="preserve">
+    <value>Erreur lors de la mise en pause !</value>
+    <comment>-</comment>
+  </data>
+  <data name="StopWorkSuccess" xml:space="preserve">
+    <value />
+    <comment>-</comment>
+  </data>
+  <data name="StopWorkError" xml:space="preserve">
+    <value />
+    <comment>-</comment>
+  </data>
 </root>

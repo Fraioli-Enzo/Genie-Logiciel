@@ -114,11 +114,11 @@ namespace WpfApp1.Model
         }
         public string StopWork(string id)
         {
-            var work = Works.FirstOrDefault(w => w.ID == id);
-            if (work != null)
+            var workToStop = Works.FirstOrDefault(w => w.ID == id);
+            if (workToStop != null)
             {
-                work.IsStopped = true;
-                work.IsPaused = false;
+                workToStop.IsStopped = true;
+                workToStop.IsPaused = false;
                 return "StopWorkSuccess";
             }
             return "StopWorkError";
@@ -127,11 +127,10 @@ namespace WpfApp1.Model
         public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
-            string nameBackup = workToExecute?.Name;
 
             if (_IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
-                LoggingLibrary.Logger.Log(nameBackup, "Error", "Error", 0, 0, log, 0);
+                LoggingLibrary.Logger.Log(workToExecute.Name, "ProcessRunning", "ProcessRunning", 0, 0, log, 0);
                 return "ProcessRunning";
             }
 
@@ -139,7 +138,7 @@ namespace WpfApp1.Model
                 return "ExecuteWorkError";
 
             if (!Directory.Exists(workToExecute.SourcePath))
-                return "SourceDirectoryNotFound";
+                return "ExecuteWorkError";
 
             var filesToCopy = _GetFilesToCopy(workToExecute);
             if (filesToCopy == null)
@@ -159,9 +158,10 @@ namespace WpfApp1.Model
             }
             catch (Exception ex)
             {
-                return $"ExecuteWorkError: {ex.Message}";
+                return "ExecuteWorkError";
             }
 
+            // Inner Functions
             bool _IsProcessRunning(string processName)
             {
                 var processes = Process.GetProcessesByName(processName);
@@ -237,13 +237,17 @@ namespace WpfApp1.Model
                 {
                     // Pause
                     while (work.IsPaused)
+                    {
                         await Task.Delay(200);
+                    }
+
 
                     // Stop
                     if (work.IsStopped)
                     {
                         __DeleteFilesInTargetPath(work);
-                        return "WorkStopped";
+                        LoggingLibrary.Logger.Log(work.Name, "Stop", "Stop", 0, 0, log, 0);
+                        return "ExecuteWorkStopped";
                     }
 
 
@@ -266,7 +270,7 @@ namespace WpfApp1.Model
                         encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "ProtectedKey");
                         if (encryptionTime == -99)
                         {
-                            return "EncryptionError";
+                            return "ExecuteWorkEncryptionError";
                         }
                     }
 
@@ -285,6 +289,7 @@ namespace WpfApp1.Model
 
                 return "ExecuteWorkSuccess";
 
+                // Inner function to delete files in the target path
                 void __DeleteFilesInTargetPath(BackupWork work)
                 {
                     if (Directory.Exists(work.TargetPath))

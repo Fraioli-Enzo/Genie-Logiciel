@@ -76,13 +76,12 @@ namespace WpfApp1
                         MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                     case "ProcessRunning":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                    case "ExecuteWorkError":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
                 }
-            }
-            else
-            {
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToExecute"), "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -92,12 +91,15 @@ namespace WpfApp1
             {
                 string id = backup.ID;
                 string result = backupWorkManager.PauseWork(id);
-                BackupDataGrid.ItemsSource = null;
-                BackupDataGrid.ItemsSource = backupWorkManager.Works;
-            }
-            else
-            {
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToPause"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch (result)
+                {
+                    case "PauseWorkSuccess":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case "PauseWorkError":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                }
             }
         }
 
@@ -107,12 +109,15 @@ namespace WpfApp1
             {
                 string id = backup.ID;
                 string result = backupWorkManager.StopWork(id);
-                BackupDataGrid.ItemsSource = null;
-                BackupDataGrid.ItemsSource = backupWorkManager.Works;
-            }
-            else
-            {
-                MessageBox.Show("Sélectionnez un travail à stopper.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                switch (result)
+                {
+                    case "StopWorkSuccess":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case "StopWorkError":
+                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                }
             }
         }
 

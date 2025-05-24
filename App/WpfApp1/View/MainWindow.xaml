@@ -191,7 +191,7 @@
         </Grid>
 
         <DataGrid x:Name="BackupDataGrid" Grid.Row="1" AutoGenerateColumns="False" 
-                  IsReadOnly="True" 
+                  IsReadOnly="True"  
                   >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="Auto"/>
