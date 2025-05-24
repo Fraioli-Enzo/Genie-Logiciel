@@ -190,10 +190,10 @@
     <value>Log file type</value>
   </data>
   <data name="ExecuteSuccess" xml:space="preserve">
-    <value>Backup(s) executed successfully.</value>
+    <value>Backup executed successfully.</value>
   </data>
   <data name="DeleteSuccess" xml:space="preserve">
-    <value>Backup(s) deleted successfully.</value>
+    <value>Backup deleted successfully.</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Success</value>
@@ -229,15 +229,27 @@
     <value>Progress</value>
   </data>
   <data name="PauseWorkSuccess" xml:space="preserve">
-    <value />
+    <value>Backup paused !</value>
   </data>
   <data name="PauseWorkError" xml:space="preserve">
-    <value />
+    <value>Error during the pause of the backup !</value>
   </data>
   <data name="StopWorkSuccess" xml:space="preserve">
-    <value />
+    <value>Backup stoped !</value>
   </data>
   <data name="StopWorkError" xml:space="preserve">
-    <value />
+    <value>Error during the stop of the backup !</value>
+  </data>
+  <data name="ToolTipExecute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Edit_Backup" xml:space="preserve">
+    <value>Edit backup</value>
+  </data>
+  <data name="EditWorkSuccess" xml:space="preserve">
+    <value>Backup edited successfully !</value>
   </data>
 </root>
