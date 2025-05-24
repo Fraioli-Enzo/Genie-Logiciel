@@ -29,7 +29,7 @@ namespace WpfApp1
 
         private void LoadConfigAndUpdateUI()
         {
-            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             string configFilePath = Path.Combine(projectRootPath, "config.json");
             string configContent = File.ReadAllText(configFilePath);
             var config = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(configContent);
@@ -39,14 +39,12 @@ namespace WpfApp1
             extensions = config != null && config.ContainsKey("extensionsToCrypto") ? config["extensionsToCrypto"].EnumerateArray().Select(e => e.GetString()).ToArray() : Array.Empty<string>();
             workingSoftware = config != null && config.ContainsKey("workingSoftware") ? config["workingSoftware"].GetString() ?? "" : "";
 
-            // Définir la culture du ResourceManager en fonction de la langue
+            // Set the culture of the ResourceManager based on the language
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             this.resourceManager = new ResourceManager("WpfApp1.Resources.Messages", typeof(MainWindow).Assembly);
 
             ButtonSettings.Content = ((ResourceManager)this.resourceManager).GetString("Setting");
             ButtonAdd.Content = ((ResourceManager)this.resourceManager).GetString("Add_Backup");
-            //ButtonDelete.Content = ((ResourceManager)this.resourceManager).GetString("Delete_Backup");
-            //ButtonExecute.Content = ((ResourceManager)this.resourceManager).GetString("Execute_Backup");
             ButtonLogger.Content = ((ResourceManager)this.resourceManager).GetString("Logger");
             BackupDataGrid.Columns[1].Header = ((ResourceManager)this.resourceManager).GetString("Name_Backup");
             BackupDataGrid.Columns[2].Header = ((ResourceManager)this.resourceManager).GetString("Source_Path");
@@ -54,7 +52,6 @@ namespace WpfApp1
             BackupDataGrid.Columns[6].Header = ((ResourceManager)this.resourceManager).GetString("Progress");
             MenuLabel.Content = ((ResourceManager)this.resourceManager).GetString("MainMenu");
         }
-
         //------------------------------------TO DO--------------------------------------
         private void ButtonLogger_Click(object sender, RoutedEventArgs e)
         {
@@ -138,6 +135,19 @@ namespace WpfApp1
             }
         }
 
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                EditBackup editBackupWindow = new EditBackup(backup);
+                editBackupWindow.BackupEdited += EditBackupWindow_BackupEdited;
+                editBackupWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToEdit"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
         //---------------------------------OPEN WINDOWS-------------------------------------
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -155,6 +165,13 @@ namespace WpfApp1
         }
 
         private void AddBackupWindow_BackupAdded(object sender, EventArgs e)
+        {
+            backupWorkManager = new BackupWorkManager();
+            BackupDataGrid.ItemsSource = null;
+            BackupDataGrid.ItemsSource = backupWorkManager.Works;
+        }
+
+        private void EditBackupWindow_BackupEdited(object sender, EventArgs e)
         {
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;

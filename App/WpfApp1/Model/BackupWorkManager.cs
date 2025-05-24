@@ -81,6 +81,41 @@ namespace WpfApp1.Model
             return "AddWorkSuccess";
         }
 
+        public string EditWork(string id, string name, string pathSource, string pathTarget, string type)
+        {
+            var workToEdit = Works.FirstOrDefault(w => w.ID == id);
+            if (workToEdit == null)
+                return "EditWorkError";
+            // Mettre à jour les propriétés de l'objet BackupWork
+            workToEdit.Name = name;
+            workToEdit.SourcePath = pathSource;
+            workToEdit.TargetPath = pathTarget;
+            workToEdit.Type = type;
+            // Recalculer le nombre total de fichiers et leur taille totale
+            var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
+            int totalFilesToCopy = allFiles.Length;
+            long totalFilesSize = allFiles.Sum(file => new FileInfo(file).Length);
+            workToEdit.TotalFilesToCopy = totalFilesToCopy.ToString();
+            workToEdit.TotalFilesSize = totalFilesSize.ToString();
+            workToEdit.NbFilesLeftToDo = totalFilesToCopy.ToString();
+            workToEdit.Progression = "0";
+            // Mettre à jour le fichier state.json
+            string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+            string jsonFilePath = Path.Combine(projectRootPath, "state.json");
+            if (File.Exists(jsonFilePath))
+            {
+                string existingJsonContent = File.ReadAllText(jsonFilePath);
+                var existingWorks = JsonSerializer.Deserialize<List<BackupWork>>(existingJsonContent) ?? new List<BackupWork>();
+                var workIndex = existingWorks.FindIndex(w => w.ID == id);
+                if (workIndex != -1)
+                {
+                    existingWorks[workIndex] = workToEdit;
+                }
+                string updatedJsonContent = JsonSerializer.Serialize(existingWorks, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(jsonFilePath, updatedJsonContent);
+            }
+            return "EditWorkSuccess";
+        }
         public string RemoveWork(string id)
         {
             Works.RemoveAll(w => id.Contains(w.ID));

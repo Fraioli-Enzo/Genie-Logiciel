@@ -214,11 +214,11 @@
     <comment>-</comment>
   </data>
   <data name="ExecuteSuccess" xml:space="preserve">
-    <value>Sauvegarde(s) exécutée(s) avec succès.</value>
+    <value>Sauvegarde exécutée avec succès.</value>
     <comment>-</comment>
   </data>
   <data name="DeleteSuccess" xml:space="preserve">
-    <value>Sauvegarde(s) supprimée(s) avec succès.</value>
+    <value>Sauvegarde supprimée avec succès.</value>
     <comment>-</comment>
   </data>
   <data name="Success" xml:space="preserve">
@@ -274,11 +274,27 @@
     <comment>-</comment>
   </data>
   <data name="StopWorkSuccess" xml:space="preserve">
-    <value />
+    <value>Travail stopper !</value>
     <comment>-</comment>
   </data>
   <data name="StopWorkError" xml:space="preserve">
-    <value />
+    <value>Erreur lors de la mise en stop du travail !</value>
+    <comment>-</comment>
+  </data>
+  <data name="ToolTipExecute" xml:space="preserve">
+    <value>Exécuter</value>
+    <comment>-</comment>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Modifier</value>
+    <comment>-</comment>
+  </data>
+  <data name="Edit_Backup" xml:space="preserve">
+    <value>Modifier un travail </value>
+    <comment>-</comment>
+  </data>
+  <data name="EditWorkSuccess" xml:space="preserve">
+    <value>Travail modifier avec succès !</value>
     <comment>-</comment>
   </data>
 </root>
