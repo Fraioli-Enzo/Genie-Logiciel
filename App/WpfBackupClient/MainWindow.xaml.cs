@@ -1,15 +1,19 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using WpfBackupClient.Client;
 
 namespace WpfBackupClient
 {
     public partial class MainWindow : Window
     {
+        public ObservableCollection<BackupWork> BackupWorks { get; set; } = new();
         private SocketBackupClient? _client;
 
         public MainWindow()
         {
             InitializeComponent();
+            BackupDataGrid.ItemsSource = BackupWorks;
+
             _client = new SocketBackupClient("127.0.0.1", 8080); // IP et port du serveur
             _client.MessageReceived += OnMessageReceived;
             Loaded += async (_, __) => await _client.ConnectAsync();
@@ -17,15 +21,35 @@ namespace WpfBackupClient
 
         private void OnMessageReceived(string msg)
         {
-            // Afficher le message dans l'UI, par exemple :
-            Dispatcher.Invoke(() => MessageBox.Show($"Message du serveur : {msg}"));
+            if (string.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show("Message reçu vide ou null.");
+                return;
+            }
+
+            Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    var travaux = System.Text.Json.JsonSerializer.Deserialize<List<BackupWork>>(msg);
+                    BackupWorks.Clear();
+                    if (travaux != null)
+                    {
+                        foreach (var t in travaux)
+                        {
+                            BackupWorks.Add(t);
+                        }
+
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erreur de désérialisation : " + ex.Message);
+                }
+            });
         }
 
-        private async void SendButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (_client != null)
-                await _client.SendMessageAsync("Hello serveur !");
-        }
 
         protected override void OnClosed(EventArgs e)
         {

@@ -57,8 +57,6 @@ namespace WpfBackupClient.Client
             }
         }
 
-
-
         public void Disconnect()
         {
             _stream?.Close();

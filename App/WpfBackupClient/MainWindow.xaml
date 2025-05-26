@@ -5,9 +5,221 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBackupClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Envoyer" Click="SendButton_Click" Width="100" Height="30"/>
+        Title="EasySafe - Interface Client"
+        Height="550"
+        Width="900"
+        Background="#FAFAFA"
+        FontFamily="Segoe UI">
 
+
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#1976D2"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#64B5F6"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#424242"/>
+        <SolidColorBrush x:Key="PlayPauseStopColor" Color="#0D47A1"/>
+        <SolidColorBrush x:Key="PlayPauseStopHoverColor" Color="#D32F2F"/>
+        <SolidColorBrush x:Key="PauseActiveColor" Color="Orange"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource AccentColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F5F5F5"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+        </Style>
+
+        <Style x:Key="PlayPauseStopButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PlayPauseStopColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource PlayPauseStopHoverColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- START BUTTON -->
+        <Style x:Key="StartButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#43A047"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- PAUSE BUTTON -->
+        <Style x:Key="PauseButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
+            <Setter Property="Background" Value="Goldenrod"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD54F"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- STOP BUTTON -->
+        <Style x:Key="StopButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
+            <Setter Property="Background" Value="Crimson"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E57373"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DELETE BUTTON -->
+        <Style x:Key="DeleteButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
+            <Setter Property="Background" Value="DarkRed"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF8A80"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20" Cursor="">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Name="MenuLabel" Content="Interface Client" VerticalAlignment="Center"/>
+
+        </Grid>
+
+        <DataGrid x:Name="BackupDataGrid" Grid.Row="1" AutoGenerateColumns="False" 
+                  IsReadOnly="True"  
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="Auto"/>
+                <DataGridTextColumn Header="Nom du travail" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Chemin source" Binding="{Binding SourcePath}" Width="*"/>
+                <DataGridTextColumn Header="Chemin cible" Binding="{Binding TargetPath}" Width="*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+
+                <DataGridTemplateColumn Header="Actions" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Name="ButtonExecute" Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StartButtonStyle}" ToolTip="Exécuter" />
+                                <Button Name="ButtonPause" Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Pause" />
+                                <Button Name="ButtonStop" Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StopButtonStyle}" ToolTip="Stopper" />
+                                <Button Name="ButtonDelete" Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource DeleteButtonStyle}" ToolTip="Supprimer" />
+                                <Button Name="ButtonEdit" Content="✏️" Command="{Binding EditCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Modifier" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Progress" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Width="120" Height="20" VerticalAlignment="Center">
+                                <ProgressBar Minimum="0" Maximum="100" Value="{Binding Progression}" />
+                                <TextBlock Text="{Binding Progression, StringFormat=' {0}%'}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="Black"
+                                   FontWeight="Bold"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

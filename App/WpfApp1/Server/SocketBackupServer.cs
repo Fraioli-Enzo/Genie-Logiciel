@@ -2,13 +2,16 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 using System.Windows;
+using WpfApp1.Model;
+
 
 namespace WpfApp1.Server
 {
     public class SocketBackupServer
     {
+        private BackupWorkManager backupWorkManager;
         private readonly int _port;
         private Socket? _serverSocket;
         private bool _isRunning;
@@ -58,16 +61,22 @@ namespace WpfApp1.Server
         {
             using (clientSocket)
             {
-                // Envoi d'un message de bienvenue ou d'état au client dès la connexion
-                string welcomeMessage = "Connexion établie avec le serveur de sauvegarde.";
-                var welcomeBytes = Encoding.UTF8.GetBytes(welcomeMessage);
+                // Sérialiser et envoyer la liste des travaux
+                if (backupWorkManager == null)
+                {
+                    backupWorkManager = new BackupWorkManager();
+                }
+                var travaux = backupWorkManager.Works;
+                string json = JsonSerializer.Serialize(travaux);
+                var jsonBytes = Encoding.UTF8.GetBytes(json);
+
                 try
                 {
-                    await clientSocket.SendAsync(welcomeBytes, SocketFlags.None);
+                    await clientSocket.SendAsync(jsonBytes, SocketFlags.None);
                 }
                 catch
                 {
-                    // Si l'envoi échoue, on arrête la gestion de ce client
+                    MessageBox.Show("Erreur lors de l'envoi des travaux au client.");
                     return;
                 }
 
