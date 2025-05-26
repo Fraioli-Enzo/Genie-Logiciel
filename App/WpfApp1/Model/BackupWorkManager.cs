@@ -22,6 +22,7 @@ namespace WpfApp1.Model
         //----------------------------GENERAL----------------------------------------
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
         public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
+        private static readonly SemaphoreSlim LargeFileCopyLock = new(1, 1);
 
         public BackupWorkManager()
         {
@@ -48,7 +49,22 @@ namespace WpfApp1.Model
             var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
             int totalFilesToCopy = allFiles.Length;
             long totalFilesSize = allFiles.Sum(file => new FileInfo(file).Length);
-            string id = (Works.Count + 1).ToString();
+
+            string id;
+            if (Works.Count == 0)
+            {
+                id = "1";
+            }
+            else
+            {
+                var existingIds = Works.Select(w => int.TryParse(w.ID, out var n) ? n : 0).Where(n => n > 0).ToList();
+                int newId = 1;
+                while (existingIds.Contains(newId))
+                {
+                    newId++;
+                }
+                id = newId.ToString();
+            }
 
             var newWork = new BackupWork(
                 id: id,
@@ -91,6 +107,7 @@ namespace WpfApp1.Model
             workToEdit.SourcePath = pathSource;
             workToEdit.TargetPath = pathTarget;
             workToEdit.Type = type;
+
             // Recalculer le nombre total de fichiers et leur taille totale
             var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
             int totalFilesToCopy = allFiles.Length;
@@ -159,7 +176,7 @@ namespace WpfApp1.Model
             return "StopWorkError";
         }
 
-        public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware)
+        public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware, string maxKo)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
 
@@ -187,7 +204,7 @@ namespace WpfApp1.Model
 
             try
             {
-                var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions);
+                var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions, maxKo);
                 _UpdateWorkStateInJson(workToExecute);
                 return result;
             }
@@ -263,7 +280,7 @@ namespace WpfApp1.Model
                 }
             }
 
-            async Task<string> _CopyAndEncryptFilesAsync(BackupWork work, List<string> filesToCopy, string log, string[] extensions)
+            async Task<string> _CopyAndEncryptFilesAsync(BackupWork work, List<string> filesToCopy, string log, string[] extensions, string maxKo)
             {
                 int totalFiles = filesToCopy.Count;
                 int filesCopied = 0;
@@ -287,6 +304,7 @@ namespace WpfApp1.Model
 
 
                     var file = filesToCopy[i];
+                    long fileSize = new FileInfo(file).Length;
                     await Task.Delay(300); // Simule un délai sans bloquer l'UI
                     string relativePath = Path.GetRelativePath(work.SourcePath, file);
                     string targetFilePath = Path.Combine(work.TargetPath, relativePath);
@@ -295,7 +313,25 @@ namespace WpfApp1.Model
 
                     var stopwatch = Stopwatch.StartNew();
 
-                    File.Copy(file, targetFilePath, overwrite: true);
+                    if (Math.Ceiling(fileSize / 1024.0) >= long.Parse(maxKo))
+                    {
+                        LoggingLibrary.Logger.Log(work.Name, file, "WAIT_LOCK", fileSize, 0, log, 0); 
+                        await LargeFileCopyLock.WaitAsync();
+                        try
+                        {
+                            LoggingLibrary.Logger.Log(work.Name, file, "ENTER_LOCK", fileSize, 0, log, 0); 
+                            File.Copy(file, targetFilePath, overwrite: true);
+                        }
+                        finally
+                        {
+                            LoggingLibrary.Logger.Log(work.Name, file, "RELEASE_LOCK", fileSize, 0, log, 0);
+                            LargeFileCopyLock.Release();
+                        }
+                    }
+                    else
+                    {
+                        File.Copy(file, targetFilePath, overwrite: true);
+                    }
 
                     // Chiffrement du fichier si l'extension correspond
                     int encryptionTime = 0;
@@ -312,7 +348,6 @@ namespace WpfApp1.Model
                     stopwatch.Stop();
                     double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
 
-                    long fileSize = new FileInfo(file).Length;
                     LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime);
 
                     filesCopied++;

@@ -252,4 +252,7 @@
   <data name="EditWorkSuccess" xml:space="preserve">
     <value>Backup edited successfully !</value>
   </data>
+  <data name="FileSizeText" xml:space="preserve">
+    <value>Maximum file size to copy in parallel</value>
+  </data>
 </root>

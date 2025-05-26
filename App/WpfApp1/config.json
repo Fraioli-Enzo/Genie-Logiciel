@@ -4,5 +4,6 @@
   "workingSoftware": "CalculatorApp",
   "extensionsToCrypto": [
     ".txt"
-  ]
+  ],
+  "MaxFileSize": "1024"
 }

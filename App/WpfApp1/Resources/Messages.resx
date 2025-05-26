@@ -297,4 +297,8 @@
     <value>Travail modifier avec succès !</value>
     <comment>-</comment>
   </data>
+  <data name="FileSizeText" xml:space="preserve">
+    <value>Taille maximale des fichiers à copier en parallèle</value>
+    <comment>-</comment>
+  </data>
 </root>
