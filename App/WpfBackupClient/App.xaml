@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:WpfBackupClient"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Ajoutez ce converter dans vos ressources -->
+        <local:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
     </Application.Resources>
 </Application>

@@ -15,6 +15,7 @@ namespace WpfApp1
     {
         private SocketBackupServer? _server;
         private BackupWorkManager backupWorkManager;
+
         private object resourceManager;
         private string logExtension;
         private string workingSoftware;
@@ -29,7 +30,10 @@ namespace WpfApp1
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
 
-            _server = new SocketBackupServer(8080);
+            backupWorkManager.ProgressChanged += BackupWorkManager_ProgressChanged;
+
+            // Pass the same instance of BackupWorkManager to the server
+            _server = new SocketBackupServer(8080, backupWorkManager);
             _server.MessageReceived += OnMessageReceived;
             _server.Start();
         }
@@ -45,6 +49,11 @@ namespace WpfApp1
             base.OnClosed(e);
         }
 
+        private void BackupWorkManager_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            string workId = e.WorkId;
+            _server?.NotifyClientsProgress(workId);
+        }
 
         private void LoadConfigAndUpdateUI()
         {
@@ -145,6 +154,7 @@ namespace WpfApp1
                 backupWorkManager.RemoveWork(id);
                 BackupDataGrid.ItemsSource = null;
                 BackupDataGrid.ItemsSource = backupWorkManager.Works;
+                _server.NotifyClients();
 
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -152,6 +162,23 @@ namespace WpfApp1
             {
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToDelete"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        //---------------------------------OPEN WINDOWS-------------------------------------
+
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddBackup addWorkWindow = new AddBackup();
+            addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
+            addWorkWindow.ShowDialog();
+            
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings settingsWindow = new Settings();
+            settingsWindow.ShowDialog();
+            LoadConfigAndUpdateUI();
         }
 
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
@@ -167,34 +194,23 @@ namespace WpfApp1
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToEdit"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-        //---------------------------------OPEN WINDOWS-------------------------------------
-
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            AddBackup addWorkWindow = new AddBackup();
-            addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
-            addWorkWindow.ShowDialog();
-        }
-
-        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
-        {
-            Settings settingsWindow = new Settings();
-            settingsWindow.ShowDialog();
-            LoadConfigAndUpdateUI();
-        }
 
         private void AddBackupWindow_BackupAdded(object sender, EventArgs e)
         {
-            backupWorkManager = new BackupWorkManager();
+            // Do not recreate backupWorkManager, just refresh the data grid
+            // backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
+            _server.NotifyClients();
         }
 
         private void EditBackupWindow_BackupEdited(object sender, EventArgs e)
         {
-            backupWorkManager = new BackupWorkManager();
+            // Do not recreate backupWorkManager, just refresh the data grid
+            // backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
+            _server.NotifyClients();
         }
     }
 }

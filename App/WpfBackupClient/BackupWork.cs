@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace WpfBackupClient
 {
-    public class BackupWork 
+    public class BackupWork : INotifyPropertyChanged
     {
         public string ID { get; set; }
         public string Name { get; set; }
@@ -29,7 +29,7 @@ namespace WpfBackupClient
                 if (_progression != value)
                 {
                     _progression = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Progression)));
+                    OnPropertyChanged(nameof(Progression));
                 }
             }
         }
@@ -50,6 +50,8 @@ namespace WpfBackupClient
 
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public BackupWork(string id, string name, string sourcePath, string targetPath, string type, string totalFilesToCopy, string totalFilesSize, string nbFilesLeftToDo, string state = "INACTIVE", string progression = "0")
         {

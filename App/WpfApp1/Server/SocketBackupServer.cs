@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Packaging;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -11,16 +12,19 @@ namespace WpfApp1.Server
 {
     public class SocketBackupServer
     {
-        private BackupWorkManager backupWorkManager;
+        private readonly List<Socket> _clients = new();
+        private readonly BackupWorkManager backupWorkManager; // Now readonly and injected
         private readonly int _port;
         private Socket? _serverSocket;
         private bool _isRunning;
 
         public event Action<string>? MessageReceived;
 
-        public SocketBackupServer(int port)
+        // Accept BackupWorkManager as a parameter
+        public SocketBackupServer(int port, BackupWorkManager backupWorkManager)
         {
             _port = port;
+            this.backupWorkManager = backupWorkManager;
         }
 
         public void Start()
@@ -47,12 +51,50 @@ namespace WpfApp1.Server
                 try
                 {
                     var clientSocket = await _serverSocket.AcceptAsync();
+                    lock (_clients) { _clients.Add(clientSocket); }
                     _ = HandleClientAsync(clientSocket);
                 }
                 catch
                 {
-                    // Arrêt du serveur ou erreur de socket
                     break;
+                }
+            }
+        }
+
+        public void NotifyClients()
+        {
+            // Do not recreate backupWorkManager
+            // backupWorkManager = new BackupWorkManager();
+
+            var travaux = backupWorkManager.Works;
+            var updateMsg = new { Type = "Update", Works = travaux };
+            string json = JsonSerializer.Serialize(updateMsg);
+            var jsonBytes = Encoding.UTF8.GetBytes(json);
+            lock (_clients)
+            {
+                foreach (var client in _clients.ToList())
+                {
+                    try { client.Send(jsonBytes); }
+                    catch { _clients.Remove(client); }
+                }
+            }
+        }
+
+        public void NotifyClientsProgress(string id)
+        {
+            // Do not recreate backupWorkManager
+            // backupWorkManager = new BackupWorkManager();
+
+            var travail = backupWorkManager.Works.Where(w => w.ID == id).ToList();
+            var updateMsg = new { Type = "Progress", Works = travail };
+            string json = JsonSerializer.Serialize(updateMsg);
+            var jsonBytes = Encoding.UTF8.GetBytes(json);
+            lock (_clients)
+            {
+                foreach (var client in _clients.ToList())
+                {
+                    try { client.Send(jsonBytes); }
+                    catch { _clients.Remove(client); }
                 }
             }
         }
@@ -61,13 +103,12 @@ namespace WpfApp1.Server
         {
             using (clientSocket)
             {
-                // Sérialiser et envoyer la liste des travaux
-                if (backupWorkManager == null)
-                {
-                    backupWorkManager = new BackupWorkManager();
-                }
+                // Do not recreate backupWorkManager
+                // backupWorkManager = new BackupWorkManager();
+
                 var travaux = backupWorkManager.Works;
-                string json = JsonSerializer.Serialize(travaux);
+                var updateMsg = new { Type = "Update", Works = travaux };
+                string json = JsonSerializer.Serialize(updateMsg);
                 var jsonBytes = Encoding.UTF8.GetBytes(json);
 
                 try
