@@ -99,16 +99,16 @@
 
             <!-- Name Backup -->
             <Label Name="LabelName" Content="Name Backup:" Grid.Row="0" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
-            <TextBox Name="TextBoxName" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" />
+            <TextBox Name="TextBoxName" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" HorizontalAlignment="Left" Margin="175,5,0,7" />
 
             <!-- Source Path -->
             <Label Name="LabelSource" Content="Source Path:" Grid.Row="1" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
-            <TextBox Name="TextBoxSource" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" />
+            <TextBox Name="TextBoxSource" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" HorizontalAlignment="Left" Margin="175,5,0,7"/>
             <Button Name="ButtonSource" Grid.Row="1" Grid.Column="1" Content="..." Style="{StaticResource ModernButtonStyle}" Width="30" Height="30" HorizontalAlignment="Left" Margin="500,5,0,7" Click="ButtonSource_Click" />
 
             <!-- Target Path -->
             <Label Name="LabelTarget" Content="Target Path:" Grid.Row="2" Grid.Column="0" Style="{StaticResource ModernLabelStyle}"/>
-            <TextBox Name="TextBoxTarget" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" />
+            <TextBox Name="TextBoxTarget" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBoxStyle}" HorizontalAlignment="Left" Margin="175,5,0,7"/>
             <Button Name="ButtonTarget" Grid.Row="2" Grid.Column="1" Content="..." Style="{StaticResource ModernButtonStyle}" Width="30" Height="30"  HorizontalAlignment="Left" Margin="500,5,0,7" Click="ButtonTarget_Click" />
 
             <!-- Type Backup -->
@@ -121,8 +121,8 @@
 
         <!-- Boutons d'action -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Name="ButtonCancel" Content="Cancel" Style="{StaticResource ModernButtonStyle}" Width="100" Click="ButtonCancel_Click"/>
-            <Button Name="ButtonAdd" Content="Add" Style="{StaticResource ModernButtonStyle}" Width="100" Click="ButtonAdd_Click" />
+            <Button Name="ButtonCancel" Content="Cancel" Style="{StaticResource ModernButtonStyle}" Width="100" Height="40" Click="ButtonCancel_Click"/>
+            <Button Name="ButtonAdd" Content="Add" Style="{StaticResource ModernButtonStyle}" Width="100" Height="40" Click="ButtonAdd_Click" />
         </StackPanel>
     </Grid>
 </Window>
