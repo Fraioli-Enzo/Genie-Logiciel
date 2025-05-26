@@ -151,6 +151,11 @@ namespace WpfApp1
                             SelectedSoftwares.Add(sw);
                         }
                     }
+
+                    if (doc.RootElement.TryGetProperty("MaxFileSize", out var MaxFileSize))
+                    {
+                        MaxFileSizeTextBox.Text = MaxFileSize.GetString();
+                    }
                 }
             }
             catch (Exception ex)
@@ -173,6 +178,7 @@ namespace WpfApp1
             string selectedLogExtension = RadioButtonJSON.IsChecked == true ? "json" : "xml";
             viewModel.ChooseLanguage(selectedLanguage);
             viewModel.ChooseLogExtension(selectedLogExtension);
+
 
             // Récupérer toutes les extensions (TextBlock) affichées
             var checkedExtensions = new List<string>();
@@ -206,6 +212,7 @@ namespace WpfApp1
 
             configDict["extensionsToCrypto"] = checkedExtensions;
             configDict["workingSoftware"] = SelectedSoftwares.FirstOrDefault() ?? "null";
+            configDict["MaxFileSize"] = MaxFileSizeTextBox.Text.Trim();
 
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(configFilePath, JsonSerializer.Serialize(configDict, options));

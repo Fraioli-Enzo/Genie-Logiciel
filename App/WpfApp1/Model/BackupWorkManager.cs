@@ -22,6 +22,9 @@ namespace WpfApp1.Model
         //----------------------------GENERAL----------------------------------------
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
         public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
+        private static readonly SemaphoreSlim LargeFileCopyLock = new(1, 1);
+        private const long LargeFileThresholdBytes = 1024;
+
 
         public BackupWorkManager()
         {
@@ -303,6 +306,7 @@ namespace WpfApp1.Model
 
 
                     var file = filesToCopy[i];
+                    long fileSize = new FileInfo(file).Length;
                     await Task.Delay(300); // Simule un délai sans bloquer l'UI
                     string relativePath = Path.GetRelativePath(work.SourcePath, file);
                     string targetFilePath = Path.Combine(work.TargetPath, relativePath);
@@ -311,7 +315,22 @@ namespace WpfApp1.Model
 
                     var stopwatch = Stopwatch.StartNew();
 
-                    File.Copy(file, targetFilePath, overwrite: true);
+                    if (fileSize >= LargeFileThresholdBytes)
+                    {
+                        await LargeFileCopyLock.WaitAsync();
+                        try
+                        {
+                            File.Copy(file, targetFilePath, overwrite: true);
+                        }
+                        finally
+                        {
+                            LargeFileCopyLock.Release();
+                        }
+                    }
+                    else
+                    {
+                        File.Copy(file, targetFilePath, overwrite: true);
+                    }
 
                     // Chiffrement du fichier si l'extension correspond
                     int encryptionTime = 0;
@@ -328,7 +347,6 @@ namespace WpfApp1.Model
                     stopwatch.Stop();
                     double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
 
-                    long fileSize = new FileInfo(file).Length;
                     LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime);
 
                     filesCopied++;
