@@ -48,7 +48,22 @@ namespace WpfApp1.Model
             var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
             int totalFilesToCopy = allFiles.Length;
             long totalFilesSize = allFiles.Sum(file => new FileInfo(file).Length);
-            string id = (Works.Count + 1).ToString();
+
+            string id;
+            if (Works.Count == 0)
+            {
+                id = "1";
+            }
+            else
+            {
+                var existingIds = Works.Select(w => int.TryParse(w.ID, out var n) ? n : 0).Where(n => n > 0).ToList();
+                int newId = 1;
+                while (existingIds.Contains(newId))
+                {
+                    newId++;
+                }
+                id = newId.ToString();
+            }
 
             var newWork = new BackupWork(
                 id: id,
@@ -91,6 +106,7 @@ namespace WpfApp1.Model
             workToEdit.SourcePath = pathSource;
             workToEdit.TargetPath = pathTarget;
             workToEdit.Type = type;
+
             // Recalculer le nombre total de fichiers et leur taille totale
             var allFiles = Directory.GetFiles(pathSource, "*", SearchOption.AllDirectories);
             int totalFilesToCopy = allFiles.Length;
