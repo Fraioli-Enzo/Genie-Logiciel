@@ -1,7 +1,7 @@
 {
   "language": "fr",
   "log": "json",
-  "workingSoftware": "null",
+  "workingSoftware": "CalculatorApp",
   "extensionsToCrypto": [
     ".txt"
   ]
