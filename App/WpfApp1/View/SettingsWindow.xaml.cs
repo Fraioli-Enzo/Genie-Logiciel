@@ -179,6 +179,7 @@ namespace WpfApp1
             viewModel.ChooseLanguage(selectedLanguage);
             viewModel.ChooseLogExtension(selectedLogExtension);
 
+
             // Récupérer toutes les extensions (TextBlock) affichées
             var checkedExtensions = new List<string>();
             foreach (var border in ExtensionCheckBoxPanel.Children.OfType<Border>())
@@ -211,6 +212,7 @@ namespace WpfApp1
 
             configDict["extensionsToCrypto"] = checkedExtensions;
             configDict["workingSoftware"] = SelectedSoftwares.FirstOrDefault() ?? "null";
+            configDict["MaxFileSize"] = MaxFileSizeTextBox.Text.Trim();
 
             var options = new JsonSerializerOptions { WriteIndented = true };
             File.WriteAllText(configFilePath, JsonSerializer.Serialize(configDict, options));
