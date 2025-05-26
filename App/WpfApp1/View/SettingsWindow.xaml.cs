@@ -151,6 +151,11 @@ namespace WpfApp1
                             SelectedSoftwares.Add(sw);
                         }
                     }
+
+                    if (doc.RootElement.TryGetProperty("MaxFileSize", out var MaxFileSize))
+                    {
+                        MaxFileSizeTextBox.Text = MaxFileSize.GetString();
+                    }
                 }
             }
             catch (Exception ex)
