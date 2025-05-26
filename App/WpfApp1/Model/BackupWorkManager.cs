@@ -182,7 +182,7 @@ namespace WpfApp1.Model
 
             if (_IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
-                LoggingLibrary.Logger.Log(workToExecute.Name, "ProcessRunning", "ProcessRunning", 0, 0, log, 0);
+                LoggingLibrary.Logger.Log(workToExecute?.Name ?? "", "ProcessRunning", "ProcessRunning", 0, 0, log, 0);
                 return "ProcessRunning";
             }
 
@@ -202,20 +202,63 @@ namespace WpfApp1.Model
 
             Directory.CreateDirectory(workToExecute.TargetPath);
 
+            // Ajout de la surveillance du logiciel métier pendant la sauvegarde
+            CancellationTokenSource cts = new();
+            Task monitoringTask = Task.CompletedTask;
+            if (!string.IsNullOrEmpty(workingSoftware) && workingSoftware != "null")
+            {
+                monitoringTask = MonitorBusinessSoftwareAsync(workToExecute, workingSoftware, cts.Token);
+            }
+
             try
             {
-                var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions, maxKo);
+                var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions, maxKo, cts.Token);
                 _UpdateWorkStateInJson(workToExecute);
+                cts.Cancel();
+                await monitoringTask;
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                cts.Cancel();
+                await monitoringTask;
                 return "ExecuteWorkError";
             }
 
-            // Inner Functions
+            // Surveillance du logiciel métier pendant la sauvegarde
+            async Task MonitorBusinessSoftwareAsync(BackupWork work, string processName, CancellationToken token)
+            {
+                try
+                {
+                    bool wasRunning = false;
+                    while (!token.IsCancellationRequested && !work.IsStopped)
+                    {
+                        // Si le logiciel est lancé, on met la sauvegarde en pause
+                        bool isRunning = _IsProcessRunning(processName);
+                        if (isRunning && !work.IsPaused)
+                        {
+                            work.IsPaused = true;
+                            wasRunning = true;
+                        }
+                        // Si le logiciel est arrêté, on reprend la sauvegarde
+                        else if (!isRunning && work.IsPaused && wasRunning)
+                        {
+                            work.IsPaused = false;
+                            wasRunning = false;
+                        }
+                        await Task.Delay(1000, token);
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                    // Annulation attendue, on ne fait rien
+                }
+            }
+
             bool _IsProcessRunning(string processName)
             {
+                if (string.IsNullOrEmpty(processName) || processName == "null")
+                    return false;
                 var processes = Process.GetProcessesByName(processName);
                 return processes.Length > 0;
             }
@@ -249,7 +292,6 @@ namespace WpfApp1.Model
             {
                 int totalFiles = filesToCopy.Count;
                 long totalSize = filesToCopy.Sum(file => new FileInfo(file).Length);
-
                 work.TotalFilesToCopy = totalFiles.ToString();
                 work.TotalFilesSize = totalSize.ToString();
                 work.NbFilesLeftToDo = totalFiles.ToString();
@@ -280,19 +322,18 @@ namespace WpfApp1.Model
                 }
             }
 
-            async Task<string> _CopyAndEncryptFilesAsync(BackupWork work, List<string> filesToCopy, string log, string[] extensions, string maxKo)
+            async Task<string> _CopyAndEncryptFilesAsync(BackupWork work, List<string> filesToCopy, string log, string[] extensions, string maxKo, CancellationToken token)
             {
                 int totalFiles = filesToCopy.Count;
                 int filesCopied = 0;
 
                 for (int i = 0; i < filesToCopy.Count; i++)
                 {
-                    // Pause
+                    // Pause manuelle ou automatique
                     while (work.IsPaused)
                     {
-                        await Task.Delay(200);
+                        await Task.Delay(200, token);
                     }
-
 
                     // Stop
                     if (work.IsStopped)
@@ -302,10 +343,9 @@ namespace WpfApp1.Model
                         return "ExecuteWorkStopped";
                     }
 
-
                     var file = filesToCopy[i];
                     long fileSize = new FileInfo(file).Length;
-                    await Task.Delay(300); // Simule un délai sans bloquer l'UI
+                    await Task.Delay(300, token); // Simule un délai sans bloquer l'UI
                     string relativePath = Path.GetRelativePath(work.SourcePath, file);
                     string targetFilePath = Path.Combine(work.TargetPath, relativePath);
 
@@ -315,11 +355,11 @@ namespace WpfApp1.Model
 
                     if (Math.Ceiling(fileSize / 1024.0) >= long.Parse(maxKo))
                     {
-                        LoggingLibrary.Logger.Log(work.Name, file, "WAIT_LOCK", fileSize, 0, log, 0); 
-                        await LargeFileCopyLock.WaitAsync();
+                        LoggingLibrary.Logger.Log(work.Name, file, "WAIT_LOCK", fileSize, 0, log, 0);
+                        await LargeFileCopyLock.WaitAsync(token);
                         try
                         {
-                            LoggingLibrary.Logger.Log(work.Name, file, "ENTER_LOCK", fileSize, 0, log, 0); 
+                            LoggingLibrary.Logger.Log(work.Name, file, "ENTER_LOCK", fileSize, 0, log, 0);
                             File.Copy(file, targetFilePath, overwrite: true);
                         }
                         finally
@@ -374,11 +414,7 @@ namespace WpfApp1.Model
                     work.Progression = "0";
                     work.NbFilesLeftToDo = work.TotalFilesToCopy;
                 }
-
             }
-
-
-
         }
     }
 }
