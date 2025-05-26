@@ -5,7 +5,7 @@
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:local="clr-namespace:WpfApp1"
        mc:Ignorable="d"
-       Title="Setting" Height="600" Width="800"
+       Title="Setting" Height="654" Width="800"
        Background="#FAFAFA" FontFamily="Segoe UI">
 
     <Window.Resources>
@@ -172,48 +172,65 @@
             <Rectangle Height="1" Stroke="Black" Width="Auto"/>
 
             <!-- Section Software Detector -->
-            <StackPanel Margin="0,10,0,10">
-                <Label Name="LabelDetector" Content="Software to Detect" Style="{StaticResource ModernLabelStyle}"/>
-                <WrapPanel x:Name="SoftwareTagPanel"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Left"
-                            Margin="0,5,0,0"/>
-            </StackPanel>
+            <StackPanel>
+                <StackPanel>
+                    <Label Name="LabelDetector" Content="Software to Detect" Style="{StaticResource ModernLabelStyle}"/>
+                    <WrapPanel x:Name="SoftwareTagPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="0,2,0,2"/>
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
-                <!-- Replace TextBox with ComboBox for software selection -->
-                <ComboBox x:Name="SoftwareDetectComboBox"
-                            Style="{StaticResource ModernComboboxStyle}"
-                            Width="450"
-                            ItemsSource="{Binding AvailableSoftwares, RelativeSource={RelativeSource AncestorType=Window}}"
-                            SelectedIndex="-1"
-                            IsEditable="False"
-                            Margin="0,0,5,0"/>
-                <Button x:Name="ButtonAddSoftware"
-                        Content="Add"
-                        Click="AddSoftwareButton_Click"
-                        Style="{StaticResource ModernButtonStyle}"
-                        Width="80"
-                        Height="26"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <!-- Replace TextBox with ComboBox for software selection -->
+                    <ComboBox x:Name="SoftwareDetectComboBox"
+                                Style="{StaticResource ModernComboboxStyle}"
+                                Width="170"
+                                ItemsSource="{Binding AvailableSoftwares, RelativeSource={RelativeSource AncestorType=Window}}"
+                                SelectedIndex="-1"
+                                IsEditable="False"
+                                Margin="0,0,5,0"/>
+                    <Button x:Name="ButtonAddSoftware"
+                            Content="Add"
+                            Click="AddSoftwareButton_Click"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Width="80"
+                            Height="26"/>
+                </StackPanel>
             </StackPanel>
-
 
             <Rectangle Height="1" Stroke="Black" Width="Auto"/>
 
             <!-- Section Extension File to Encrypt -->
-            <StackPanel Margin="0,10,0,10">
-                <Label Name="Extension_File_Encrypt" Content="Extension File to Encrypt" Style="{StaticResource ModernLabelStyle}"/>
-                <WrapPanel x:Name="ExtensionCheckBoxPanel" Orientation="Horizontal" HorizontalAlignment="Left" ItemHeight="30" ItemWidth="Auto" Margin="0,5,0,0" />
-            </StackPanel>
-
-            <!-- Section Type File to Encrypt -->
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="Type_File" Style="{StaticResource ModernTextBoxStyle}" Width="450" Margin="0,0,5,0" />
-                    <Button x:Name="ButtonAdd_Ext" Content="Add" Click="AddExtensionCheckBox_Click" Style="{StaticResource ModernButtonStyle}" Width="80"/>
+                <StackPanel>
+                    <Label Name="Extension_File_Encrypt" Content="Extension File to Encrypt" Style="{StaticResource ModernLabelStyle}"/>
+                    <WrapPanel x:Name="ExtensionCheckBoxPanel" Orientation="Horizontal" HorizontalAlignment="Left" ItemHeight="30" ItemWidth="Auto" Margin="0,2,0,2" />
+                </StackPanel>
+
+                <!-- Section Type File to Encrypt -->
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBox x:Name="Type_File" Style="{StaticResource ModernTextBoxStyle}" Width="120" Margin="0,0,5,0" />
+                        <Button x:Name="ButtonAdd_Ext" Content="Add" Click="AddExtensionCheckBox_Click" Style="{StaticResource ModernButtonStyle}" Width="80"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
+            <Rectangle Height="1" Stroke="Black" Width="Auto"/>
 
+            
+            <!-- Section Taille max des fichiers à copier -->
+            <StackPanel Margin="0,10,0,10">
+                <Label Name="FileSizeText" Content="Maximum file size to copy in parallel" Style="{StaticResource ModernLabelStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="MaxFileSizeTextBox"
+                             Style="{StaticResource ModernTextBoxStyle}"
+                             Width="120"
+                             VerticalAlignment="Center"
+                             Margin="0,0,10,0"/>
+                    <TextBlock Text="Ko" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource TextPrimary}"/>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
 
         <!-- Boutons d'action -->

@@ -51,6 +51,7 @@ namespace WpfApp1
             Extension_File_Encrypt.Content = ((ResourceManager)this.resourceManager).GetString("Extension_File_Encrypt");
             ButtonAddSoftware.Content = ((ResourceManager)this.resourceManager).GetString("Add");
             ButtonAdd_Ext.Content = ((ResourceManager)this.resourceManager).GetString("Add");
+            FileSizeText.Content = ((ResourceManager)this.resourceManager).GetString("FileSizeText");
 
             // Charger la langue et les logs depuis config.json
             try
