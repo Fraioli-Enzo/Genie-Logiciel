@@ -7,11 +7,13 @@ using System.Resources;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using WpfApp1.Server;
 
 namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
+        private SocketBackupServer? _server;
         private BackupWorkManager backupWorkManager;
         private object resourceManager;
         private string logExtension;
@@ -22,11 +24,27 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            LoadConfigAndUpdateUI();
+
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
 
-            LoadConfigAndUpdateUI(); 
+            _server = new SocketBackupServer(8080);
+            _server.MessageReceived += OnMessageReceived;
+            _server.Start();
         }
+
+        private void OnMessageReceived(string msg)
+        {
+            MessageBox.Show($"Server : {msg}");
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _server?.Stop();
+            base.OnClosed(e);
+        }
+
 
         private void LoadConfigAndUpdateUI()
         {
