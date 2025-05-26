@@ -17,6 +17,7 @@ namespace WpfApp1
         private string logExtension;
         private string workingSoftware;
         private string[] extensions;
+        private string maxKo;
 
         public MainWindow()
         {
@@ -38,7 +39,7 @@ namespace WpfApp1
             logExtension = config != null && config.ContainsKey("log") ? config["log"].GetString() ?? "json" : "json";
             extensions = config != null && config.ContainsKey("extensionsToCrypto") ? config["extensionsToCrypto"].EnumerateArray().Select(e => e.GetString()).ToArray() : Array.Empty<string>();
             workingSoftware = config != null && config.ContainsKey("workingSoftware") ? config["workingSoftware"].GetString() ?? "" : "";
-
+            maxKo = config != null && config.ContainsKey("MaxFileSize") ? config["MaxFileSize"].GetString() ?? "1024" : "1024";
             // Set the culture of the ResourceManager based on the language
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             this.resourceManager = new ResourceManager("WpfApp1.Resources.Messages", typeof(MainWindow).Assembly);
@@ -65,7 +66,7 @@ namespace WpfApp1
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
                 string id = backup.ID;
-                string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware);
+                string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware, maxKo);
 
                 switch (result)
                 {

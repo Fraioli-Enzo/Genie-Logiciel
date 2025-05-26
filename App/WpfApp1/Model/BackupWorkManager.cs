@@ -23,8 +23,6 @@ namespace WpfApp1.Model
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
         public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
         private static readonly SemaphoreSlim LargeFileCopyLock = new(1, 1);
-        private const long LargeFileThresholdBytes = 1024;
-
 
         public BackupWorkManager()
         {
@@ -178,7 +176,7 @@ namespace WpfApp1.Model
             return "StopWorkError";
         }
 
-        public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware)
+        public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware, string maxKo)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
 
@@ -206,7 +204,7 @@ namespace WpfApp1.Model
 
             try
             {
-                var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions);
+                var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions, maxKo);
                 _UpdateWorkStateInJson(workToExecute);
                 return result;
             }
@@ -282,7 +280,7 @@ namespace WpfApp1.Model
                 }
             }
 
-            async Task<string> _CopyAndEncryptFilesAsync(BackupWork work, List<string> filesToCopy, string log, string[] extensions)
+            async Task<string> _CopyAndEncryptFilesAsync(BackupWork work, List<string> filesToCopy, string log, string[] extensions, string maxKo)
             {
                 int totalFiles = filesToCopy.Count;
                 int filesCopied = 0;
@@ -315,15 +313,18 @@ namespace WpfApp1.Model
 
                     var stopwatch = Stopwatch.StartNew();
 
-                    if (fileSize >= LargeFileThresholdBytes)
+                    if (Math.Ceiling(fileSize / 1024.0) >= long.Parse(maxKo))
                     {
+                        LoggingLibrary.Logger.Log(work.Name, file, "WAIT_LOCK", fileSize, 0, log, 0); 
                         await LargeFileCopyLock.WaitAsync();
                         try
                         {
+                            LoggingLibrary.Logger.Log(work.Name, file, "ENTER_LOCK", fileSize, 0, log, 0); 
                             File.Copy(file, targetFilePath, overwrite: true);
                         }
                         finally
                         {
+                            LoggingLibrary.Logger.Log(work.Name, file, "RELEASE_LOCK", fileSize, 0, log, 0);
                             LargeFileCopyLock.Release();
                         }
                     }
