@@ -5,7 +5,7 @@
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:local="clr-namespace:WpfApp1"
        mc:Ignorable="d"
-       Title="Setting" Height="539" Width="800"
+       Title="Setting" Height="600" Width="800"
        Background="#FAFAFA" FontFamily="Segoe UI">
 
     <Window.Resources>
@@ -147,12 +147,12 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Name="HeaderText" Grid.Row="0" Text="Settings" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+        <TextBlock Name="HeaderText" Grid.Row="0" Text="Settings" Style="{StaticResource HeaderTextStyle}"/>
 
         <!-- Contenu des options -->
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <!-- Section Language -->
-            <StackPanel Margin="0,0,0,0">
+            <StackPanel>
                 <Label Name="LabelLanguage" Content="Language" Style="{StaticResource ModernLabelStyle}"/>
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Name="RadioButtonEN" Content="English" Style="{StaticResource ModernRadioButtonStyle}" />
@@ -217,7 +217,7 @@
         </StackPanel>
 
         <!-- Boutons d'action -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" Width="220">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Width="220">
             <Button Name="ButtonCancel" Content="Cancel" Style="{StaticResource ModernButtonStyle}" Width="100" Height="40" Click="ButtonCancel_Click" />
             <Button Name="ButtonSave" Content="Save" Style="{StaticResource ModernButtonStyle}" Width="100" Height="40" Click="ButtonSave_Click" />
         </StackPanel>
