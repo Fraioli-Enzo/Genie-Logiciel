@@ -5,5 +5,5 @@
   "extensionsToCrypto": [
     ".txt"
   ],
-  "MaxFileSize": "100000"
+  "MaxFileSize": "1024"
 }
