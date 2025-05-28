@@ -17,8 +17,8 @@ Ce menu contient un tableau listant les sauvegardes que vous avez créées.
 Pour chaque sauvegarde, vous disposez des actions suivantes :
 - **Exécuter** : Lancer l'exécution de la sauvegarde.
 - **Pause** : Mettre en pause la sauvegarde.
-- **Stop** : Arrêter la sauvegarde.
-- **Delete** : Supprimer la sauvegarde.
+- **Stopper** : Arrêter la sauvegarde.
+- **Supprimer** : Supprimer la sauvegarde.
 - **Modifier** : Modifier les paramètres de la sauvegarde.
 
 ---
