@@ -1,90 +1,105 @@
 @startuml
 actor User
-
-' Application Layers
 participant MainWindow
 participant AddBackup
 participant Settings
-participant EasySafeViewModel
+participant EasySaveViewModel
 participant BackupWorkManager
 participant BackupWork
-participant CryptoSoft
 participant FileManager
+participant CryptoSoft
+participant SoftwareDetector
+participant NetworkMonitor
+participant RemoteConsoleServer
+participant RemoteConsoleClient
+participant PriorityRules
+participant MutexManager
 
-' Model Enumerations
-participant Language
-participant State
-participant BackupType
-participant LogFileType
-
-== 1. Add a backup ==
-
-User -> MainWindow : Click_AddButton()
+== Add a Backup ==
+User -> MainWindow : Click_AddBackup()
 MainWindow -> AddBackup : ShowForm()
-
 User -> AddBackup : FillForm(name, source, target, type)
-AddBackup -> BackupType : SelectType("Complete" | "Differential")
 AddBackup -> BackupWorkManager : AddWork(name, source, target, type)
+BackupWorkManager -> BackupWork : Create new(name, source, target, type)
+BackupWork -> BackupWork : Initialize State = ACTIVE
+BackupWork --> BackupWorkManager : Instance created
 
-BackupWorkManager -> BackupWork : new(name, source, target, type)
-activate BackupWork
-BackupWork -> State : SetState("ACTIVE")
-BackupWork --> BackupWorkManager : Instance
-deactivate BackupWork
+== Execute All Backups ==
+User -> MainWindow : Click_RunAllBackups()
+MainWindow -> BackupWorkManager : StartAll()
 
-== 2. Execute a backup ==
-
-User -> MainWindow : Click_ExecuteButton()
-MainWindow -> BackupWorkManager : ExecuteWorkAsync(id, log, extensions[], software, maxKo)
-
-BackupWorkManager -> BackupWork : Execute()
-activate BackupWork
-
-BackupWork -> CryptoSoft : RunEncryption(path, key, method)
-CryptoSoft --> BackupWork : Encrypted data
-
-BackupWork -> FileManager : TransformFile()
-FileManager --> BackupWork : Transformed
-
-loop Copying files
-    BackupWork -> BackupWork : getProgress()
-    BackupWork -> BackupWorkManager : NotifyProgress()
+BackupWorkManager -> NetworkMonitor : GetNetworkLoad()
+NetworkMonitor --> BackupWorkManager : LoadPercentage
+alt High Load (> threshold)
+    BackupWorkManager -> BackupWorkManager : ReduceParallelTasks()
 end
-deactivate BackupWork
 
-== 3. Pause a backup ==
+loop For each BackupWork
+    BackupWorkManager -> BackupWork : StartAsync()
 
-User -> MainWindow : Click_PauseButton()
-MainWindow -> BackupWorkManager : PauseWork(id)
-BackupWorkManager -> State : SetState("INACTIVE")
+    BackupWork -> PriorityRules : CheckFilePriority(file)
+    alt High Priority
+        PriorityRules --> BackupWork : OK
+    else
+        PriorityRules --> BackupWork : WAIT
+        BackupWork -> BackupWork : WaitUntilPriorityOK()
+    end
 
-== 4. Resume a backup ==
+    BackupWork -> BackupWork : IsLargeFile(file > n Ko)?
+    alt LargeFile & another large file running
+        BackupWork -> BackupWork : WaitUntilOtherEnds()
+    end
 
-User -> MainWindow : Click_ResumeButton()
-MainWindow -> BackupWorkManager : ResumeWork(id)
-BackupWorkManager -> State : SetState("ACTIVE")
+    BackupWork -> MutexManager : RequestCryptoSoftAccess()
+    MutexManager -> CryptoSoft : LockAndEncrypt(filePath, key)
+    CryptoSoft --> MutexManager : EncryptedFile
+    MutexManager --> BackupWork : FileReady
 
-== 5. Stop a backup ==
+    BackupWork -> FileManager : TransferFile(encryptedFile)
+    FileManager --> BackupWork : TransferDone
 
-User -> MainWindow : Click_StopButton()
-MainWindow -> BackupWorkManager : StopWork(id)
-BackupWorkManager -> State : SetState("END")
+    BackupWork -> BackupWorkManager : ReportProgress()
 
-== 6. Delete a backup ==
+end
 
-User -> MainWindow : Click_DeleteButton()
-MainWindow -> BackupWorkManager : RemoveWork(id)
+== Pause if Business Software Detected ==
+SoftwareDetector -> BackupWorkManager : BusinessAppDetected()
+BackupWorkManager -> BackupWork : Pause()
+BackupWork -> FileManager : WaitUntilCurrentFileEnds()
+BackupWork -> BackupWorkManager : Paused
 
-== 7. Change settings ==
+== Resume after Business App Ends ==
+SoftwareDetector -> BackupWorkManager : BusinessAppStopped()
+BackupWorkManager -> BackupWork : Resume()
 
-User -> MainWindow : Click_SettingsButton()
-MainWindow -> Settings : Display()
+== Real-Time Console Control ==
+User -> RemoteConsoleClient : ConnectToServer()
+RemoteConsoleClient -> RemoteConsoleServer : Auth + Connect
+RemoteConsoleServer -> BackupWorkManager : GetStatus()
+BackupWorkManager --> RemoteConsoleServer : StatusData
+RemoteConsoleServer --> RemoteConsoleClient : ForwardStatus()
+RemoteConsoleClient -> User : DisplayStatus()
 
-User -> Settings : SelectLanguage("EN" | "FR")
-Settings -> EasySafeViewModel : ChooseLanguage(lang)
-EasySafeViewModel -> Language : SetLanguage(lang)
+User -> RemoteConsoleClient : PauseWork(workID)
+RemoteConsoleClient -> RemoteConsoleServer : SendPause(workID)
+RemoteConsoleServer -> BackupWorkManager : PauseWork(workID)
+BackupWorkManager -> BackupWork : Pause()
 
-User -> Settings : SelectLogFormat("JSON" | "XML")
-Settings -> EasySafeViewModel : ChooseLogExtension(format)
-EasySafeViewModel -> LogFileType : SetLogFormat(format)
+User -> RemoteConsoleClient : ResumeWork(workID)
+RemoteConsoleClient -> RemoteConsoleServer : SendResume(workID)
+RemoteConsoleServer -> BackupWorkManager : ResumeWork(workID)
+BackupWorkManager -> BackupWork : Resume()
+
+User -> RemoteConsoleClient : StopWork(workID)
+RemoteConsoleClient -> RemoteConsoleServer : SendStop(workID)
+RemoteConsoleServer -> BackupWorkManager : StopWork(workID)
+BackupWorkManager -> BackupWork : Stop()
+
+== User Settings ==
+User -> MainWindow : Open_Settings()
+MainWindow -> Settings : DisplayWindow()
+User -> Settings : ChangeLanguage("FR")
+Settings -> EasySaveViewModel : SetLanguage("FR")
+User -> Settings : SetLogType("JSON")
+Settings -> EasySaveViewModel : SetLogFormat("JSON")
 @enduml

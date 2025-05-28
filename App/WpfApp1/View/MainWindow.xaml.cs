@@ -217,7 +217,7 @@ namespace WpfApp1
             AddBackup addWorkWindow = new AddBackup();
             addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
             addWorkWindow.ShowDialog();
-            
+            _server.NotifyClients();
         }
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
@@ -236,6 +236,7 @@ namespace WpfApp1
                     EditBackup editBackupWindow = new EditBackup(backup);
                     editBackupWindow.BackupEdited += EditBackupWindow_BackupEdited;
                     editBackupWindow.ShowDialog();
+                    _server.NotifyClients();
                 }
             }
             else
@@ -246,20 +247,17 @@ namespace WpfApp1
 
         private void AddBackupWindow_BackupAdded(object sender, EventArgs e)
         {
-            // Do not recreate backupWorkManager, just refresh the data grid
-            // backupWorkManager = new BackupWorkManager();
+            backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
-            _server.NotifyClients();
+            
         }
 
         private void EditBackupWindow_BackupEdited(object sender, EventArgs e)
         {
-            // Do not recreate backupWorkManager, just refresh the data grid
-            // backupWorkManager = new BackupWorkManager();
+            backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
-            _server.NotifyClients();
         }
     }
 }
