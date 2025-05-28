@@ -14,7 +14,19 @@ namespace WpfApp1.Model
         public string SourcePath { get; set; }
         public string TargetPath { get; set; }
         public string Type { get; set; }
-        public string State { get; set; }
+        private string _state;
+        public string State
+        {
+            get => _state;
+            set
+            {
+                if (_state != value)
+                {
+                    _state = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(State)));
+                }
+            }
+        }
         public string TotalFilesToCopy { get; set; }
         public string TotalFilesSize { get; set; }
         public string NbFilesLeftToDo { get; set; }

@@ -109,6 +109,38 @@
 
         <!-- PAUSE BUTTON -->
         <Style x:Key="PauseButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
+            <Setter Property="Background" Value="gray"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Etat INACTIVE -->
+                            <DataTrigger Binding="{Binding State}" Value="INACTIVE">
+                                <Setter Property="Background" Value="Gray"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE sans souris dessus -->
+                            <DataTrigger Binding="{Binding State}" Value="ACTIVE">
+                                <Setter Property="Background" Value="Goldenrod"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE + souris dessus -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding State}" Value="ACTIVE"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" Value="#FFD54F"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Edit BUTTON -->
+        <Style x:Key="EditButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
             <Setter Property="Background" Value="Goldenrod"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -117,32 +149,58 @@
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <!-- Etat INACTIVE -->
+                            <DataTrigger Binding="{Binding State}" Value="ACTIVE">
+                                <Setter Property="Background" Value="Gray"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE sans souris dessus -->
+                            <DataTrigger Binding="{Binding State}" Value="INACTIVE">
+                                <Setter Property="Background" Value="Goldenrod"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE + souris dessus -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding State}" Value="INACTIVE"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
                                 <Setter Property="Background" Value="#FFD54F"/>
-                            </Trigger>
+                            </MultiDataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
         <!-- STOP BUTTON -->
         <Style x:Key="StopButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayPauseStopButtonStyle}">
-            <Setter Property="Background" Value="Crimson"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+           <Setter Property="Background" Value="Gray"/>
+           <Setter Property="Template">
+               <Setter.Value>
+                   <ControlTemplate TargetType="Button">
+                       <Border Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                           <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                       </Border>
+                       <ControlTemplate.Triggers>
+                            <!-- Etat INACTIVE -->
+                            <DataTrigger Binding="{Binding State}" Value="INACTIVE">
+                                <Setter Property="Background" Value="Gray"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE sans souris dessus -->
+                            <DataTrigger Binding="{Binding State}" Value="ACTIVE">
+                                <Setter Property="Background" Value="Crimson"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE + souris dessus -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding State}" Value="ACTIVE"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
                                 <Setter Property="Background" Value="#E57373"/>
-                            </Trigger>
+                            </MultiDataTrigger>
                         </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+                   </ControlTemplate>
+               </Setter.Value>
+           </Setter>
         </Style>
 
         <!-- DELETE BUTTON -->
@@ -155,9 +213,22 @@
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <!-- Etat INACTIVE -->
+                            <DataTrigger Binding="{Binding State}" Value="ACTIVE">
+                                <Setter Property="Background" Value="Gray"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE sans souris dessus -->
+                            <DataTrigger Binding="{Binding State}" Value="INACTIVE">
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </DataTrigger>
+                            <!-- Etat ACTIVE + souris dessus -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding State}" Value="INACTIVE"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
                                 <Setter Property="Background" Value="#FF8A80"/>
-                            </Trigger>
+                            </MultiDataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -208,7 +279,7 @@
                                 <Button Name="ButtonPause" Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
                                 <Button Name="ButtonStop" Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StopButtonStyle}" ToolTip="Stopper" Click="ButtonStop_Click"/>
                                 <Button Name="ButtonDelete" Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource DeleteButtonStyle}" ToolTip="Supprimer" Click="ButtonDelete_Click"/>
-                                <Button Name="ButtonEdit" Content="✏️" Command="{Binding EditCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Modifier" Click="ButtonEdit_Click"/>
+                                <Button Name="ButtonEdit" Content="✏️" Command="{Binding EditCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource EditButtonStyle}" ToolTip="Modifier" Click="ButtonEdit_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
