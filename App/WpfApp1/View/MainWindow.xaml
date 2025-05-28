@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="EasySafe"
+        Title="EasySave"
         Height="550"
         Width="900"
         Background="#FAFAFA"
