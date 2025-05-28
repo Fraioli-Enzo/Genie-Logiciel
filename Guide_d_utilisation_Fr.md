@@ -6,95 +6,56 @@
 
 Ce guide vous accompagne dans l'utilisation de l'application EasySave version console, conçue pour gérer des travaux de sauvegarde complète ou différentielle.
 
-## Avant de commencer
+## Menu principal
+Lorsque vous démarrez l'application, vous arrivez sur le **menu principal**.  
 
-1. **Ouvrez le projet :**
+![Menu Principal](Image/Interface_EasySave.png)
 
-   - Localisez et ouvrez le fichier `ConsolApp.csproj` avec Visual Studio. Ce fichier contient l’intégralité du projet.
+Ce menu contient un tableau listant les sauvegardes que vous avez créées.
 
-2. **Exécutez le code :**
-   - Une fois le projet ouvert, cliquez sur le bouton "Démarrer" ou appuyez sur `F5` pour lancer l’application.
-
----
-
-## 1. Choix initial
-
-Lorsque l'application démarre, vous arrivez sur le menu principal :
-
-![Interface](Image/Interface_EasySave.png)
-
-```
-[1] Changer la langue
-[2] Lancer une sauvegarde
-[3] Quitter
-```
-
-Saisissez `2` pour lancer une sauvegarde.
+### Colonne "Action" du tableau
+Pour chaque sauvegarde, vous disposez des actions suivantes :
+- **Exécuter** : Lancer l'exécution de la sauvegarde.
+- **Pause** : Mettre en pause la sauvegarde.
+- **Stopper** : Arrêter la sauvegarde.
+- **Supprimer** : Supprimer la sauvegarde.
+- **Modifier** : Modifier les paramètres de la sauvegarde.
 
 ---
 
-## 2. Menu des sauvegardes
+## Accès aux paramètres
+En haut à droite de l'écran, cliquez sur le bouton **Paramètre** pour accéder à la page des paramètres.
 
-Un second menu apparaît :
+![Menu Principal](Image/Interface_Parametre.png)
 
-```
-[1] Afficher les travaux
-[2] Ajouter une sauvegarde
-[3] Supprimer une sauvegarde
-[4] Exécuter une sauvegarde
-[5] Quitter
-```
+### Paramètres disponibles
+Sur cette page, vous pouvez configurer :
+- **Langue** : Choisir entre *Français* et *Anglais*.
+- **Type de fichier log** : Sélectionner *XML* ou *JSON*.
+- **Logiciel métier à détecter** : Préciser le logiciel métier concerné.
+- **Type de fichier à encrypter** : Indiquer le type de fichier à crypter (par exemple `.txt`, `.docx`).
+- **Taille maximale de fichier à copier** : Entrer la valeur maximale autorisée.
 
----
-
-## 3. Ajouter une sauvegarde
-
-Saisissez `2` pour ajouter une nouvelle sauvegarde. Vous devrez ensuite procéder comme suit :
-
-1. **Saisissez un nom de sauvegarde**
-
-   - Exemple : `Nom : > MaSauvegarde`
-
-2. **Choisissez un type de sauvegarde**
-
-   ```
-   [1] Complète
-   [2] Différentielle
-   ```
-
-   - Saisissez `1` ou `2` selon le type souhaité.
-
-3. **Sélectionnez le lecteur source**
-
-   - Saisissez par exemple `C` pour accéder à `C:\`.
-   - Le contenu du lecteur vous sera alors affiché.
-     - Naviguez dans les dossiers en saisissant leur numéro.
-     - Validez avec `s`.
-     - Annulez avec `q`.
-
-4. **Sélectionnez ensuite le lecteur de destination**
-   - Répétez la même procédure pour définir le dossier cible.
+Après avoir configuré ces paramètres :
+- Cliquez sur **Sauvegarde** pour sauvegarder les paramètres et revenir au **menu principal**.
+- Cliquez sur **Annuler** pour revenir au **menu principal** sans sauvegarder les modifications.
 
 ---
 
-## 4. Exécuter une sauvegarde
+## Ajout d'une nouvelle sauvegarde
+En bas à droite du **menu principal**, cliquez sur le bouton **Ajouter une sauvegarde** pour accéder à la page d'ajout.
 
-Revenez au menu précédent et saisissez `4`. Vous devrez ensuite :
+![Menu Principal](Image/Interface_Add.png)
 
-- Saisir le nom de la sauvegarde que vous avez créée (ex. : `MaSauvegarde`).
-- La sauvegarde démarre automatiquement.
-- Un message de confirmation ou d’erreur s’affichera en fonction du résultat.
+### Informations à renseigner
+- **Nom de la sauvegarde** : Indiquer un nom pour la sauvegarde.
+- **Dossier source** : Choisir le dossier à sauvegarder.
+- **Dossier destinataire** : Choisir le dossier de destination.
+- **Type de sauvegarde** : Sélectionner *Complète* ou *Différentielle*.
+
+Après avoir renseigné les informations :
+- Cliquez sur **Ajouter** pour créer la sauvegarde et revenir au **menu principal**.
+- Cliquez sur **Annuler** pour revenir au **menu principal** sans ajouter la sauvegarde.
 
 ---
 
-## 5. Afficher ou supprimer une sauvegarde (optionnel)
-
-- Saisissez `1` pour afficher la liste des sauvegardes enregistrées.
-- Saisissez `3` pour supprimer une sauvegarde (vous devrez saisir son nom).
-
----
-
-## 6. Retour ou quitter l’application
-
-- Saisissez `q` pour revenir au menu principal.
-- Dans le menu principal, saisissez `3` pour quitter l’application.
