@@ -32,8 +32,8 @@ En haut à droite de l'écran, cliquez sur le bouton **Paramètre** pour accéde
 Sur cette page, vous pouvez configurer :
 - **Langue** : Choisir entre *Français* et *Anglais*.
 - **Type de fichier log** : Sélectionner *XML* ou *JSON*.
-- **Type de fichier à crypter** : Indiquer le type de fichier à crypter (par exemple `.txt`, `.docx`).
 - **Logiciel métier à détecter** : Préciser le logiciel métier concerné.
+- **Type de fichier à encrypter** : Indiquer le type de fichier à crypter (par exemple `.txt`, `.docx`).
 - **Taille maximale de fichier à copier** : Entrer la valeur maximale autorisée.
 
 Après avoir configuré ces paramètres :
