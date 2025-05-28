@@ -412,6 +412,7 @@ namespace WpfApp1.Model
                     }
                     work.IsStopped = false;
                     work.Progression = "0";
+                    ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(work.ID, int.Parse(work.Progression)));
                     work.NbFilesLeftToDo = work.TotalFilesToCopy;
                 }
             }

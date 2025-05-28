@@ -1,0 +1,10 @@
+﻿<Application x:Class="WpfBackupClient.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfBackupClient"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Ajoutez ce converter dans vos ressources -->
+        <local:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+    </Application.Resources>
+</Application>

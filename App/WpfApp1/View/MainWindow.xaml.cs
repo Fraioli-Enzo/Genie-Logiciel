@@ -7,12 +7,15 @@ using System.Resources;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using WpfApp1.Server;
 
 namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
+        private SocketBackupServer? _server;
         private BackupWorkManager backupWorkManager;
+
         private object resourceManager;
         private string logExtension;
         private string workingSoftware;
@@ -22,10 +25,66 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            LoadConfigAndUpdateUI();
+
             backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
 
-            LoadConfigAndUpdateUI(); 
+            backupWorkManager.ProgressChanged += BackupWorkManager_ProgressChanged;
+
+            // Pass the same instance of BackupWorkManager to the server
+            _server = new SocketBackupServer(8080, backupWorkManager);
+            _server.MessageReceived += OnMessageReceived;
+            _server.Start();
+        }
+
+        private void OnMessageReceived(string msg)
+        {
+            try
+            {
+                var message = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(msg);
+                if (message != null && message.ContainsKey("Type") && message.ContainsKey("WorkId"))
+                {
+                    string type = message["Type"].GetString() ?? "";
+                    string workId = message["WorkId"].GetString() ?? "";
+
+                    switch (type)
+                    {
+                        case "Execute":
+                            _ = backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo);
+                            break;
+                        case "Pause":
+                            backupWorkManager.PauseWork(workId);
+                            break;
+                        case "Stop":
+                            backupWorkManager.StopWork(workId);
+                            break;
+                        default:
+                            MessageBox.Show($"Type de message inconnu : {type}");
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Message du serveur invalide.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du traitement du message serveur : {ex.Message}");
+            }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _server?.Stop();
+            base.OnClosed(e);
+        }
+
+        private void BackupWorkManager_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            string workId = e.WorkId;
+            _server?.NotifyClientsProgress(workId);
         }
 
         private void LoadConfigAndUpdateUI()
@@ -92,7 +151,7 @@ namespace WpfApp1
                 switch (result)
                 {
                     case "PauseWorkSuccess":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                     case "PauseWorkError":
                         MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -127,6 +186,7 @@ namespace WpfApp1
                 backupWorkManager.RemoveWork(id);
                 BackupDataGrid.ItemsSource = null;
                 BackupDataGrid.ItemsSource = backupWorkManager.Works;
+                _server.NotifyClients();
 
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -134,6 +194,23 @@ namespace WpfApp1
             {
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToDelete"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        //---------------------------------OPEN WINDOWS-------------------------------------
+
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddBackup addWorkWindow = new AddBackup();
+            addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
+            addWorkWindow.ShowDialog();
+            
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings settingsWindow = new Settings();
+            settingsWindow.ShowDialog();
+            LoadConfigAndUpdateUI();
         }
 
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
@@ -149,34 +226,23 @@ namespace WpfApp1
                 MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToEdit"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-        //---------------------------------OPEN WINDOWS-------------------------------------
-
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            AddBackup addWorkWindow = new AddBackup();
-            addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
-            addWorkWindow.ShowDialog();
-        }
-
-        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
-        {
-            Settings settingsWindow = new Settings();
-            settingsWindow.ShowDialog();
-            LoadConfigAndUpdateUI();
-        }
 
         private void AddBackupWindow_BackupAdded(object sender, EventArgs e)
         {
-            backupWorkManager = new BackupWorkManager();
+            // Do not recreate backupWorkManager, just refresh the data grid
+            // backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
+            _server.NotifyClients();
         }
 
         private void EditBackupWindow_BackupEdited(object sender, EventArgs e)
         {
-            backupWorkManager = new BackupWorkManager();
+            // Do not recreate backupWorkManager, just refresh the data grid
+            // backupWorkManager = new BackupWorkManager();
             BackupDataGrid.ItemsSource = null;
             BackupDataGrid.ItemsSource = backupWorkManager.Works;
+            _server.NotifyClients();
         }
     }
 }
