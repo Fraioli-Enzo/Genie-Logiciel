@@ -1,0 +1,90 @@
+@startuml
+actor User
+
+' Application Layers
+participant MainWindow
+participant AddBackup
+participant Settings
+participant EasySafeViewModel
+participant BackupWorkManager
+participant BackupWork
+participant CryptoSoft
+participant FileManager
+
+' Model Enumerations
+participant Language
+participant State
+participant BackupType
+participant LogFileType
+
+== 1. Add a backup ==
+
+User -> MainWindow : Click_AddButton()
+MainWindow -> AddBackup : ShowForm()
+
+User -> AddBackup : FillForm(name, source, target, type)
+AddBackup -> BackupType : SelectType("Complete" | "Differential")
+AddBackup -> BackupWorkManager : AddWork(name, source, target, type)
+
+BackupWorkManager -> BackupWork : new(name, source, target, type)
+activate BackupWork
+BackupWork -> State : SetState("ACTIVE")
+BackupWork --> BackupWorkManager : Instance
+deactivate BackupWork
+
+== 2. Execute a backup ==
+
+User -> MainWindow : Click_ExecuteButton()
+MainWindow -> BackupWorkManager : ExecuteWorkAsync(id, log, extensions[], software, maxKo)
+
+BackupWorkManager -> BackupWork : Execute()
+activate BackupWork
+
+BackupWork -> CryptoSoft : RunEncryption(path, key, method)
+CryptoSoft --> BackupWork : Encrypted data
+
+BackupWork -> FileManager : TransformFile()
+FileManager --> BackupWork : Transformed
+
+loop Copying files
+    BackupWork -> BackupWork : getProgress()
+    BackupWork -> BackupWorkManager : NotifyProgress()
+end
+deactivate BackupWork
+
+== 3. Pause a backup ==
+
+User -> MainWindow : Click_PauseButton()
+MainWindow -> BackupWorkManager : PauseWork(id)
+BackupWorkManager -> State : SetState("INACTIVE")
+
+== 4. Resume a backup ==
+
+User -> MainWindow : Click_ResumeButton()
+MainWindow -> BackupWorkManager : ResumeWork(id)
+BackupWorkManager -> State : SetState("ACTIVE")
+
+== 5. Stop a backup ==
+
+User -> MainWindow : Click_StopButton()
+MainWindow -> BackupWorkManager : StopWork(id)
+BackupWorkManager -> State : SetState("END")
+
+== 6. Delete a backup ==
+
+User -> MainWindow : Click_DeleteButton()
+MainWindow -> BackupWorkManager : RemoveWork(id)
+
+== 7. Change settings ==
+
+User -> MainWindow : Click_SettingsButton()
+MainWindow -> Settings : Display()
+
+User -> Settings : SelectLanguage("EN" | "FR")
+Settings -> EasySafeViewModel : ChooseLanguage(lang)
+EasySafeViewModel -> Language : SetLanguage(lang)
+
+User -> Settings : SelectLogFormat("JSON" | "XML")
+Settings -> EasySafeViewModel : ChooseLogExtension(format)
+EasySafeViewModel -> LogFileType : SetLogFormat(format)
+@enduml
