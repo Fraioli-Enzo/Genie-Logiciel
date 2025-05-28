@@ -3,6 +3,8 @@ using System.Text.Json;
 using System.Windows;
 using WpfBackupClient.Client;
 using System.Diagnostics;
+using System.Resources;
+using System.Windows.Controls;
 
 namespace WpfBackupClient
 {
@@ -70,6 +72,63 @@ namespace WpfBackupClient
             });
         }
 
+
+        private async void ButtonExecuteClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                // Directly call the logic here instead of awaiting a void method
+                if (_client != null)
+                {
+                    var message = new
+                    {
+                        Type = "Execute", // or "Pause", "Stop" depending on the context
+                        WorkId = backup.ID
+                    };
+
+                    string json = JsonSerializer.Serialize(message);
+                    await _client.SendMessageAsync(json);
+                }
+            }
+        }
+
+        private async void ButtonPauseClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                // Directly call the logic here instead of awaiting a void method
+                if (_client != null)
+                {
+                    var message = new
+                    {
+                        Type = "Pause", // or "Pause", "Stop" depending on the context
+                        WorkId = backup.ID
+                    };
+
+                    string json = JsonSerializer.Serialize(message);
+                    await _client.SendMessageAsync(json);
+                }
+            }
+        }
+
+        private async void ButtonStopClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is BackupWork backup)
+            {
+                // Directly call the logic here instead of awaiting a void method
+                if (_client != null)
+                {
+                    var message = new
+                    {
+                        Type = "Stop", // or "Pause", "Stop" depending on the context
+                        WorkId = backup.ID
+                    };
+
+                    string json = JsonSerializer.Serialize(message);
+                    await _client.SendMessageAsync(json);
+                }
+            }
+        }
 
         protected override void OnClosed(EventArgs e)
         {

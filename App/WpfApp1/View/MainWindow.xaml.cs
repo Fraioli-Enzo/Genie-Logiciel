@@ -40,7 +40,39 @@ namespace WpfApp1
 
         private void OnMessageReceived(string msg)
         {
-            MessageBox.Show($"Server : {msg}");
+            try
+            {
+                var message = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(msg);
+                if (message != null && message.ContainsKey("Type") && message.ContainsKey("WorkId"))
+                {
+                    string type = message["Type"].GetString() ?? "";
+                    string workId = message["WorkId"].GetString() ?? "";
+
+                    switch (type)
+                    {
+                        case "Execute":
+                            _ = backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo);
+                            break;
+                        case "Pause":
+                            backupWorkManager.PauseWork(workId);
+                            break;
+                        case "Stop":
+                            backupWorkManager.StopWork(workId);
+                            break;
+                        default:
+                            MessageBox.Show($"Type de message inconnu : {type}");
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Message du serveur invalide.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du traitement du message serveur : {ex.Message}");
+            }
         }
 
         protected override void OnClosed(EventArgs e)
@@ -119,7 +151,7 @@ namespace WpfApp1
                 switch (result)
                 {
                     case "PauseWorkSuccess":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                     case "PauseWorkError":
                         MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
