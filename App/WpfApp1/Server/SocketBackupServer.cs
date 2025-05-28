@@ -63,10 +63,9 @@ namespace WpfApp1.Server
 
         public void NotifyClients()
         {
-            // Do not recreate backupWorkManager
-            // backupWorkManager = new BackupWorkManager();
-
-            var travaux = backupWorkManager.Works;
+            BackupWorkManager newbackupWorkManager = new BackupWorkManager();
+            var travaux = newbackupWorkManager.Works;
+            System.Diagnostics.Debug.WriteLine($"NotifyClients: {travaux.Count} travaux à notifier aux clients.");
             var updateMsg = new { Type = "Update", Works = travaux };
             string json = JsonSerializer.Serialize(updateMsg);
             var jsonBytes = Encoding.UTF8.GetBytes(json);
