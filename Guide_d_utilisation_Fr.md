@@ -15,13 +15,13 @@ Ce guide vous accompagne dans l'utilisation de l'application EasySave version co
 2. **Exécutez le code :**
    - Une fois le projet ouvert, cliquez sur le bouton "Démarrer" ou appuyez sur `F5` pour lancer l’application.
 
-![Interface](Image/Interface_EasySave.png)
-
 ---
 
 ## 1. Choix initial
 
-Lorsque l'application démarre, le menu suivant s'affiche :
+Lorsque l'application démarre, vous arrivez sur le menu suivant :
+
+![Interface](Image/Interface_EasySave.png)
 
 ```
 [1] Changer la langue
