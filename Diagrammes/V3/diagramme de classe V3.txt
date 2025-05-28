@@ -1,0 +1,171 @@
+@startuml
+'========================
+' ENUMERATIONS (Model)
+'========================
+package Model {
+  enum Language {
+    FR
+    EN
+  }
+
+  enum State {
+    ACTIVE
+    INACTIVE
+    END
+  }
+
+  enum Type_Backup {
+    Complete
+    Differential
+  }
+
+  enum Type_File_Log {
+    XML
+    JSON
+  }
+
+}
+
+'========================
+' MODEL
+'========================
+package Model {
+  class BackupWork {
+    - ID : string
+    - Name : string
+    - SourcePath : string
+    - TargetPath : string
+    - Type : string
+    - State : string
+    - TotalFilesToCopy : string
+    - TotalFilesSize : string
+    - NbFilesLeftToDo : string
+    - Progression : string
+    + BackupWork(id : string, name : string, sourcePath : string, targetPath : string, type : string, totalFilesToCopy : string, totalFilesSize : string, nbFilesLeftToDo : string, state : string, progression : string)
+    }
+
+  class BackupWorkManager {
+    + Works : List<BackupWork>
+    + BackupWorkManager()
+    + AddWork(name : string, pathSource : string, pathTarget : string, type : string) : string
+    + RemoveWork(ids : string) : string
+    + ExecuteWork(ids : string, log : string, extensions : string[], workingSoftware : string) : string
+    - InitializeWorksFromState() : void
+    - ExecuteSingleWork(id : string, log : string, extensions : string[]) : string
+    - static IsProcessRunning(processName : string) : bool
+    - static ParseIds(ids : string) : HashSet<string>
+    }
+
+  class CryptoSoft {
+    - mutex : Mutex = new(false, "CryptoSoft_Instance")
+    + static RunEncryption(path : string, key : string) : int
+  }
+
+  class FileManager {
+    - FilePath : string
+    - Key : string
+    - CheckFile() : bool
+    + TransformFile() : int
+    - static ConvertToByte(text : string) : byte[]
+    - static XorMethod(fileBytes : IReadOnlyList<byte>, keyBytes : IReadOnlyList<byte>) : byte[]
+  }
+}
+
+'========================
+' VIEWMODEL
+'========================
+package ViewModel {
+  class EasySafeViewModel {
+    - workManager : BackupWorkManager
+    + ChooseLanguage(language : string) : void
+    + ChooseLogExtension(logExtension : string) : void
+  }
+}
+
+'========================
+' VIEW
+'========================
+package View {
+  class MainWindow {
+    - backupWorkManager : BackupWorkManager
+    - resourceManager : object
+    - logExtension : string
+    - workingSoftware : string
+    - extension : string[]
+
+    + MainWindow()
+    - LoadConfigAndUpdateUI() : void
+    - BackupDataGrid_SelectionChanged(sender : object, e : 
+    - SelectionChangedEventArgs) : void
+    - ButtonAdd_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonExecute_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonDelete_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonLogger_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonPause_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonStop_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonSettings_Click(sender : object, e : RoutedEventArgs) : void
+    - AddBackupWindow_BackupAdded(sender : object, e : EventArgs) : void
+  }
+
+  class AddBackup {
+    - backupWorkManager : BackupWorkManager
+    - resourceManager : object
+    - name : string
+    - pathSource : string
+    - pathTarget : string
+    - type : string
+
+    + AddBackup()
+    - TextBoxName_TextChanged(sender : object, e : TextChangedEventArgs) : void
+    - TextBoxSource_TextChanged(sender : object, e : TextChangedEventArgs) : void
+    - TextBoxTarget_TextChanged(sender : object, e : TextChangedEventArgs) : void
+    - ButtonSource_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonTarget_Click(sender : object, e : RoutedEventArgs) : void
+    - RadioButtonFull_Checked(sender : object, e : RoutedEventArgs) : void
+    - RadioButtonDifferential_Checked(sender : object, e : RoutedEventArgs) : void
+    - ButtonCancel_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonAdd_Click(sender : object, e : RoutedEventArgs) : void
+  }
+  
+  class Settings {
+    - resourceManager : object
+    - viewModel : EasySafeViewModel
+    - AvailableSoftwares : ObservableCollection<string>
+    - SelectedSoftwares : ObservableCollection<string>
+
+    + Settings()
+    - ButtonCancel_Click(sender : object, e : RoutedEventArgs) : void
+    - ButtonSave_Click(sender : object, e : RoutedEventArgs) : void
+    - AddExtensionCheckBox_Click(sender : object, e : RoutedEventArgs) : void
+    - BtnDelete_Click(sender : object, e : RoutedEventArgs) : void
+    - AddSoftwareButton_Click(sender : object, e : RoutedEventArgs) : void
+    - RefreshSoftwareTags() : void
+    - RemoveSoftwareTag_Click(sender : object, e : RoutedEventArgs) : void
+  }
+}
+
+'========================
+' RELATIONS
+'========================
+
+' BackupWorkManager contient plusieurs BackupWork
+Model.BackupWorkManager *-- Model.BackupWork
+
+Model.BackupWorkManager ..> Model.CryptoSoft
+
+' EasySafeViewModel utilise BackupWorkManager
+ViewModel.EasySafeViewModel --> Model.BackupWorkManager
+
+' MainWindow utilise BackupWorkManager
+View.MainWindow --> Model.BackupWorkManager
+
+' AddBackup utilise BackupWorkManager
+View.AddBackup --> Model.BackupWorkManager
+
+' Settings utilise EasySafeViewModel
+View.Settings --> ViewModel.EasySafeViewModel
+
+' CryptoSoft utilise FileManager dans RunEncryption
+Model.CryptoSoft ..> Model.FileManager
+
+@enduml
