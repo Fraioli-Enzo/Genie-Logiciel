@@ -124,20 +124,23 @@ namespace WpfApp1
         {
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                string id = backup.ID;
-                string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware, maxKo);
-
-                switch (result)
+                if (backup.State == "INACTIVE")
                 {
-                    case "ExecuteWorkSuccess":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
-                    case "ProcessRunning":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
-                    case "ExecuteWorkError":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
+                    string id = backup.ID;
+                    string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware, maxKo);
+
+                    switch (result)
+                    {
+                        case "ExecuteWorkSuccess":
+                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                            break;
+                        case "ProcessRunning":
+                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                        case "ExecuteWorkError":
+                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                    }
                 }
             }
         }
@@ -146,16 +149,19 @@ namespace WpfApp1
         {
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                string id = backup.ID;
-                string result = backupWorkManager.PauseWork(id);
-                switch (result)
+                if (backup.State == "ACTIVE")
                 {
-                    case "PauseWorkSuccess":
-                        //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
-                    case "PauseWorkError":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
+                    string id = backup.ID;
+                    string result = backupWorkManager.PauseWork(id);
+                    switch (result)
+                    {
+                        case "PauseWorkSuccess":
+                            //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                            break;
+                        case "PauseWorkError":
+                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                    }
                 }
             }
         }
@@ -164,31 +170,39 @@ namespace WpfApp1
         {
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                string id = backup.ID;
-                string result = backupWorkManager.StopWork(id);
-                switch (result)
+                if (backup.State == "ACTIVE")
                 {
-                    case "StopWorkSuccess":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
-                    case "StopWorkError":
-                        MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
+                    string id = backup.ID;
+                    string result = backupWorkManager.StopWork(id);
+                    switch (result)
+                    {
+                        case "StopWorkSuccess":
+                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                            break;
+                        case "StopWorkError":
+                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                    }
                 }
             }
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
+
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                string id = backup.ID;
-                backupWorkManager.RemoveWork(id);
-                BackupDataGrid.ItemsSource = null;
-                BackupDataGrid.ItemsSource = backupWorkManager.Works;
-                _server.NotifyClients();
+                if (backup.State == "INACTIVE")
+                {
+                    string id = backup.ID;
+                    backupWorkManager.RemoveWork(id);
+                    BackupDataGrid.ItemsSource = null;
+                    BackupDataGrid.ItemsSource = backupWorkManager.Works;
+                    _server.NotifyClients();
 
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                }
             }
             else
             {
@@ -217,9 +231,12 @@ namespace WpfApp1
         {
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                EditBackup editBackupWindow = new EditBackup(backup);
-                editBackupWindow.BackupEdited += EditBackupWindow_BackupEdited;
-                editBackupWindow.ShowDialog();
+                if (backup.State == "INACTIVE")
+                {
+                    EditBackup editBackupWindow = new EditBackup(backup);
+                    editBackupWindow.BackupEdited += EditBackupWindow_BackupEdited;
+                    editBackupWindow.ShowDialog();
+                }
             }
             else
             {

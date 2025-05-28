@@ -179,7 +179,7 @@ namespace WpfApp1.Model
         public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware, string maxKo)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
-
+            workToExecute.State = "ACTIVE";
             if (_IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
                 LoggingLibrary.Logger.Log(workToExecute?.Name ?? "", "ProcessRunning", "ProcessRunning", 0, 0, log, 0);
@@ -214,12 +214,14 @@ namespace WpfApp1.Model
             {
                 var result = await _CopyAndEncryptFilesAsync(workToExecute, filesToCopy, log, extensions, maxKo, cts.Token);
                 _UpdateWorkStateInJson(workToExecute);
+                workToExecute.State = "INACTIVE";
                 cts.Cancel();
                 await monitoringTask;
                 return result;
             }
             catch (Exception)
             {
+                workToExecute.State = "INACTIVE";
                 cts.Cancel();
                 await monitoringTask;
                 return "ExecuteWorkError";
