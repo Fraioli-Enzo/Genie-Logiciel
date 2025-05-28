@@ -19,7 +19,7 @@ Ce guide vous accompagne dans l'utilisation de l'application EasySave version co
 
 ## 1. Choix initial
 
-Lorsque l'application démarre, vous arrivez sur le menu suivant :
+Lorsque l'application démarre, vous arrivez sur le menu principal :
 
 ![Interface](Image/Interface_EasySave.png)
 
