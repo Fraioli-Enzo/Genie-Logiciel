@@ -51,7 +51,9 @@ namespace WpfApp1
             Extension_File_Encrypt.Content = ((ResourceManager)this.resourceManager).GetString("Extension_File_Encrypt");
             ButtonAddSoftware.Content = ((ResourceManager)this.resourceManager).GetString("Add");
             ButtonAdd_Ext.Content = ((ResourceManager)this.resourceManager).GetString("Add");
+            ButtonAdd_Ext_To_Prio.Content = ((ResourceManager)this.resourceManager).GetString("Add");
             FileSizeText.Content = ((ResourceManager)this.resourceManager).GetString("FileSizeText");
+            Extension_File_Prio.Content = ((ResourceManager)this.resourceManager).GetString("Extension_File_Prio");
 
             // Charger la langue et les logs depuis config.json
             try
@@ -143,6 +145,59 @@ namespace WpfApp1
                         }
                     }
 
+                    if (doc.RootElement.TryGetProperty("extensionsToPrio", out var extPrio) && extPrio.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var extElem in extPrio.EnumerateArray())
+                        {
+                            string? extension = extElem.GetString();
+                            if (!string.IsNullOrWhiteSpace(extension))
+                            {
+                                // Vérifie si un type de fichier n'est pas déjà présent
+                                bool alreadyExists = PrioCheckBoxPanel.Children
+                                    .OfType<Border>()
+                                    .Select(b => b.Child)
+                                    .OfType<StackPanel>()
+                                    .Select(sp => sp.Children[0] as TextBlock)
+                                    .Any(tb => tb != null && tb.Text.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+                                if (!alreadyExists)
+                                {
+                                    Border border = new Border
+                                    {
+                                        Style = (Style)FindResource("ExtensionTagStyle")
+                                    };
+
+                                    StackPanel sp = new StackPanel { Orientation = Orientation.Horizontal };
+
+                                    // Remplacer la CheckBox par un TextBlock
+                                    TextBlock tb = new TextBlock
+                                    {
+                                        Text = extension,
+                                        FontSize = 14,
+                                        Foreground = (System.Windows.Media.Brush)FindResource("PrimaryColor"),
+                                        VerticalAlignment = VerticalAlignment.Center,
+                                        Margin = new Thickness(0)
+                                    };
+
+                                    Button btnDelete = new Button
+                                    {
+                                        Content = "✕",
+                                        Style = (Style)FindResource("DeleteTagButtonStyle"),
+                                        Tag = border
+                                    };
+                                    btnDelete.Click += BtnDeletePrio_Click;
+
+                                    sp.Children.Add(tb);
+                                    sp.Children.Add(btnDelete);
+
+                                    border.Child = sp;
+
+                                    PrioCheckBoxPanel.Children.Add(border);
+                                }
+                            }
+                        }
+                    }
+
                     if (doc.RootElement.TryGetProperty("workingSoftware", out var wsProp) && wsProp.ValueKind == JsonValueKind.String)
                     {
                         string? sw = wsProp.GetString();
@@ -196,6 +251,22 @@ namespace WpfApp1
                 }
             }
 
+            // Récupérer toutes les extensions (TextBlock) affichées
+            var checkedExtensionsPrio = new List<string>();
+            foreach (var border in PrioCheckBoxPanel.Children.OfType<Border>())
+            {
+                if (border.Child is StackPanel sp && sp.Children[0] is TextBlock tb)
+                {
+                    string ext = tb.Text;
+                    // S'assurer que l'extension commence par un point
+                    if (!string.IsNullOrWhiteSpace(ext))
+                    {
+                        if (!ext.StartsWith(".")) ext = "." + ext;
+                        checkedExtensionsPrio.Add(ext.ToLowerInvariant());
+                    }
+                }
+            }
+
             // Charger le fichier config.json
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string configFilePath = Path.Combine(projectRootPath, "config.json");
@@ -211,6 +282,7 @@ namespace WpfApp1
             }
 
             configDict["extensionsToCrypto"] = checkedExtensions;
+            configDict["extensionsToPrio"] = checkedExtensionsPrio;
             configDict["workingSoftware"] = SelectedSoftwares.FirstOrDefault() ?? "null";
             configDict["MaxFileSize"] = MaxFileSizeTextBox.Text.Trim();
 
@@ -285,6 +357,14 @@ namespace WpfApp1
             }
         }
 
+        private void BtnDeletePrio_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is Border border)
+            {
+                PrioCheckBoxPanel.Children.Remove(border);
+            }
+        }
+
         private void AddSoftwareButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedSoftwares.Clear();
@@ -342,6 +422,64 @@ namespace WpfApp1
             {
                 SelectedSoftwares.Remove(sw);
                 RefreshSoftwareTags();
+            }
+        }
+
+
+        private void AddPrioCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            string extension = Type_File_Prio.Text.Trim();
+
+            // Vérifie si le champ de saisi n'est pas vide
+            if (!string.IsNullOrEmpty(extension))
+            {
+                // Vérifie si un type de fichier n'est pas dejà présent
+                bool alreadyExists = PrioCheckBoxPanel.Children
+                    .OfType<Border>()
+                    .Select(b => b.Child)
+                    .OfType<StackPanel>()
+                    .Select(sp => sp.Children[0] as TextBlock)
+                    .Any(tb => tb != null && tb.Text.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+                if (!alreadyExists)
+                {
+                    Border border = new Border
+                    {
+                        Style = (Style)FindResource("ExtensionTagStyle")
+                    };
+
+                    StackPanel sp = new StackPanel { Orientation = Orientation.Horizontal };
+
+                    TextBlock tb = new TextBlock
+                    {
+                        Text = extension,
+                        FontSize = 14,
+                        Foreground = (System.Windows.Media.Brush)FindResource("PrimaryColor"),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Margin = new Thickness(0)
+                    };
+
+                    Button btnDelete = new Button
+                    {
+                        Content = "✕",
+                        Style = (Style)FindResource("DeleteTagButtonStyle"),
+                        Tag = border
+                    };
+                    btnDelete.Click += BtnDeletePrio_Click;
+
+                    sp.Children.Add(tb);
+                    sp.Children.Add(btnDelete);
+
+                    border.Child = sp;
+
+                    PrioCheckBoxPanel.Children.Add(border);
+
+                    Type_File.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("This extension is already added.", "Duplicate", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
         }
     }

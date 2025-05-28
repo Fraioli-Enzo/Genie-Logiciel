@@ -5,7 +5,7 @@
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:local="clr-namespace:WpfApp1"
        mc:Ignorable="d"
-       Title="Setting" Height="654" Width="800"
+       Title="Setting" Height="756" Width="800"
        Background="#FAFAFA" FontFamily="Segoe UI">
 
     <Window.Resources>
@@ -218,7 +218,24 @@
             </StackPanel>
             <Rectangle Height="1" Stroke="Black" Width="Auto"/>
 
+            <!-- Section Extension File to Prio -->
+            <StackPanel>
+                <StackPanel>
+                    <Label Name="Extension_File_Prio" Content="Extension File to Prio" Style="{StaticResource ModernLabelStyle}"/>
+                    <WrapPanel x:Name="PrioCheckBoxPanel" Orientation="Horizontal" HorizontalAlignment="Left" ItemHeight="30" ItemWidth="Auto" Margin="0,2,0,2" />
+                </StackPanel>
+
+                <!-- Section Type File to Prio -->
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBox x:Name="Type_File_Prio" Style="{StaticResource ModernTextBoxStyle}" Width="120" Margin="0,0,5,0" />
+                        <Button x:Name="ButtonAdd_Ext_To_Prio" Content="Add" Click="AddPrioCheckBox_Click" Style="{StaticResource ModernButtonStyle}" Width="80"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <Rectangle Height="1" Stroke="Black" Width="Auto"/>
             
+
             <!-- Section Taille max des fichiers à copier -->
             <StackPanel Margin="0,10,0,10">
                 <Label Name="FileSizeText" Content="Maximum file size to copy in parallel" Style="{StaticResource ModernLabelStyle}"/>
