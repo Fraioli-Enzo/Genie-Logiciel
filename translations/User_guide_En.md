@@ -2,88 +2,54 @@
 
 This guide will assist you in using the EasySave console application, designed to manage full or differential backup tasks.
 
-## Before You Begin
+## Main Menu
+When you start the application, you arrive at the **main menu**.  
 
-1. **Open the Project:**  
-    - Locate and open the `ConsolApp.csproj` file with Visual Studio. This file contains the entire project.
+![Main Menu](Image/Interface_EasySave.png)
 
-2. **Run the Code:**  
-    - Once the project is open, click the "Start" button or press `F5` to launch the application.
+This menu contains a table listing the backups you have created.
 
----
-
-## 1. Initial Choice
-
-When the application starts, the following menu is displayed:
-
-```
-[1] Change Language  
-[2] Start a Backup  
-[3] Exit  
-```
-
-Enter `2` to start a backup.
+### "Action" Column of the Table
+For each backup, you have the following actions:
+- **Run**: Start executing the backup.
+- **Pause**: Pause the backup.
+- **Stop**: Stop the backup.
+- **Delete**: Delete the backup.
+- **Edit**: Edit the backup settings.
 
 ---
 
-## 2. Backup Menu
+## Accessing the Settings
+At the top right of the screen, click on the **Settings** button to access the settings page.
 
-A second menu appears:
+![Main Menu](Image/Interface_Parametre.png)
 
-```
-[1] Display Backup Tasks  
-[2] Add a Backup  
-[3] Delete a Backup  
-[4] Execute a Backup  
-[5] Exit  
-```
+### Available Settings
+On this page, you can configure:
+- **Language**: Choose between *French* and *English*.
+- **Log File Type**: Select *XML* or *JSON*.
+- **Business Software to Detect**: Specify the relevant business software.
+- **File Type to Encrypt**: Indicate the type of file to encrypt (for example, `.txt`, `.docx`).
+- **Maximum File Size to Copy**: Enter the maximum allowed size.
 
----
-
-## 3. Add a Backup
-
-Enter `2` to add a new backup. Then proceed as follows:
-
-1. **Enter a Backup Name**  
-    - Example: `Name: > MyBackup`
-
-2. **Choose a Backup Type**  
-    ```
-    [1] Full  
-    [2] Differential  
-    ```
-    - Enter `1` or `2` depending on the desired type.
-
-3. **Select the Source Drive**  
-    - For example, enter `C` to access `C:\`.  
-    - The drive's contents will then be displayed.  
-      - Navigate through folders by entering their number.  
-      - Confirm with `s`.  
-      - Cancel with `q`.
-
-4. **Then Select the Destination Drive**  
-    - Repeat the same procedure to define the target folder.
+After configuring these settings:
+- Click **Save** to save the settings and return to the **main menu**.
+- Click **Cancel** to return to the **main menu** without saving changes.
 
 ---
 
-## 4. Execute a Backup
+## Adding a New Backup
+At the bottom right of the **main menu**, click on the **Add Backup** button to access the add page.
 
-Return to the previous menu and enter `4`. Then you will need to:
+![Main Menu](Image/Interface_Add.png)
 
-- Enter the name of the backup you created (e.g., `MyBackup`).  
-- The backup will start automatically.  
-- A confirmation or error message will be displayed depending on the result.
+### Information to Enter
+- **Backup Name**: Enter a name for the backup.
+- **Source Folder**: Choose the folder to back up.
+- **Destination Folder**: Choose the destination folder.
+- **Backup Type**: Select *Full* or *Differential*.
 
----
+After entering the information:
+- Click **Add** to create the backup and return to the **main menu**.
+- Click **Cancel** to return to the **main menu** without adding the backup.
 
-## 5. Display or Delete a Backup (Optional)
-
-- Enter `1` to display the list of saved backups.  
-- Enter `3` to delete a backup (you will need to enter its name).
-
----
-
-## 6. Return or Exit the Application
-
-- Enter `q` to return to the main menu.  
-- In the main menu, enter `3` to exit the application.  
