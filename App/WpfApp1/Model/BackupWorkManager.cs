@@ -176,7 +176,7 @@ namespace WpfApp1.Model
             return "StopWorkError";
         }
 
-        public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware, string maxKo)
+        public async Task<string> ExecuteWorkAsync(string id, string log, string[] extensions, string workingSoftware, string maxKo, string[] extensionsPrio)
         {
             var workToExecute = Works.FirstOrDefault(w => w.ID == id);
             workToExecute.State = "ACTIVE";
@@ -195,6 +195,8 @@ namespace WpfApp1.Model
             var filesToCopy = _GetFilesToCopy(workToExecute);
             if (filesToCopy == null)
                 return "ExecuteWorkError";
+
+            filesToCopy = _OrderFilesByExtensionPriority(filesToCopy, extensionsPrio);
 
             _UpdateWorkFileStats(workToExecute, filesToCopy);
 
@@ -225,6 +227,18 @@ namespace WpfApp1.Model
                 cts.Cancel();
                 await monitoringTask;
                 return "ExecuteWorkError";
+            }
+
+            List<string> _OrderFilesByExtensionPriority(List<string> files, string[] extensionsPrio)
+            {
+                return files
+                    .OrderBy(f =>
+                    {
+                        var ext = Path.GetExtension(f);
+                        int idx = Array.FindIndex(extensionsPrio, e => string.Equals(e, ext, StringComparison.OrdinalIgnoreCase));
+                        return idx == -1 ? int.MaxValue : idx;
+                    })
+                    .ToList();
             }
 
             // Surveillance du logiciel métier pendant la sauvegarde

@@ -246,7 +246,7 @@
     <comment>-</comment>
   </data>
   <data name="Extension_File_Encrypt" xml:space="preserve">
-    <value>Extension de fichier à encrypter</value>
+    <value>Extensions des fichiers à encrypter</value>
     <comment>-</comment>
   </data>
   <data name="Detect_Software" xml:space="preserve">
@@ -299,6 +299,10 @@
   </data>
   <data name="FileSizeText" xml:space="preserve">
     <value>Taille maximale des fichiers à copier en parallèle</value>
+    <comment>-</comment>
+  </data>
+  <data name="Extension_File_Prio" xml:space="preserve">
+    <value>Extensions des fichiers à prioriser</value>
     <comment>-</comment>
   </data>
 </root>

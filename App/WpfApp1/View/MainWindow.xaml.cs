@@ -20,6 +20,7 @@ namespace WpfApp1
         private string logExtension;
         private string workingSoftware;
         private string[] extensions;
+        private string[] extensionsPrio;
         private string maxKo;
 
         public MainWindow()
@@ -51,7 +52,7 @@ namespace WpfApp1
                     switch (type)
                     {
                         case "Execute":
-                            _ = backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo);
+                            _ = backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);
                             break;
                         case "Pause":
                             backupWorkManager.PauseWork(workId);
@@ -97,6 +98,7 @@ namespace WpfApp1
             string language = config != null && config.ContainsKey("language") ? config["language"].GetString() ?? "en" : "en";
             logExtension = config != null && config.ContainsKey("log") ? config["log"].GetString() ?? "json" : "json";
             extensions = config != null && config.ContainsKey("extensionsToCrypto") ? config["extensionsToCrypto"].EnumerateArray().Select(e => e.GetString()).ToArray() : Array.Empty<string>();
+            extensionsPrio = config != null && config.ContainsKey("extensionsToPrio") ? config["extensionsToPrio"].EnumerateArray().Select(e => e.GetString()).ToArray() : Array.Empty<string>();
             workingSoftware = config != null && config.ContainsKey("workingSoftware") ? config["workingSoftware"].GetString() ?? "" : "";
             maxKo = config != null && config.ContainsKey("MaxFileSize") ? config["MaxFileSize"].GetString() ?? "1024" : "1024";
             // Set the culture of the ResourceManager based on the language
@@ -127,7 +129,7 @@ namespace WpfApp1
                 if (backup.State == "INACTIVE")
                 {
                     string id = backup.ID;
-                    string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware, maxKo);
+                    string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);
 
                     switch (result)
                     {

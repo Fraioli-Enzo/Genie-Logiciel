@@ -9,7 +9,7 @@ Ce guide vous accompagne dans l'utilisation de l'application EasySave version co
 ## Menu principal
 Lorsque vous démarrez l'application, vous arrivez sur le **menu principal**.  
 
-![Interface](Image/Interface_EasySave.png)
+![Menu Principal](Image/Interface_EasySave.png)
 
 Ce menu contient un tableau listant les sauvegardes que vous avez créées.
 
@@ -26,12 +26,14 @@ Pour chaque sauvegarde, vous disposez des actions suivantes :
 ## Accès aux paramètres
 En haut à droite de l'écran, cliquez sur le bouton **Paramètre** pour accéder à la page des paramètres.
 
+![Menu Paramètre](Image/Interface_Parametre.png)
+
 ### Paramètres disponibles
 Sur cette page, vous pouvez configurer :
 - **Langue** : Choisir entre *Français* et *Anglais*.
 - **Type de fichier log** : Sélectionner *XML* ou *JSON*.
-- **Type de fichier à crypter** : Indiquer le type de fichier à crypter (par exemple `.txt`, `.docx`).
 - **Logiciel métier à détecter** : Préciser le logiciel métier concerné.
+- **Type de fichier à encrypter** : Indiquer le type de fichier à crypter (par exemple `.txt`, `.docx`).
 - **Taille maximale de fichier à copier** : Entrer la valeur maximale autorisée.
 
 Après avoir configuré ces paramètres :
@@ -42,6 +44,8 @@ Après avoir configuré ces paramètres :
 
 ## Ajout d'une nouvelle sauvegarde
 En bas à droite du **menu principal**, cliquez sur le bouton **Ajouter une sauvegarde** pour accéder à la page d'ajout.
+
+![Menu Ajout Sauvegarde](Image/Interface_Add.png)
 
 ### Informations à renseigner
 - **Nom de la sauvegarde** : Indiquer un nom pour la sauvegarde.
