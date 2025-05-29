@@ -22,7 +22,7 @@ For each backup, you have the following actions:
 ## Accessing the Settings
 At the top right of the screen, click on the **Settings** button to access the settings page.
 
-![Main Menu](Image/Interface_Parametre.png)
+![Setting](Image_En/Setting.png)
 
 ### Available Settings
 On this page, you can configure:
@@ -41,7 +41,7 @@ After configuring these settings:
 ## Adding a New Backup
 At the bottom right of the **main menu**, click on the **Add Backup** button to access the add page.
 
-![Main Menu](Image/Interface_Add.png)
+![Add](Image_En/Add.png)
 
 ### Information to Enter
 - **Backup Name**: Enter a name for the backup.
