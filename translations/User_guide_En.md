@@ -5,7 +5,7 @@ This guide will assist you in using the EasySave console application, designed t
 ## Main Menu
 When you start the application, you arrive at the **main menu**.  
 
-![Main Menu](Image/Interface_EasySave.png)
+![Main Menu](Main/Image/Interface_EasySave.png)
 
 This menu contains a table listing the backups you have created.
 
