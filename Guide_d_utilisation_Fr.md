@@ -26,7 +26,7 @@ Pour chaque sauvegarde, vous disposez des actions suivantes :
 ## Accès aux paramètres
 En haut à droite de l'écran, cliquez sur le bouton **Paramètre** pour accéder à la page des paramètres.
 
-![Menu Principal](Image/Interface_Parametre.png)
+![Menu Paramètre](Image/Interface_Parametre.png)
 
 ### Paramètres disponibles
 Sur cette page, vous pouvez configurer :
@@ -45,7 +45,7 @@ Après avoir configuré ces paramètres :
 ## Ajout d'une nouvelle sauvegarde
 En bas à droite du **menu principal**, cliquez sur le bouton **Ajouter une sauvegarde** pour accéder à la page d'ajout.
 
-![Menu Principal](Image/Interface_Add.png)
+![Menu Ajout Sauvegarde](Image/Interface_Add.png)
 
 ### Informations à renseigner
 - **Nom de la sauvegarde** : Indiquer un nom pour la sauvegarde.
