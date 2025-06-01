@@ -92,7 +92,6 @@ namespace WpfApp1
             pathSource = TextBoxSource.Text;
             pathTarget = TextBoxTarget.Text;
             backupWorkManager.AddWork(name, pathSource, pathTarget, type);
-            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("AddWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             BackupAdded?.Invoke(this, EventArgs.Empty); 
             this.Close();
         }

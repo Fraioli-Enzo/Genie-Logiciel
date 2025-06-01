@@ -305,4 +305,8 @@
     <value>Extensions des fichiers à prioriser</value>
     <comment>-</comment>
   </data>
+  <data name="LoggerNotImplemented" xml:space="preserve">
+    <value>La fonctionnalité de consultation des logs sera disponible à partir de la version 4.0</value>
+    <comment>-</comment>
+  </data>
 </root>

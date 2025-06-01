@@ -111,7 +111,6 @@ namespace WpfApp1
             pathSource = TextBoxSource.Text;
             pathTarget = TextBoxTarget.Text;
             backupWorkManager.EditWork(id, name, pathSource, pathTarget, type);
-            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("EditWorkSuccess"), "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             BackupEdited?.Invoke(this, EventArgs.Empty); 
             this.Close();
         }

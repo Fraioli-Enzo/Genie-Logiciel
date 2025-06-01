@@ -258,4 +258,7 @@
   <data name="Extension_File_Prio" xml:space="preserve">
     <value>File extensions to prioritize</value>
   </data>
+  <data name="LoggerNotImplemented" xml:space="preserve">
+    <value>The log viewing feature will be available starting from version 4.0</value>
+  </data>
 </root>
