@@ -143,7 +143,7 @@ namespace WpfApp1
         {
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                if (backup.State == "INACTIVE")
+                if (backup.State == "INACTIVE" && backup.IsPaused == false)
                 {
                     string id = backup.ID;
                     string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);

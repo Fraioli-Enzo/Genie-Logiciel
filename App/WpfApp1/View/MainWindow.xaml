@@ -101,6 +101,9 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#43A047"/>
                             </Trigger>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="true">
+                                <Setter Property="Background" Value="Gray"/>
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
