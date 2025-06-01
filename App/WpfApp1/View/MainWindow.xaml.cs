@@ -40,7 +40,7 @@ namespace WpfApp1
             _server.Start();
         }
 
-        private void OnMessageReceived(string msg)
+        private async void OnMessageReceived(string msg)
         {
             try
             {
@@ -53,19 +53,19 @@ namespace WpfApp1
                     switch (type)
                     {
                         case "Execute":
-                            backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);
-                            //ShowBanner(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), true);
+                             string result = await backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);
+                            if (result == "ExecuteWorkSuccess")
+                            {
+                                _server?.NotifyClientsSucess("ExecuteSucess");
+                            }
+
                             break;
                         case "Pause":
                             backupWorkManager.PauseWork(workId);
-                            ShowBanner(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), true);
                             break;
                         case "Stop":
-                            backupWorkManager.StopWork(workId);
-                            ShowBanner(((ResourceManager)this.resourceManager).GetString("StopWorkSuccess"), true);
-                            break;
-                        default:
-                            //MessageBox.Show($"Type de message inconnu : {type}");
+                             backupWorkManager.StopWork(workId);
+                            _server?.NotifyClientsSucess("StopSucess");
                             break;
                     }
                 }
