@@ -134,7 +134,7 @@ namespace WpfApp1
         //------------------------------------TO DO--------------------------------------
         private void ButtonLogger_Click(object sender, RoutedEventArgs e)
         {
-
+            ShowBanner(((ResourceManager)this.resourceManager).GetString("LoggerNotImplemented"), false);
         }
 
         //---------------------------------ACTIONS-------------------------------------
@@ -247,6 +247,7 @@ namespace WpfApp1
             addWorkWindow.BackupAdded += AddBackupWindow_BackupAdded;
             addWorkWindow.ShowDialog();
             _server.NotifyClients();
+            ShowBanner(((ResourceManager)this.resourceManager).GetString("AddWorkSuccess"), true);
         }
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
@@ -266,6 +267,7 @@ namespace WpfApp1
                     editBackupWindow.BackupEdited += EditBackupWindow_BackupEdited;
                     editBackupWindow.ShowDialog();
                     _server.NotifyClients();
+                    ShowBanner(((ResourceManager)this.resourceManager).GetString("EditWorkSuccess"), true);
                 }
             }
             else
