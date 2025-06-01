@@ -237,25 +237,29 @@
     </Window.Resources>
 
     <Grid Margin="20" Cursor="">
-        
 
-        
+
+
         <Grid.RowDefinitions>
-            
             <RowDefinition Height="Auto"/>
+            <!-- Titre ou autre -->
             <RowDefinition Height="*"/>
+            <!-- DataGrid -->
             <RowDefinition Height="Auto"/>
+            <!-- Bandeau -->
+            <RowDefinition Height="Auto"/>
+            <!-- Boutons -->
         </Grid.RowDefinitions>
 
 
 
-        <Grid Grid.Row="0">
+        <!--<Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Bandeau en haut -->
+            --><!-- Bandeau en haut --><!--
             <Border x:Name="Banner"
             Background="Green"
             CornerRadius="5"
@@ -273,7 +277,7 @@
                    FontWeight="Bold"/>
             </Border>
 
-            <!-- Titre et bouton -->
+            --><!-- Titre et bouton --><!--
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -291,6 +295,25 @@
                     </Button.RenderTransform>
                 </Button>
             </Grid>
+        </Grid>-->
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Name="MenuLabel" Content="Main Menu" VerticalAlignment="Center"/>
+            <Button Name="ButtonSettings" Content="Settings" Margin="0,8,3,8" Click="ButtonSettings_Click" HorizontalAlignment="Right" Width="190" Height="40">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
         </Grid>
 
 
@@ -335,7 +358,24 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+        <Border x:Name="Banner"
+        Background="Green"
+        CornerRadius="5"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Stretch"
+        Height="40"
+        Margin="0,0,0,5"
+        Visibility="Collapsed"
+        Opacity="0.9"
+        Grid.Row="2">
+            <TextBlock x:Name="BannerText"
+                Foreground="White"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                FontWeight="Bold"/>
+        </Border>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
             <Button Name="ButtonAdd" Content="Add Backup" Width="120" Height="40" Click="ButtonAdd_Click"  />
             <Button Name="ButtonLogger" Content="Logger" Width="120" Height="40" Click="ButtonLogger_Click" />
         </StackPanel>
