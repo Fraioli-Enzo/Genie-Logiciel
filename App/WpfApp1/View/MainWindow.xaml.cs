@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using WpfApp1.Server;
 using System.Windows.Media;
+using System.Windows.Data;
 
 namespace WpfApp1
 {
@@ -183,6 +184,8 @@ namespace WpfApp1
                         case "PauseWorkError":
                             ShowBanner(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), false);
                             //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                        case "ResumeWorkSuccess":
                             break;
                     }
                 }

@@ -161,8 +161,16 @@ namespace WpfApp1.Model
             var workToPause = Works.FirstOrDefault(w => w.ID == id);
             if (workToPause != null)
             {
-                workToPause.IsPaused = !(workToPause.IsPaused);
-                return "PauseWorkSuccess";
+                if (workToPause.IsPaused == false)
+                {
+                    workToPause.IsPaused = true;
+                    return "PauseWorkSuccess";
+                } else
+                {
+                    workToPause.IsPaused = false;
+                    return "ResumeWorkSuccess";
+                }
+
             }
             return "PauseWorkError";
         }

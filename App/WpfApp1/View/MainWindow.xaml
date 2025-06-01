@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:local="clr-namespace:WpfApp1" xmlns:local1="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
         Title="EasySave"
         Height="550"
         Width="900"
         Background="#FAFAFA"
         FontFamily="Segoe UI">
-        
+
 
 
     <Window.Resources>
@@ -234,6 +234,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <local1:PauseContentConverter x:Key="PauseContentConverter"/>
     </Window.Resources>
 
     <Grid Margin="20" Cursor="">
@@ -289,7 +290,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Name="ButtonExecute" Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StartButtonStyle}" ToolTip="Exécuter" Click="ButtonExecute_Click"/>
-                                <Button Name="ButtonPause" Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
+                                <Button Name="ButtonPause" Content="{Binding IsPaused, Converter={StaticResource PauseContentConverter}}" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
                                 <Button Name="ButtonStop" Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StopButtonStyle}" ToolTip="Stopper" Click="ButtonStop_Click"/>
                                 <Button Name="ButtonDelete" Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource DeleteButtonStyle}" ToolTip="Supprimer" Click="ButtonDelete_Click"/>
                                 <Button Name="ButtonEdit" Content="✏️" Command="{Binding EditCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource EditButtonStyle}" ToolTip="Modifier" Click="ButtonEdit_Click"/>
