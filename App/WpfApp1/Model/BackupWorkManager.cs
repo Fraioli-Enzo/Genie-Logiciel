@@ -374,16 +374,30 @@ namespace WpfApp1.Model
                     if (Math.Ceiling(fileSize / 1024.0) >= long.Parse(maxKo))
                     {
                         LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "WAIT_LOCK_SIZE");
-                        await LargeFileCopyLock.WaitAsync(token);
+
+                        // Timeout de 5 secondes
+                        int lockTimeoutMs = 5000;
+                        bool lockAcquired = false;
                         try
                         {
+                            lockAcquired = await LargeFileCopyLock.WaitAsync(lockTimeoutMs, token);
+                            if (!lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "TIMEOUT_LOCK_SIZE");
+                                // Passe au fichier suivant
+                                continue;
+                            }
+
                             LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "ENTER_LOCK_SIZE");
                             File.Copy(file, targetFilePath, overwrite: true);
                         }
                         finally
                         {
-                            LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "RELEASE_LOCK_SIZE");
-                            LargeFileCopyLock.Release();
+                            if (lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "RELEASE_LOCK_SIZE");
+                                LargeFileCopyLock.Release();
+                            }
                         }
                     }
                     else
@@ -391,15 +405,27 @@ namespace WpfApp1.Model
                         File.Copy(file, targetFilePath, overwrite: true);
                     }
 
+
                     // Chiffrement du fichier si l'extension correspond
                     int encryptionTime = 0;
                     string fileExtension = Path.GetExtension(targetFilePath);
                     if (extensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
                     {
                         LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "WAIT_LOCK_ENCRYPTION");
-                        await EncryptionLock.WaitAsync(token);
+
+                        // Timeout de 5 secondes 
+                        int lockTimeoutMs = 5000;
+                        bool lockAcquired = false;
                         try
                         {
+                            lockAcquired = await EncryptionLock.WaitAsync(lockTimeoutMs, token);
+                            if (!lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "TIMEOUT_LOCK_ENCRYPTION");
+                                // Passe au fichier suivant
+                                continue;
+                            }
+
                             LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "ENTER_LOCK_ENCRYPTION");
                             encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "ProtectedKey");
                             if (encryptionTime == -99)
@@ -409,10 +435,14 @@ namespace WpfApp1.Model
                         }
                         finally
                         {
-                            LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "RELEASE_LOCK_ENCRYPTION");
-                            EncryptionLock.Release();
+                            if (lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "RELEASE_LOCK_ENCRYPTION");
+                                EncryptionLock.Release();
+                            }
                         }
                     }
+
 
                     stopwatch.Stop();
                     double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;

@@ -49,6 +49,7 @@ namespace WpfApp1
                 {
                     string type = message["Type"].GetString() ?? "";
                     string workId = message["WorkId"].GetString() ?? "";
+                    System.Diagnostics.Debug.WriteLine($"Type reçu: {type}, WorkId: {workId}");
 
                     switch (type)
                     {
