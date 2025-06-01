@@ -30,7 +30,19 @@ namespace WpfApp1.Model
         public string TotalFilesToCopy { get; set; }
         public string TotalFilesSize { get; set; }
         public string NbFilesLeftToDo { get; set; }
-        public bool IsPaused { get; set; }
+        private bool _isPaused;
+        public bool IsPaused
+        {
+            get => _isPaused;
+            set
+            {
+                if (_isPaused != value)
+                {
+                    _isPaused = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPaused)));
+                }
+            }
+        }
 
         private string _progression;
         public string Progression

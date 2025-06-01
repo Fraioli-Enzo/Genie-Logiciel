@@ -3,11 +3,10 @@
   "log": "json",
   "workingSoftware": "CalculatorApp",
   "extensionsToCrypto": [
-    ".txt",
-    ".pdf"
+    ".txt"
   ],
   "extensionsToPrio": [
-    ".txt"
+    ".docx"
   ],
   "MaxFileSize": "1024"
 }

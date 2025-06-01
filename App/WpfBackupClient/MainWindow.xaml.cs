@@ -5,6 +5,8 @@ using WpfBackupClient.Client;
 using System.Diagnostics;
 using System.Resources;
 using System.Windows.Controls;
+using System.Reflection;
+using System.Windows.Media;
 
 namespace WpfBackupClient
 {
@@ -62,6 +64,12 @@ namespace WpfBackupClient
                                 }
                             }
                             break;
+                        case "ExecuteSucess":
+                            ShowBanner("Exécution réussie", true);
+                            break;
+                        case "StopSucess":
+                            ShowBanner("Stop réussi", true);
+                            break;
                     }
 
                 }
@@ -72,7 +80,15 @@ namespace WpfBackupClient
             });
         }
 
+        public async void ShowBanner(string message, bool isSuccess)
+        {
+            BannerText.Text = message;
+            Banner.Background = isSuccess ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+            Banner.Visibility = Visibility.Visible;
+            await Task.Delay(3000);
 
+            Banner.Visibility = Visibility.Collapsed;
+        }
         private async void ButtonExecuteClient_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is BackupWork backup)

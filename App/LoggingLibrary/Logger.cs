@@ -20,9 +20,10 @@ namespace LoggingLibrary
             public double FileTransferTime { get; set; }
             public string Time { get; set; }
             public int EncryptionTime { get; set; }
+            public string Message { get; set; }
         }
 
-        public static void Log(string id, string fileSource, string fileTarget, long fileSize, double fileTransferTime, string log, int encryptionTime)
+        public static void Log(string id, string fileSource, string fileTarget, long fileSize, double fileTransferTime, string log, int encryptionTime, string message)
         {
             string projectRootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")); 
             string logsDirectoryPath = Path.Combine(projectRootPath, "Logs");
@@ -40,7 +41,8 @@ namespace LoggingLibrary
                 FileSize = fileSize,
                 FileTransferTime = fileTransferTime,
                 Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
-                EncryptionTime = encryptionTime
+                EncryptionTime = encryptionTime,
+                Message = message
             };
 
             if (log.ToLower() == "xml")
@@ -55,6 +57,7 @@ namespace LoggingLibrary
                 entrySb.AppendLine($"    <FileTransferTime>{logEntry.FileTransferTime}</FileTransferTime>");
                 entrySb.AppendLine($"    <Time>{System.Security.SecurityElement.Escape(logEntry.Time)}</Time>");
                 entrySb.AppendLine($"    <EncryptionTime>{logEntry.EncryptionTime}</EncryptionTime>");
+                entrySb.AppendLine($"    <Message>{logEntry.Message}</Message>");
                 entrySb.AppendLine("  </Entry>");
                 string entryXml = entrySb.ToString();
 
@@ -83,8 +86,39 @@ namespace LoggingLibrary
             }
             else // Par défaut JSON
             {
-                string logEntryJson = JsonSerializer.Serialize(logEntry, new JsonSerializerOptions { WriteIndented = true });
-                File.AppendAllText(logFilePath, logEntryJson + Environment.NewLine);
+                // Lire le contenu existant ou initialiser une liste
+                List<LogEntry> entries;
+                if (File.Exists(logFilePath))
+                {
+                    string existing = File.ReadAllText(logFilePath);
+                    if (!string.IsNullOrWhiteSpace(existing))
+                    {
+                        try
+                        {
+                            entries = JsonSerializer.Deserialize<List<LogEntry>>(existing) ?? new List<LogEntry>();
+                        }
+                        catch
+                        {
+                            // Si le fichier n'est pas un tableau JSON, on réinitialise
+                            entries = new List<LogEntry>();
+                        }
+                    }
+                    else
+                    {
+                        entries = new List<LogEntry>();
+                    }
+                }
+                else
+                {
+                    entries = new List<LogEntry>();
+                }
+
+                // Ajouter la nouvelle entrée
+                entries.Add(logEntry);
+
+                // Sérialiser et écraser le fichier
+                string json = JsonSerializer.Serialize(entries, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(logFilePath, json);
             }
         }
     }

@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using WpfApp1.Server;
+using System.Windows.Media;
+using System.Windows.Data;
 
 namespace WpfApp1
 {
@@ -39,7 +41,7 @@ namespace WpfApp1
             _server.Start();
         }
 
-        private void OnMessageReceived(string msg)
+        private async void OnMessageReceived(string msg)
         {
             try
             {
@@ -48,31 +50,35 @@ namespace WpfApp1
                 {
                     string type = message["Type"].GetString() ?? "";
                     string workId = message["WorkId"].GetString() ?? "";
+                    System.Diagnostics.Debug.WriteLine($"Type reçu: {type}, WorkId: {workId}");
 
                     switch (type)
                     {
                         case "Execute":
-                            _ = backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);
+                             string result = await backupWorkManager.ExecuteWorkAsync(workId, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);
+                            if (result == "ExecuteWorkSuccess")
+                            {
+                                _server?.NotifyClientsSucess("ExecuteSucess");
+                            }
+
                             break;
                         case "Pause":
                             backupWorkManager.PauseWork(workId);
                             break;
                         case "Stop":
-                            backupWorkManager.StopWork(workId);
-                            break;
-                        default:
-                            MessageBox.Show($"Type de message inconnu : {type}");
+                             backupWorkManager.StopWork(workId);
+                            _server?.NotifyClientsSucess("StopSucess");
                             break;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Message du serveur invalide.");
+                    //MessageBox.Show("Message du serveur invalide.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du traitement du message serveur : {ex.Message}");
+                //MessageBox.Show($"Erreur lors du traitement du message serveur : {ex.Message}");
             }
         }
 
@@ -114,6 +120,17 @@ namespace WpfApp1
             BackupDataGrid.Columns[6].Header = ((ResourceManager)this.resourceManager).GetString("Progress");
             MenuLabel.Content = ((ResourceManager)this.resourceManager).GetString("MainMenu");
         }
+
+        public async void ShowBanner(string message, bool isSuccess)
+        {
+            BannerText.Text = message;
+            Banner.Background = isSuccess ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+            Banner.Visibility = Visibility.Visible;
+
+            await Task.Delay(3000);
+
+            Banner.Visibility = Visibility.Collapsed;
+        }
         //------------------------------------TO DO--------------------------------------
         private void ButtonLogger_Click(object sender, RoutedEventArgs e)
         {
@@ -126,7 +143,7 @@ namespace WpfApp1
         {
             if (sender is Button button && button.DataContext is BackupWork backup)
             {
-                if (backup.State == "INACTIVE")
+                if (backup.State == "INACTIVE" && backup.IsPaused == false)
                 {
                     string id = backup.ID;
                     string result = await backupWorkManager.ExecuteWorkAsync(id, logExtension, extensions, workingSoftware, maxKo, extensionsPrio);
@@ -134,13 +151,16 @@ namespace WpfApp1
                     switch (result)
                     {
                         case "ExecuteWorkSuccess":
-                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                            //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ShowBanner(((ResourceManager)this.resourceManager).GetString("ExecuteSuccess"), true);
                             break;
                         case "ProcessRunning":
-                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            ShowBanner(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), false);
+                            //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ProcessRunning"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                         case "ExecuteWorkError":
-                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            ShowBanner(((ResourceManager)this.resourceManager).GetString("ExecuteWorkError"), false);
+                            //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("ExecuteWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                     }
                 }
@@ -158,10 +178,14 @@ namespace WpfApp1
                     switch (result)
                     {
                         case "PauseWorkSuccess":
+                            ShowBanner(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), true);
                             //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                             break;
                         case "PauseWorkError":
-                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            ShowBanner(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), false);
+                            //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("PauseWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                        case "ResumeWorkSuccess":
                             break;
                     }
                 }
@@ -179,10 +203,12 @@ namespace WpfApp1
                     switch (result)
                     {
                         case "StopWorkSuccess":
-                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ShowBanner(((ResourceManager)this.resourceManager).GetString("StopWorkSuccess"), true);
+                            //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                             break;
                         case "StopWorkError":
-                            MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
+                            ShowBanner(((ResourceManager)this.resourceManager).GetString("StopWorkError"), false);
+                            //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("StopWorkError"), "Info", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                     }
                 }
@@ -202,13 +228,14 @@ namespace WpfApp1
                     BackupDataGrid.ItemsSource = backupWorkManager.Works;
                     _server.NotifyClients();
 
-                    MessageBox.Show(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                    //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ShowBanner(((ResourceManager)this.resourceManager).GetString("DeleteSuccess"), true);
                 }
             }
             else
             {
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToDelete"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                ShowBanner(((ResourceManager)this.resourceManager).GetString("SelectWorkToDelete"), false);
+                //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToDelete"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -243,7 +270,8 @@ namespace WpfApp1
             }
             else
             {
-                MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToEdit"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                ShowBanner(((ResourceManager)this.resourceManager).GetString("SelectWorkToEdit"), false);
+                //MessageBox.Show(((ResourceManager)this.resourceManager).GetString("SelectWorkToEdit"), "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

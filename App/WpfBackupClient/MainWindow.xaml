@@ -115,6 +115,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -166,5 +167,22 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <Border x:Name="Banner"
+        Background="Green"
+        CornerRadius="5"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Stretch"
+        Height="40"
+        Margin="0,0,0,5"
+        Visibility="Collapsed"
+        Opacity="0.9"
+        Grid.Row="2">
+            <TextBlock x:Name="BannerText"
+                Foreground="White"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                FontWeight="Bold"/>
+        </Border>
     </Grid>
 </Window>

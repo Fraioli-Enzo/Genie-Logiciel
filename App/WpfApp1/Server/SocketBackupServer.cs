@@ -79,11 +79,36 @@ namespace WpfApp1.Server
             }
         }
 
+        public void NotifyClientsSucess(string type)
+        {
+            // Define the anonymous type explicitly to avoid type mismatch
+            var sucessTypeMsg = new { Type = string.Empty, Works = string.Empty };
+
+            switch (type)
+            {
+                case "ExecuteSucess":
+                    sucessTypeMsg = new { Type = "ExecuteSucess", Works = string.Empty };
+                    break;
+                case "StopSucess":
+                    sucessTypeMsg = new { Type = "StopSucess", Works = string.Empty };
+                    break;
+            }
+
+            string json = JsonSerializer.Serialize(sucessTypeMsg);
+            var jsonBytes = Encoding.UTF8.GetBytes(json);
+            lock (_clients)
+            {
+                foreach (var client in _clients.ToList())
+                {
+                    try { client.Send(jsonBytes); }
+                    catch { _clients.Remove(client); }
+                }
+            }
+        }
+
+
         public void NotifyClientsProgress(string id)
         {
-            // Do not recreate backupWorkManager
-            // backupWorkManager = new BackupWorkManager();
-
             var travail = backupWorkManager.Works.Where(w => w.ID == id).ToList();
             var updateMsg = new { Type = "Progress", Works = travail };
             string json = JsonSerializer.Serialize(updateMsg);
@@ -102,9 +127,6 @@ namespace WpfApp1.Server
         {
             using (clientSocket)
             {
-                // Do not recreate backupWorkManager
-                // backupWorkManager = new BackupWorkManager();
-
                 var travaux = backupWorkManager.Works;
                 var updateMsg = new { Type = "Update", Works = travaux };
                 string json = JsonSerializer.Serialize(updateMsg);

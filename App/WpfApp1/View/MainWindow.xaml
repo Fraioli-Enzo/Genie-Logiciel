@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:local="clr-namespace:WpfApp1" xmlns:local1="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
         Title="EasySave"
         Height="550"
         Width="900"
         Background="#FAFAFA"
         FontFamily="Segoe UI">
-        
+
 
 
     <Window.Resources>
@@ -101,6 +101,9 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#43A047"/>
                             </Trigger>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="true">
+                                <Setter Property="Background" Value="Gray"/>
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -234,20 +237,33 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <local1:PauseContentConverter x:Key="PauseContentConverter"/>
     </Window.Resources>
 
     <Grid Margin="20" Cursor="">
+
+
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <!-- Titre ou autre -->
             <RowDefinition Height="*"/>
+            <!-- DataGrid -->
             <RowDefinition Height="Auto"/>
+            <!-- Bandeau -->
+            <RowDefinition Height="Auto"/>
+            <!-- Boutons -->
         </Grid.RowDefinitions>
+
+
+
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+
             <Label Name="MenuLabel" Content="Main Menu" VerticalAlignment="Center"/>
             <Button Name="ButtonSettings" Content="Settings" Margin="0,8,3,8" Click="ButtonSettings_Click" HorizontalAlignment="Right" Width="190" Height="40">
                 <Button.RenderTransform>
@@ -260,6 +276,7 @@
                 </Button.RenderTransform>
             </Button>
         </Grid>
+
 
         <DataGrid x:Name="BackupDataGrid" Grid.Row="1" AutoGenerateColumns="False" 
                   IsReadOnly="True"  
@@ -276,7 +293,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Name="ButtonExecute" Content="▶" Command="{Binding PlayCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StartButtonStyle}" ToolTip="Exécuter" Click="ButtonExecute_Click"/>
-                                <Button Name="ButtonPause" Content="||" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
+                                <Button Name="ButtonPause" Content="{Binding IsPaused, Converter={StaticResource PauseContentConverter}}" Command="{Binding PauseCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource PauseButtonStyle}" ToolTip="Pause" Click="ButtonPause_Click"/>
                                 <Button Name="ButtonStop" Content="⏹️" Command="{Binding StopCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource StopButtonStyle}" ToolTip="Stopper" Click="ButtonStop_Click"/>
                                 <Button Name="ButtonDelete" Content="🗑️" Command="{Binding DeleteCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource DeleteButtonStyle}" ToolTip="Supprimer" Click="ButtonDelete_Click"/>
                                 <Button Name="ButtonEdit" Content="✏️" Command="{Binding EditCommand}" Width="30" Height="30" Margin="2" Style="{StaticResource EditButtonStyle}" ToolTip="Modifier" Click="ButtonEdit_Click"/>
@@ -302,9 +319,29 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+        <Border x:Name="Banner"
+        Background="Green"
+        CornerRadius="5"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Stretch"
+        Height="40"
+        Margin="0,0,0,5"
+        Visibility="Collapsed"
+        Opacity="0.9"
+        Grid.Row="2">
+            <TextBlock x:Name="BannerText"
+                Foreground="White"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                FontWeight="Bold"/>
+        </Border>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
             <Button Name="ButtonAdd" Content="Add Backup" Width="120" Height="40" Click="ButtonAdd_Click"  />
             <Button Name="ButtonLogger" Content="Logger" Width="120" Height="40" Click="ButtonLogger_Click" />
         </StackPanel>
+
+
+        
     </Grid>
 </Window>

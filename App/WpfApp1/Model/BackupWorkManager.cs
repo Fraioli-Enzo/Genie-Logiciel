@@ -23,6 +23,8 @@ namespace WpfApp1.Model
         public List<BackupWork> Works { get; set; } = new List<BackupWork>();
         public event EventHandler<ProgressChangedEventArgs>? ProgressChanged;
         private static readonly SemaphoreSlim LargeFileCopyLock = new(1, 1);
+        private static readonly SemaphoreSlim EncryptionLock = new(1, 1);
+
 
         public BackupWorkManager()
         {
@@ -159,8 +161,16 @@ namespace WpfApp1.Model
             var workToPause = Works.FirstOrDefault(w => w.ID == id);
             if (workToPause != null)
             {
-                workToPause.IsPaused = !(workToPause.IsPaused);
-                return "PauseWorkSuccess";
+                if (workToPause.IsPaused == false)
+                {
+                    workToPause.IsPaused = true;
+                    return "PauseWorkSuccess";
+                } else
+                {
+                    workToPause.IsPaused = false;
+                    return "ResumeWorkSuccess";
+                }
+
             }
             return "PauseWorkError";
         }
@@ -182,7 +192,7 @@ namespace WpfApp1.Model
             workToExecute.State = "ACTIVE";
             if (_IsProcessRunning(workingSoftware) && workingSoftware != "null")
             {
-                LoggingLibrary.Logger.Log(workToExecute?.Name ?? "", "ProcessRunning", "ProcessRunning", 0, 0, log, 0);
+                LoggingLibrary.Logger.Log(workToExecute.Name, workToExecute.SourcePath, workToExecute.TargetPath, 0, 0, log, 0, "PROCESS_RUNNING");
                 return "ProcessRunning";
             }
 
@@ -355,7 +365,7 @@ namespace WpfApp1.Model
                     if (work.IsStopped)
                     {
                         __DeleteFilesInTargetPath(work);
-                        LoggingLibrary.Logger.Log(work.Name, "Stop", "Stop", 0, 0, log, 0);
+                        LoggingLibrary.Logger.Log(work.Name, work.SourcePath, work.TargetPath, 0, 0, log, 0, "STOP");
                         return "ExecuteWorkStopped";
                     }
 
@@ -371,17 +381,31 @@ namespace WpfApp1.Model
 
                     if (Math.Ceiling(fileSize / 1024.0) >= long.Parse(maxKo))
                     {
-                        LoggingLibrary.Logger.Log(work.Name, file, "WAIT_LOCK", fileSize, 0, log, 0);
-                        await LargeFileCopyLock.WaitAsync(token);
+                        LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "WAIT_LOCK_SIZE");
+
+                        // Timeout de 5 secondes
+                        int lockTimeoutMs = 5000;
+                        bool lockAcquired = false;
                         try
                         {
-                            LoggingLibrary.Logger.Log(work.Name, file, "ENTER_LOCK", fileSize, 0, log, 0);
+                            lockAcquired = await LargeFileCopyLock.WaitAsync(lockTimeoutMs, token);
+                            if (!lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "TIMEOUT_LOCK_SIZE");
+                                // Passe au fichier suivant
+                                continue;
+                            }
+
+                            LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "ENTER_LOCK_SIZE");
                             File.Copy(file, targetFilePath, overwrite: true);
                         }
                         finally
                         {
-                            LoggingLibrary.Logger.Log(work.Name, file, "RELEASE_LOCK", fileSize, 0, log, 0);
-                            LargeFileCopyLock.Release();
+                            if (lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "RELEASE_LOCK_SIZE");
+                                LargeFileCopyLock.Release();
+                            }
                         }
                     }
                     else
@@ -389,22 +413,49 @@ namespace WpfApp1.Model
                         File.Copy(file, targetFilePath, overwrite: true);
                     }
 
+
                     // Chiffrement du fichier si l'extension correspond
                     int encryptionTime = 0;
                     string fileExtension = Path.GetExtension(targetFilePath);
                     if (extensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
                     {
-                        encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "ProtectedKey");
-                        if (encryptionTime == -99)
+                        LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "WAIT_LOCK_ENCRYPTION");
+
+                        // Timeout de 5 secondes 
+                        int lockTimeoutMs = 5000;
+                        bool lockAcquired = false;
+                        try
                         {
-                            return "ExecuteWorkEncryptionError";
+                            lockAcquired = await EncryptionLock.WaitAsync(lockTimeoutMs, token);
+                            if (!lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "TIMEOUT_LOCK_ENCRYPTION");
+                                // Passe au fichier suivant
+                                continue;
+                            }
+
+                            LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "ENTER_LOCK_ENCRYPTION");
+                            encryptionTime = CryptoSoft.RunEncryption(targetFilePath, "ProtectedKey");
+                            if (encryptionTime == -99)
+                            {
+                                return "ExecuteWorkEncryptionError";
+                            }
+                        }
+                        finally
+                        {
+                            if (lockAcquired)
+                            {
+                                LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, 0, log, 0, "RELEASE_LOCK_ENCRYPTION");
+                                EncryptionLock.Release();
+                            }
                         }
                     }
+
 
                     stopwatch.Stop();
                     double fileTransferTime = stopwatch.Elapsed.TotalMilliseconds;
 
-                    LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime);
+                    LoggingLibrary.Logger.Log(work.Name, file, targetFilePath, fileSize, fileTransferTime, log, encryptionTime, "_");
 
                     filesCopied++;
 
